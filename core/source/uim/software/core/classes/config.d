@@ -30,48 +30,39 @@ mixin(ShowModule!());
   * }
   */
 class UIMConfig : IUIMConfig {
-  this()
-  {
+  this() {
     initialize();
   }
 
-  this(Json[string] initData)
-  {
+  this(Json[string] initData) {
     initialize(initData);
   }
 
-  bool initialize(Json[string] initData = null)
-  {
-    if (initData.hasKey("serviceName") && initData.isString("serviceName"))
-    {
+  bool initialize(Json[string] initData = null) {
+    if (initData.hasKey("serviceName") && initData.isString("serviceName")) {
       serviceName(initData.getString("serviceName"));
     }
 
-    if (initData.hasKey("serviceVersion") && initData.isString("serviceVersion"))
-    {
+    if (initData.hasKey("serviceVersion") && initData.isString("serviceVersion")) {
       serviceVersion(initData.getString("serviceVersion"));
     }
 
-    if (initData.hasKey("host") && initData.isString("host"))
-    {
+    if (initData.hasKey("host") && initData.isString("host")) {
       host(initData.getString("host"));
     }
 
-    port(cast(ushort) initData.getInteger("port", 0));
+    port(cast(ushort)initData.getInteger("port", 0));
     basePath(initData.getString("basePath", ""));
 
     requireAuthToken(initData.getBoolean("requireAuthToken", false));
-    if (requireAuthToken)
-    {
+    if (requireAuthToken) {
       authToken(initData.getString("authToken", ""));
     }
 
-    if (initData.hasKey("customHeaders") && initData["customHeaders"].isObject)
-    {
+    if (initData.hasKey("customHeaders") && initData["customHeaders"].isObject) {
       Json[string] headers = initData["customHeaders"].toMap;
       string[string] custHeaders;
-      foreach (key, value; headers)
-      {
+      foreach (key, value; headers) {
         custHeaders[key] = headers.getString(key);
       }
       customHeaders(custHeaders);
@@ -80,69 +71,57 @@ class UIMConfig : IUIMConfig {
   }
 
   protected string _serviceName;
-  string serviceName() const
-  {
+  string serviceName() const {
     return _serviceName;
   }
 
-  void serviceName(string name)
-  {
+  void serviceName(string name) {
     _serviceName = name;
   }
 
   protected string _serviceVersion;
-  string serviceVersion() const
-  {
+  string serviceVersion() const {
     return _serviceVersion;
   }
 
-  void serviceVersion(string version_)
-  {
+  void serviceVersion(string version_) {
     _serviceVersion = version_;
   }
 
   protected string _host;
-  string host() const
-  {
+  string host() const {
     return _host;
   }
 
-  void host(string host_)
-  {
+  void host(string host_) {
     _host = host_;
   }
 
   protected ushort _port;
-  ushort port() const
-  {
+  ushort port() const {
     return _port;
   }
 
-  void port(ushort port_)
-  {
+  void port(ushort port_) {
     _port = port_;
   }
 
   protected string _basePath;
-  string basePath() const
-  {
+  string basePath() const {
     return _basePath;
   }
 
-  void basePath(string path)
-  {
+  void basePath(string path) {
     _basePath = path;
   }
 
   // #region requireAuthToken 
   protected bool _requireAuthToken;
-  bool requireAuthToken() const
-  {
+  bool requireAuthToken() const {
     return _requireAuthToken;
   }
 
-  void requireAuthToken(bool required)
-  {
+  void requireAuthToken(bool required) {
     _requireAuthToken = required;
   }
   // #endregion requireAuthToken 
@@ -159,13 +138,11 @@ class UIMConfig : IUIMConfig {
   * config.authToken("my-secure-token");
    */
   protected string _authToken;
-  string authToken() const
-  {
+  string authToken() const {
     return _authToken;
   }
 
-  void authToken(string token)
-  {
+  void authToken(string token) {
     _authToken = token;
   }
   // #endregion authToken
@@ -182,23 +159,19 @@ class UIMConfig : IUIMConfig {
   * The configuration class does not enforce any specific headers, allowing flexibility for different services.
   */
   protected string[string] _customHeaders;
-  string[string] customHeaders()
-  {
+  string[string] customHeaders() {
     return _customHeaders.dup;
   }
 
-  void customHeaders(string[string] value)
-  {
+  void customHeaders(string[string] value) {
     _customHeaders = value;
   }
 
-  string customHeader(string key) const
-  {
+  string customHeader(string key) const {
     return _customHeaders[key];
   }
 
-  void customHeader(string key, string value)
-  {
+  void customHeader(string key, string value) {
     _customHeaders[key] = value;
   }
   // #endregion customHeaders
@@ -208,40 +181,32 @@ class UIMConfig : IUIMConfig {
   * Should be overridden by derived classes to add specific validation logic.
   * Throws an exception if validation fails.
   */
-  void validate()
-  {
-    if (serviceName.length == 0)
-    {
+  void validate() {
+    if (serviceName.length == 0) {
       throw new Exception("Service name cannot be empty");
     }
 
-    if (serviceVersion.length == 0)
-    {
+    if (serviceVersion.length == 0) {
       throw new Exception("Service version cannot be empty");
     }
 
-    if (host.length == 0)
-    {
+    if (host.length == 0) {
       throw new Exception("Host cannot be empty");
     }
 
-    if (port == 0)
-    {
+    if (port == 0) {
       throw new Exception("Port must be greater than zero");
     }
 
-    if (basePath.length == 0)
-    {
+    if (basePath.length == 0) {
       throw new Exception("Base path cannot be empty");
     }
 
-    if (!basePath.startsWith("/"))
-    {
+    if (!basePath.startsWith("/")) {
       throw new Exception("Base path must start with '/'");
     }
 
-    if (requireAuthToken && authToken.length == 0)
-    {
+    if (requireAuthToken && authToken.length == 0) {
       throw new Exception("Auth token is required when token authentication is enabled");
     }
 
