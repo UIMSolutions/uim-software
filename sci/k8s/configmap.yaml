@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sci-config
+  namespace: uim-platform
+  labels:
+    app: sci
+    part-of: uim-platform
+data:
+  SCI_HOST: "0.0.0.0"
+  SCI_PORT: "8110"
