@@ -1,0 +1,39 @@
+name "eam"
+description "SAP S/4HANA Enterprise Asset Management Service - Equipment, functional locations, maintenance orders, notifications, plans, and work centers"
+authors "Ozan Nurettin Suel"
+copyright "Copyright (c) 2018-2026, Ozan Nurettin Suel"
+license "Apache-2.0"
+targetName "uim-eam-platform-service"
+
+dependency "uim-platform:service" path=".."
+
+sourcePaths "source"
+importPaths "source"
+
+configuration "defaultRun" {
+    targetType "executable"
+}
+
+configuration "defaultTest" {
+    targetType "library"
+}
+
+configuration "modules" {
+    targetType "library"
+    versions "show_module"
+}
+
+configuration "tests" {
+    targetType "library"
+    versions "show_module" "show_test"
+}
+
+configuration "inits" {
+    targetType "library"
+    versions "show_module" "show_init"
+}
+
+configuration "calls" {
+    targetType "library"
+    versions "show_module" "show_calls"
+}

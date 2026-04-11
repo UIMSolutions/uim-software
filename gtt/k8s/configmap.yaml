@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gtt-config
+  namespace: uim-platform
+  labels:
+    app: gtt
+    part-of: uim-platform
+data:
+  GTT_HOST: "0.0.0.0"
+  GTT_PORT: "8115"

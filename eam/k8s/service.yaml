@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: eam
+  namespace: uim-platform
+  labels:
+    app: eam
+    part-of: uim-platform
+spec:
+  type: ClusterIP
+  selector:
+    app: eam
+  ports:
+  - name: http
+    port: 8120
+    targetPort: 8120
+    protocol: TCP

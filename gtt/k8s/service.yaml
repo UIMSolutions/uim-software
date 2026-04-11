@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gtt
+  namespace: uim-platform
+  labels:
+    app: gtt
+    part-of: uim-platform
+spec:
+  type: ClusterIP
+  selector:
+    app: gtt
+  ports:
+  - name: http
+    port: 8115
+    targetPort: 8115
+    protocol: TCP
