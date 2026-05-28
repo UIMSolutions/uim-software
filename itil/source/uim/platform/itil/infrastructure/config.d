@@ -1,0 +1,25 @@
+/****************************************************************************************************************
+* Copyright: (c) 2018-2026 Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.itil.infrastructure.config;
+
+import std.process : environment;
+import std.conv : to;
+
+@safe:
+
+struct AppConfig {
+    string host = "0.0.0.0";
+    ushort port = 8140;
+}
+
+AppConfig loadConfig() {
+    AppConfig cfg;
+    auto envHost = environment.get("ITIL_HOST", "");
+    if (envHost.length > 0) cfg.host = envHost;
+    auto envPort = environment.get("ITIL_PORT", "");
+    if (envPort.length > 0) cfg.port = envPort.to!ushort;
+    return cfg;
+}

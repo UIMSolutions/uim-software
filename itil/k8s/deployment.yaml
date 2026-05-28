@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: itil
+  namespace: uim-platform
+  labels:
+    app: itil
+    part-of: uim-platform
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: itil
+  template:
+    metadata:
+      labels:
+        app: itil
+    spec:
+      containers:
+      - name: itil
+        image: uim-platform/itil:latest
+        ports:
+        - containerPort: 8140
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: itil-config
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8140
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8140
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"

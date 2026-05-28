@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: itil-config
+  namespace: uim-platform
+  labels:
+    app: itil
+    part-of: uim-platform
+data:
+  ITIL_HOST: "0.0.0.0"
+  ITIL_PORT: "8140"
