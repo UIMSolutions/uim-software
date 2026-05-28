@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: lean-config
+  namespace: uim-platform
+  labels:
+    app: lean
+    part-of: uim-platform
+data:
+  LEAN_HOST: "0.0.0.0"
+  LEAN_PORT: "8130"
