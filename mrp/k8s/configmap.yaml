@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mrp-config
+  namespace: uim-platform
+  labels:
+    app: mrp
+    part-of: uim-platform
+data:
+  MRP_HOST: "0.0.0.0"
+  MRP_PORT: "8119"
