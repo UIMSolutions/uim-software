@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: siem
+  namespace: uim-platform
+  labels:
+    app: siem
+    part-of: uim-platform
+spec:
+  type: ClusterIP
+  selector:
+    app: siem
+  ports:
+  - name: http
+    port: 8125
+    targetPort: 8125
+    protocol: TCP

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: siem-config
+  namespace: uim-platform
+  labels:
+    app: siem
+    part-of: uim-platform
+data:
+  SIEM_HOST: "0.0.0.0"
+  SIEM_PORT: "8125"

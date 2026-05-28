@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: siem
+  namespace: uim-platform
+  labels:
+    app: siem
+    part-of: uim-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: siem
+  template:
+    metadata:
+      labels:
+        app: siem
+    spec:
+      containers:
+      - name: siem
+        image: uim-platform/siem:latest
+        ports:
+        - containerPort: 8125
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: siem-config
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8125
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8125
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
