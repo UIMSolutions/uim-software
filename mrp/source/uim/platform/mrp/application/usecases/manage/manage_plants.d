@@ -50,7 +50,11 @@ class ManagePlantsUseCase : UIMUseCase {
         if (dto.companyCode.length > 0) existing.companyCode = dto.companyCode;
         if (dto.country.length > 0) existing.country = dto.country;
         if (dto.timezone.length > 0) existing.timezone = dto.timezone;
-        if (dto.planningScope.length > 0) existing.planningScope = parseEnumValue!PlanningScope(dto.planningScope, existing.planningScope);
+        if (dto.planningScope.length > 0)
+            existing.planningScope = parseEnumValue!PlanningScope(
+                dto.planningScope,
+                existing.planningScope
+            );
         if (dto.modifiedBy.length > 0) existing.modifiedBy = dto.modifiedBy;
 
         repo.update(*existing);

@@ -74,9 +74,21 @@ class ManageMaterialsUseCase : UIMUseCase {
         if (dto.lotSize.length > 0) existing.lotSize = dto.lotSize;
         if (dto.minimumLotSize.length > 0) existing.minimumLotSize = dto.minimumLotSize;
         if (dto.independentDemand.length > 0) existing.independentDemand = dto.independentDemand;
-        if (dto.mrpProcedure.length > 0) existing.mrpProcedure = parseEnumValue!MRPProcedure(dto.mrpProcedure, existing.mrpProcedure);
-        if (dto.lotSizingProcedure.length > 0) existing.lotSizingProcedure = parseEnumValue!LotSizingProcedure(dto.lotSizingProcedure, existing.lotSizingProcedure);
-        if (dto.procurementType.length > 0) existing.procurementType = parseEnumValue!ProcurementType(dto.procurementType, existing.procurementType);
+        if (dto.mrpProcedure.length > 0)
+            existing.mrpProcedure = parseEnumValue!MRPProcedure(
+                dto.mrpProcedure,
+                existing.mrpProcedure
+            );
+        if (dto.lotSizingProcedure.length > 0)
+            existing.lotSizingProcedure = parseEnumValue!LotSizingProcedure(
+                dto.lotSizingProcedure,
+                existing.lotSizingProcedure
+            );
+        if (dto.procurementType.length > 0)
+            existing.procurementType = parseEnumValue!ProcurementType(
+                dto.procurementType,
+                existing.procurementType
+            );
         if (dto.status.length > 0) existing.status = parseEnumValue!MaterialStatus(dto.status, existing.status);
         if (dto.modifiedBy.length > 0) existing.modifiedBy = dto.modifiedBy;
 

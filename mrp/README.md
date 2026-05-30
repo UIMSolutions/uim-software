@@ -130,6 +130,21 @@ The script creates:
 - Inventory positions
 - One MRP run that creates procurement proposals
 
+Run an endpoint-level smoke test (health + seed + proposal assertions):
+
+```bash
+bash examples/smoke-test.sh
+```
+
+The smoke test verifies:
+
+- Service health endpoint is reachable
+- Exactly 2 procurement proposals are generated
+- `FG-BIKE` proposal is `plannedOrder` with quantity `20`
+- `RM-WHEEL` proposal is `purchaseRequisition` with quantity `35`
+
+If `jq` is installed, assertions are strict JSON-query based. Without `jq`, the script falls back to robust string assertions.
+
 Equivalent manual curl flow:
 
 ```bash

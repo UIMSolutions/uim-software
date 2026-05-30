@@ -48,7 +48,11 @@ class ManageProcurementProposalsUseCase : UIMUseCase {
         if (dto.dueDate.length > 0) existing.dueDate = dto.dueDate;
         if (dto.source.length > 0) existing.source = dto.source;
         if (dto.exceptionMessage.length > 0) existing.exceptionMessage = dto.exceptionMessage;
-        if (dto.proposalType.length > 0) existing.proposalType = parseEnumValue!ProposalType(dto.proposalType, existing.proposalType);
+        if (dto.proposalType.length > 0)
+            existing.proposalType = parseEnumValue!ProposalType(
+                dto.proposalType,
+                existing.proposalType
+            );
         if (dto.status.length > 0) existing.status = parseEnumValue!ProposalStatus(dto.status, existing.status);
         if (dto.modifiedBy.length > 0) existing.modifiedBy = dto.modifiedBy;
 

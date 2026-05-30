@@ -1,0 +1,50 @@
+// Metadata
+name "plm"
+description "Product Lifecycle Management service inspired by SAP S/4HANA PLM"
+authors "Ozan Nurettin Suel"
+copyright "Copyright © 2018-2026, Ozan Nurettin Suel"
+license "Apache-2.0"
+
+// Target
+targetName "uim-plm-platform-service"
+
+// Dependencies
+dependency "uim-framework" version="~>26.4.1"
+dependency "uim-platform:core" path=".."
+
+// Source files
+sourcePaths "source"
+importPaths "source"
+
+configuration "defaultRun" {
+    targetType "executable"
+}
+
+configuration "defaultTest" {
+    targetType "library"
+}
+
+configuration "modules" {
+    targetType "library"
+    versions "show_module"
+}
+
+configuration "tests" {
+    targetType "library"
+    versions "show_module" "show_test"
+}
+
+configuration "inits" {
+    targetType "library"
+    versions "show_module" "show_init"
+}
+
+configuration "calls" {
+    targetType "library"
+    versions "show_module" "show_calls"
+}
+
+configuration "verbose" {
+    targetType "library"
+    versions "show_module" "show_test" "show_init" "show_calls"
+}

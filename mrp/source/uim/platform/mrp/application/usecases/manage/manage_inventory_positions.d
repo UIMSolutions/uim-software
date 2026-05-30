@@ -52,7 +52,11 @@ class ManageInventoryPositionsUseCase : UIMUseCase {
         if (dto.openPurchaseOrders.length > 0) existing.openPurchaseOrders = dto.openPurchaseOrders;
         if (dto.openProductionOrders.length > 0) existing.openProductionOrders = dto.openProductionOrders;
         if (dto.snapshotDate.length > 0) existing.snapshotDate = dto.snapshotDate;
-        if (dto.stockSegment.length > 0) existing.stockSegment = parseEnumValue!StockSegment(dto.stockSegment, existing.stockSegment);
+        if (dto.stockSegment.length > 0)
+            existing.stockSegment = parseEnumValue!StockSegment(
+                dto.stockSegment,
+                existing.stockSegment
+            );
         if (dto.modifiedBy.length > 0) existing.modifiedBy = dto.modifiedBy;
 
         repo.update(*existing);
