@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ibp-config
+  namespace: uim-platform
+  labels:
+    app: ibp
+    part-of: uim-platform
+data:
+  IBP_HOST: "0.0.0.0"
+  IBP_PORT: "8132"
