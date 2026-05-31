@@ -1,12 +1,12 @@
-# Warehouse Management Service - NAFv4 Mapping
+# Extended Warehouse Management Service - NAFv4 Mapping
 
 <!-- markdownlint-disable MD040 MD060 MD047 -->
 
 ## Overview
 
-This document maps the ECC microservice to selected NATO Architecture Framework v4 viewpoints.
+This document maps the EWM microservice to selected NATO Architecture Framework v4 viewpoints.
 
-The mapping is aligned to the SAP Extended Warehouse Management for SAP S/4HANA documentation areas (installation and upgrade, configuration, security, and application help), and translates those concerns into a cloud-native service architecture.
+The mapping is aligned with SAP Extended Warehouse Management guidance from SAP Help and translates warehouse process concerns into a cloud-native service architecture.
 
 ## C1 Capability View
 
@@ -14,44 +14,47 @@ The mapping is aligned to the SAP Extended Warehouse Management for SAP S/4HANA 
 
 | Capability | Sub-Capability | Service Realization |
 |---|---|---|
-| Engineering Data Control | Material-centric engineering records | /api/v1/ewm/warehouses |
-| Document Governance | CAD and engineering document metadata | /api/v1/ewm/inbound-deliveries |
-| Structure Governance | BOM and assembly hierarchy | /api/v1/ewm/storage-bins, /api/v1/ewm/stock-items |
-| Engineering Change | Change request lifecycle | /api/v1/ewm/warehouse-tasks |
-| Attribute and Classification | Document and specification attributes | /api/v1/ewm/outbound-deliveries |
-| Collaboration | Engineering workspace coordination | /api/v1/ewm/resource-queues |
-| S/4HANA Synchronization | Material and document sync orchestration | /api/v1/ewm/integrations/* |
+| Warehouse Master Control | Warehouse profile and status management | /api/v1/ewm/warehouses |
+| Bin and Layout Governance | Storage bin organization | /api/v1/ewm/storage-bins |
+| Task Execution | Warehouse task lifecycle | /api/v1/ewm/warehouse-tasks |
+| Inbound Processing | Receipt-oriented delivery handling | /api/v1/ewm/inbound-deliveries |
+| Outbound Processing | Shipment-oriented delivery handling | /api/v1/ewm/outbound-deliveries |
+| Handling Unit Management | Packaging unit lifecycle | /api/v1/ewm/handling-units |
+| Resource Orchestration | Queue and assignment coordination | /api/v1/ewm/resource-queues |
+| Stock Visibility | Stock item representation and synchronization | /api/v1/ewm/stock-items, /api/v1/ewm/integrations/* |
 
 ### C1.2 Capability Dependencies
 
 ```text
-Engineering Data Control
-  -> Document Governance
-  -> Structure Governance
-  -> Engineering Change
+Warehouse Master Control
+  -> Bin and Layout Governance
+  -> Task Execution
+  -> Stock Visibility
 
-Engineering Change
-  -> Collaboration
-  -> S/4HANA Synchronization
+Inbound Processing
+  -> Task Execution
+  -> Handling Unit Management
 
-Structure Governance
-  -> S/4HANA Synchronization
+Outbound Processing
+  -> Task Execution
+  -> Resource Orchestration
+  -> Stock Visibility
 ```
 
 ## C2 Enterprise Vision
 
 ### Vision Statement
 
-Provide an EWM-like engineering control service that keeps CAD-facing engineering data and SAP S/4HANA-aligned business objects synchronized, traceable, and governable across product lifecycle activities.
+Provide an EWM-like warehouse execution backend that supports controlled inbound/outbound processing, warehouse task orchestration, and synchronized stock visibility for SAP-centric landscapes.
 
 ### Goals
 
 | Goal | Description |
 |---|---|
-| Data consistency | Keep material, document, and structure data aligned |
-| Traceable engineering changes | Ensure controlled and auditable change flows |
-| Integration readiness | Provide stable integration ports for ERP synchronization |
-| Operational reliability | Support health, configuration, and deployment standards |
+| Operational consistency | Keep warehouse entities and stock states coherent |
+| Process traceability | Track task and delivery lifecycle transitions |
+| Integration readiness | Expose stable synchronization ports |
+| Reliable operations | Support health, deployment, and runtime controls |
 
 ## C4 Standards View
 
@@ -68,21 +71,22 @@ Provide an EWM-like engineering control service that keeps CAD-facing engineerin
 
 | Service | Endpoint Prefix | Consumers |
 |---|---|---|
-| Material Engineering Service | /api/v1/ewm/warehouses | Engineering and master data teams |
-| Document Service | /api/v1/ewm/inbound-deliveries | CAD and document control teams |
-| BOM Service | /api/v1/ewm/storage-bins | Product structure governance |
-| Assembly Structure Service | /api/v1/ewm/stock-items | Product architects |
-| Change Service | /api/v1/ewm/warehouse-tasks | Change control boards |
-| Attribute Service | /api/v1/ewm/outbound-deliveries | Metadata and classification teams |
-| Workspace Service | /api/v1/ewm/resource-queues | Engineering collaboration roles |
-| Integration Orchestration Service | /api/v1/ewm/integrations/* | ERP integration operations |
+| Warehouse Service | /api/v1/ewm/warehouses | Warehouse master data teams |
+| Storage Bin Service | /api/v1/ewm/storage-bins | Warehouse design and operations |
+| Warehouse Task Service | /api/v1/ewm/warehouse-tasks | Operational supervisors and automation flows |
+| Inbound Delivery Service | /api/v1/ewm/inbound-deliveries | Receiving processes |
+| Outbound Delivery Service | /api/v1/ewm/outbound-deliveries | Shipping processes |
+| Handling Unit Service | /api/v1/ewm/handling-units | Packaging and staging processes |
+| Resource Queue Service | /api/v1/ewm/resource-queues | Workforce and queue planning |
+| Stock Service | /api/v1/ewm/stock-items | Inventory visibility workflows |
+| Integration Orchestration Service | /api/v1/ewm/integrations/* | ERP and warehouse integration operations |
 
 ### C7.2 Service Dependencies
 
 ```text
 EWM Service
-  consumes: tenant-scoped engineering payloads
-  produces: governed engineering records and synchronization events
+  consumes: tenant-scoped warehouse payloads
+  produces: governed warehouse records and synchronization events
   exposes: stable service interfaces for EWM-like operations
 ```
 
@@ -92,10 +96,10 @@ EWM Service
 
 | Driver | Description |
 |---|---|
-| CAD-ERP alignment | Keep engineering system data synchronized with SAP S/4HANA-relevant objects |
-| Controlled engineering operations | Centralize document and structure governance |
-| Secure operations | Support security and configuration controls in deployment |
-| Maintainability | Isolate domain logic from transport and adapter concerns |
+| Warehouse transparency | Improve visibility of warehouse entities and stock |
+| Process efficiency | Streamline inbound/outbound and task execution flows |
+| Integration continuity | Keep warehouse data aligned with enterprise systems |
+| Maintainability | Isolate domain behavior from adapters and transport concerns |
 
 ### Constraints
 
@@ -115,7 +119,7 @@ Kubernetes Namespace
       application orchestration
       domain model and ports
       memory persistence adapter
-      SAP ECC integration stub adapters
+      SAP EWM integration stub adapters
 
 ConfigMap
   EWM_HOST

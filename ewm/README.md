@@ -1,28 +1,28 @@
-# Warehouse Management Service
+# Extended Warehouse Management Service
 
 <!-- markdownlint-disable MD040 MD060 MD047 -->
 
-A vibe.d microservice in D that implements an SAP Extended Warehouse Management for SAP S/4HANA inspired backend using a combination of clean architecture and hexagonal architecture.
+A vibe.d microservice in D that implements an SAP Extended Warehouse Management inspired backend using a combination of clean architecture and hexagonal architecture.
 
-The service models core engineering control capabilities around CAD-driven product data management, document control, structure governance, engineering change, and synchronization with SAP S/4HANA business objects.
+The service models warehouse execution and inventory control capabilities aligned with SAP EWM process areas, including warehouse master operations, bin-level organization, task orchestration, delivery processing, handling units, and stock visibility.
 
 ## Scope
 
-This solution is designed as an EWM-like engineering integration core for:
+This solution is designed as an EWM-like warehouse operations core for:
 
-- CAD document metadata and version control
-- Material and engineering object master synchronization
-- Engineering BOM and assembly structure governance
-- Engineering change request tracking
-- Engineering workspace collaboration
-- Document info record and material master synchronization stubs
+- Warehouse and storage bin management
+- Warehouse task orchestration and execution tracking
+- Inbound and outbound delivery handling
+- Handling unit lifecycle support
+- Resource queue coordination
+- Stock-item visibility and synchronization stubs
 
 ## Architecture
 
 ```text
 source/
   app.d
-  uim/platform/ecc/
+  uim/platform/ewm/
     domain/
       entities/
       integration/      # outbound integration ports
@@ -47,24 +47,24 @@ source/
 ### Clean + Hexagonal Mapping
 
 - Domain: entities, business constraints, and abstract ports
-- Application: orchestration use cases for CRUD and sync workflows
+- Application: use-case orchestration for CRUD and sync workflows
 - Infrastructure: adapters for persistence and external integration
-- Presentation: HTTP adapters exposing ECC-facing REST APIs
+- Presentation: HTTP adapters exposing EWM-style REST APIs
 
 ## API Surface
 
 | Method | Endpoint | Purpose |
 |---|---|---|
-| GET/POST/PUT/DELETE | /api/v1/ewm/warehouses | Engineering material records |
-| GET/POST/PUT/DELETE | /api/v1/ewm/storage-bins | Engineering BOM structures |
-| GET/POST/PUT/DELETE | /api/v1/ewm/warehouse-tasks | Engineering change management |
-| GET/POST/PUT/DELETE | /api/v1/ewm/inbound-deliveries | CAD and engineering document metadata |
-| GET/POST/PUT/DELETE | /api/v1/ewm/outbound-deliveries | Classification and document attribute metadata |
-| GET/POST/PUT/DELETE | /api/v1/ewm/handling-units | CAD item metadata and references |
-| GET/POST/PUT/DELETE | /api/v1/ewm/resource-queues | Engineering collaboration workspaces |
-| GET/POST/PUT/DELETE | /api/v1/ewm/stock-items | Product assembly hierarchy |
-| POST | /api/v1/ewm/integrations/warehouse-master-sync/:warehouseId | Trigger material master sync stub |
-| POST | /api/v1/ewm/integrations/stock-sync/:stockId | Trigger document info record sync stub |
+| GET/POST/PUT/DELETE | /api/v1/ewm/warehouses | Warehouse master records |
+| GET/POST/PUT/DELETE | /api/v1/ewm/storage-bins | Storage bin structures |
+| GET/POST/PUT/DELETE | /api/v1/ewm/warehouse-tasks | Warehouse task operations |
+| GET/POST/PUT/DELETE | /api/v1/ewm/inbound-deliveries | Inbound delivery records |
+| GET/POST/PUT/DELETE | /api/v1/ewm/outbound-deliveries | Outbound delivery records |
+| GET/POST/PUT/DELETE | /api/v1/ewm/handling-units | Handling unit records |
+| GET/POST/PUT/DELETE | /api/v1/ewm/resource-queues | Resource and queue assignments |
+| GET/POST/PUT/DELETE | /api/v1/ewm/stock-items | Stock item views |
+| POST | /api/v1/ewm/integrations/warehouse-master-sync/:warehouseId | Trigger warehouse sync stub |
+| POST | /api/v1/ewm/integrations/stock-sync/:stockId | Trigger stock sync stub |
 | GET | /health | Service health |
 | GET | /api/v1/health | Service health |
 
@@ -97,6 +97,6 @@ dub test
 
 ## SAP Reference
 
-Based on SAP Help Portal documentation for SAP Extended Warehouse Management for SAP S/4HANA:
+Based on SAP Help Portal documentation for SAP Extended Warehouse Management:
 
 [https://help.sap.com/docs/SAP_EXTENDED_WAREHOUSE_MANAGEMENT?locale=en-US](https://help.sap.com/docs/SAP_EXTENDED_WAREHOUSE_MANAGEMENT?locale=en-US)

@@ -27,7 +27,7 @@ class ManageProductsUseCase : UIMUseCase {
         value.validFrom = dto.validFrom;
         value.validTo = dto.validTo;
         value.createdBy = dto.createdBy;
-        if (!EccValidator.isValidProduct(value)) return CommandResult(false, "", "Invalid product data");
+        if (!EwmValidator.isValidProduct(value)) return CommandResult(false, "", "Invalid product data");
         repo.save(value);
         return CommandResult(true, dto.id, "");
     }

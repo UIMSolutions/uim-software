@@ -18,7 +18,7 @@ assert_contains() {
   fi
 }
 
-echo "Running EPD smoke test against $BASE_URL for tenant $TENANT"
+echo "Running EWM smoke test against $BASE_URL for tenant $TENANT"
 
 health_code=$(curl -sS -o /dev/null -w "%{http_code}" "$BASE_URL/health") || fail "health endpoint unreachable"
 if [[ "$health_code" != "200" ]]; then
@@ -27,12 +27,12 @@ fi
 
 BASE_URL="$BASE_URL" TENANT="$TENANT" bash "$(dirname "$0")/seed-data.sh"
 
-products=$(curl -sS "$BASE_URL/api/v1/ewm/warehouses") || fail "could not fetch products"
-assert_contains "$products" '"count":1' "expected product count to be 1"
-assert_contains "$products" '"id":"P-100"' "expected seeded product P-100"
+warehouses=$(curl -sS "$BASE_URL/api/v1/ewm/warehouses") || fail "could not fetch warehouses"
+assert_contains "$warehouses" '"count":1' "expected warehouse count to be 1"
+assert_contains "$warehouses" '"id":"WH-100"' "expected seeded warehouse WH-100"
 
-changes=$(curl -sS "$BASE_URL/api/v1/ewm/warehouse-tasks") || fail "could not fetch change requests"
-assert_contains "$changes" '"count":1' "expected change request count to be 1"
-assert_contains "$changes" '"id":"CR-10"' "expected seeded change request CR-10"
+tasks=$(curl -sS "$BASE_URL/api/v1/ewm/warehouse-tasks") || fail "could not fetch warehouse tasks"
+assert_contains "$tasks" '"count":1' "expected warehouse task count to be 1"
+assert_contains "$tasks" '"id":"WT-10"' "expected seeded warehouse task WT-10"
 
 echo "SMOKE TEST PASSED"

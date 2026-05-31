@@ -23,7 +23,7 @@ class ManageProductStructuresUseCase : UIMUseCase {
         value.mandatory = dto.mandatory;
         value.status = dto.status.length ? dto.status : value.status;
         value.createdBy = dto.createdBy;
-        if (!EccValidator.isValidProductStructure(value)) {
+        if (!EwmValidator.isValidProductStructure(value)) {
             return CommandResult(false, "", "Invalid product structure data");
         }
         repo.save(value);

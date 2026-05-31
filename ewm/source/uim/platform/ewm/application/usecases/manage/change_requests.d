@@ -26,7 +26,7 @@ class ManageChangeRequestsUseCase : UIMUseCase {
         value.affectedDocumentIds = dto.affectedDocumentIds;
         value.affectedBomIds = dto.affectedBomIds;
         value.createdBy = dto.createdBy;
-        if (!EccValidator.isValidChangeRequest(value)) {
+        if (!EwmValidator.isValidChangeRequest(value)) {
             return CommandResult(false, "", "Invalid change request data");
         }
         repo.save(value);

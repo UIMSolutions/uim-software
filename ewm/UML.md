@@ -1,4 +1,4 @@
-# Warehouse Management Service - UML
+# Extended Warehouse Management Service - UML
 
 <!-- markdownlint-disable MD040 MD060 MD047 -->
 
@@ -9,20 +9,20 @@ uim.platform.ewm
 ├── domain
 │   ├── types
 │   ├── entities
-│   │   ├── Product
-│   │   ├── BillOfMaterial
-│   │   ├── ChangeRequest
-│   │   ├── Document
-│   │   ├── Specification
-│   │   ├── Recipe
-│   │   ├── Collaboration
-│   │   └── ProductStructure
+│   │   ├── Warehouse
+│   │   ├── StorageBin
+│   │   ├── WarehouseTask
+│   │   ├── InboundDelivery
+│   │   ├── OutboundDelivery
+│   │   ├── HandlingUnit
+│   │   ├── ResourceQueue
+│   │   └── StockItem
 │   ├── integration
-│   │   ├── ProductHandoverGateway
-│   │   └── SpecificationSyncGateway
+│   │   ├── WarehouseSyncGateway
+│   │   └── StockSyncGateway
 │   ├── repositories
 │   └── services
-│       └── EccValidator
+│       └── EwmValidator
 ├── application
 │   ├── dto
 │   ├── usecases.manage
@@ -43,71 +43,69 @@ uim.platform.ewm
 classDiagram
     direction TB
 
-    class Product {
+    class Warehouse {
         +id
         +tenantId
-        +productNumber
-        +lifecycleStatus
-    }
-
-    class Document {
-        +id
-        +tenantId
-        +documentNumber
-        +documentType
+        +warehouseNumber
         +status
     }
 
-    class BillOfMaterial {
+    class StorageBin {
         +id
         +tenantId
         +warehouseId
-        +revision
+        +binCode
     }
 
-    class ProductStructure {
+    class WarehouseTask {
         +id
         +tenantId
         +warehouseId
-        +parentNodeId
-        +childNodeIds
-    }
-
-    class ChangeRequest {
-        +id
-        +tenantId
-        +warehouseId
-        +title
         +status
     }
 
-    class Specification {
+    class InboundDelivery {
         +id
         +tenantId
         +warehouseId
-        +specificationNumber
+        +deliveryNumber
     }
 
-    class Collaboration {
+    class OutboundDelivery {
         +id
         +tenantId
         +warehouseId
-        +title
+        +deliveryNumber
     }
 
-    class Recipe {
+    class HandlingUnit {
         +id
         +tenantId
         +warehouseId
-        +recipeNumber
+        +huNumber
     }
 
-    Product --> BillOfMaterial : structured by
-    Product --> ProductStructure : assembled by
-    Product --> Document : documented by
-    Product --> ChangeRequest : changed by
-    Product --> Specification : attributed by
-    Product --> Collaboration : reviewed in
+    class ResourceQueue {
+        +id
+        +tenantId
+        +warehouseId
+        +queueName
+    }
+
+    class StockItem {
+        +id
+        +tenantId
+        +warehouseId
+        +materialNumber
+    }
+
+    Warehouse --> StorageBin : contains
+    Warehouse --> WarehouseTask : executes
+    Warehouse --> InboundDelivery : receives
+    Warehouse --> OutboundDelivery : ships
+    Warehouse --> HandlingUnit : packs
+    Warehouse --> ResourceQueue : allocates
+    Warehouse --> StockItem : tracks
 ```
 
 ## Hexagonal View
@@ -127,7 +125,7 @@ graph LR
         EN[Entities]
         RP[Repository Ports]
         IP[Integration Ports]
-        VL[EccValidator]
+        VL[EwmValidator]
     end
 
     subgraph D[Secondary Adapters]

@@ -28,7 +28,7 @@ class ManageRecipesUseCase : UIMUseCase {
         value.ingredients = dto.ingredients;
         value.instructions = dto.instructions;
         value.createdBy = dto.createdBy;
-        if (!EccValidator.isValidRecipe(value)) {
+        if (!EwmValidator.isValidRecipe(value)) {
             return CommandResult(false, "", "Invalid recipe data");
         }
         repo.save(value);
