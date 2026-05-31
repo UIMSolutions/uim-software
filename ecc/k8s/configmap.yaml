@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ecc-config
+  namespace: uim-platform
+  labels:
+    app: ecc
+    part-of: uim-platform
+data:
+  ECC_HOST: "0.0.0.0"
+  ECC_PORT: "8132"

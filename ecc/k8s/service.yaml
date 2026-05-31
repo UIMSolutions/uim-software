@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ecc
+  namespace: uim-platform
+  labels:
+    app: ecc
+    part-of: uim-platform
+spec:
+  type: ClusterIP
+  selector:
+    app: ecc
+  ports:
+  - name: http
+    port: 8132
+    targetPort: 8132
+    protocol: TCP
