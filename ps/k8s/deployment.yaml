@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ps
+  namespace: uim-platform
+  labels:
+    app: ps
+    part-of: uim-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ps
+  template:
+    metadata:
+      labels:
+        app: ps
+    spec:
+      containers:
+      - name: ps
+        image: uim-platform/ps:latest
+        ports:
+        - containerPort: 8121
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: ps-config
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8121
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8121
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"

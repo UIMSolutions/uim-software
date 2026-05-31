@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ps-config
+  namespace: uim-platform
+  labels:
+    app: ps
+    part-of: uim-platform
+data:
+  PS_HOST: "0.0.0.0"
+  PS_PORT: "8121"

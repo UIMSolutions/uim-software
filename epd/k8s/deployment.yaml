@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: epd
+  namespace: uim-platform
+  labels:
+    app: epd
+    part-of: uim-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: epd
+  template:
+    metadata:
+      labels:
+        app: epd
+    spec:
+      containers:
+      - name: epd
+        image: uim-platform/epd:latest
+        ports:
+        - containerPort: 8132
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: epd-config
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8132
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8132
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"

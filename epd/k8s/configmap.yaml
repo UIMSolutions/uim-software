@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: epd-config
+  namespace: uim-platform
+  labels:
+    app: epd
+    part-of: uim-platform
+data:
+  EPD_HOST: "0.0.0.0"
+  EPD_PORT: "8132"

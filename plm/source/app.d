@@ -11,6 +11,8 @@ import vibe.http.server : HTTPServerSettings, listenHTTP;
 import vibe.core.core : runApplication;
 import uim.platform.plm;
 
+version(unittest) {
+} else
 void main() {
     auto config = loadConfig();
     auto container = buildContainer(config);

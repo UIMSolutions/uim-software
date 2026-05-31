@@ -19,8 +19,10 @@ mixin(ShowModule!());
   * @param statusCode The HTTP status code to use (e.g. 400, 404, 500)
   */
 void respondError(HTTPServerResponse res, string message, int statusCode) {
-  Json payload = Json.emptyObject.set("success", false).set("message", message)
-    .set("statusCode", statusCode);
+  auto payload = Json.emptyObject;
+  payload["success"] = Json(false);
+  payload["message"] = Json(message);
+  payload["statusCode"] = Json(statusCode);
 
   res.writeJsonBody(payload, statusCode);
 }

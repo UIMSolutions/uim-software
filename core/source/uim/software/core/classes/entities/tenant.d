@@ -43,7 +43,9 @@ class UIMTenantEntity : UIMEntity {
 
   override Json toJson()
   {
-    return super.toJson().set("tenantId", _tenantId.toString());
+    auto j = super.toJson();
+    j["tenantId"] = Json(_tenantId.toString());
+    return j;
   }
   ///
   unittest
