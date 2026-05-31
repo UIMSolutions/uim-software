@@ -11,7 +11,7 @@ import uim.platform.ibp.domain.entities.specification;
 
 @safe:
 
-struct EwmValidator {
+struct IbpValidator {
     static bool hasIdentity(string id, string tenantId, string name) {
         return id.length > 0 && tenantId.length > 0 && name.length > 0;
     }

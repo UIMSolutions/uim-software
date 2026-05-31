@@ -27,12 +27,12 @@ fi
 
 BASE_URL="$BASE_URL" TENANT="$TENANT" bash "$(dirname "$0")/seed-data.sh"
 
-warehouses=$(curl -sS "$BASE_URL/api/v1/ibp/demand-plans") || fail "could not fetch warehouses"
-assert_contains "$warehouses" '"count":1' "expected warehouse count to be 1"
-assert_contains "$warehouses" '"id":"WH-100"' "expected seeded warehouse WH-100"
+demand=$(curl -sS "$BASE_URL/api/v1/ibp/demand-plans") || fail "could not fetch demand plans"
+assert_contains "$demand" '"count":1' "expected demand plan count to be 1"
+assert_contains "$demand" '"id":"DP-100"' "expected seeded demand plan DP-100"
 
-tasks=$(curl -sS "$BASE_URL/api/v1/ibp/response-plans") || fail "could not fetch warehouse tasks"
-assert_contains "$tasks" '"count":1' "expected warehouse task count to be 1"
-assert_contains "$tasks" '"id":"WT-10"' "expected seeded warehouse task WT-10"
+response=$(curl -sS "$BASE_URL/api/v1/ibp/response-plans") || fail "could not fetch response plans"
+assert_contains "$response" '"count":1' "expected response plan count to be 1"
+assert_contains "$response" '"id":"RP-10"' "expected seeded response plan RP-10"
 
 echo "SMOKE TEST PASSED"

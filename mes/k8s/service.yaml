@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mes
+  namespace: uim-platform
+  labels:
+    app: mes
+    part-of: uim-platform
+spec:
+  type: ClusterIP
+  selector:
+    app: mes
+  ports:
+  - name: http
+    port: 8132
+    targetPort: 8132
+    protocol: TCP

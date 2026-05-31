@@ -26,7 +26,7 @@ class ManageCollaborationsUseCase : UIMUseCase {
         value.relatedDocumentId = dto.relatedDocumentId;
         value.relatedChangeRequestId = dto.relatedChangeRequestId;
         value.createdBy = dto.createdBy;
-        if (!EwmValidator.isValidCollaboration(value)) {
+        if (!IbpValidator.isValidCollaboration(value)) {
             return CommandResult(false, "", "Invalid collaboration data");
         }
         repo.save(value);

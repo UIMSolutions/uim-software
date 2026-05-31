@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mes-config
+  namespace: uim-platform
+  labels:
+    app: mes
+    part-of: uim-platform
+data:
+  MES_HOST: "0.0.0.0"
+  MES_PORT: "8132"

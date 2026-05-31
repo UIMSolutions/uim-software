@@ -16,16 +16,16 @@ post() {
 
 echo "Seeding IBP sample data to $BASE_URL for tenant $TENANT"
 
-post "/api/v1/ibp/demand-plans" '{"id":"WH-100","name":"Central Warehouse","description":"Main distribution warehouse","productNumber":"WH-100","productType":"warehouse","lifecycleStatus":"active","category":"logistics","baseUnit":"EA","createdBy":"seed"}'
+post "/api/v1/ibp/demand-plans" '{"id":"DP-100","name":"Baseline Demand Q3","description":"Consensus demand plan for Q3","productNumber":"DP-100","productType":"demand","lifecycleStatus":"active","category":"planning","baseUnit":"EA","createdBy":"planner"}'
 
-post "/api/v1/ibp/supply-plans" '{"id":"BIN-100","demandPlanId":"WH-100","name":"Aisle 01 Bin 01","description":"Primary putaway bin","bomType":"storage","revision":"1","usage":"putaway","plant":"DC-01","baseQuantity":"1","baseUnit":"EA","isActive":"true","createdBy":"seed"}'
+post "/api/v1/ibp/supply-plans" '{"id":"SP-100","demandPlanId":"DP-100","name":"Constrained Supply Q3","description":"Supply balancing scenario","bomType":"supply","revision":"1","usage":"planning","plant":"PLN-01","baseQuantity":"1","baseUnit":"EA","isActive":"true","createdBy":"planner"}'
 
-post "/api/v1/ibp/response-plans" '{"id":"WT-10","demandPlanId":"WH-100","title":"Putaway pallet","description":"Move inbound pallet to BIN-100","priority":"high","status":"open","reason":"Inbound receipt","impact":"Medium","requestedBy":"planner-1","createdBy":"seed"}'
+post "/api/v1/ibp/response-plans" '{"id":"RP-10","demandPlanId":"DP-100","title":"Accelerate supply lane","description":"Response plan for demand spike","priority":"high","status":"open","reason":"Forecast uplift","impact":"Medium","requestedBy":"planner-1","createdBy":"planner"}'
 
-echo "Warehouses:"
+echo "Demand Plans:"
 curl -sS "$BASE_URL/api/v1/ibp/demand-plans"
 echo
 
-echo "Warehouse Tasks:"
+echo "Response Plans:"
 curl -sS "$BASE_URL/api/v1/ibp/response-plans"
 echo

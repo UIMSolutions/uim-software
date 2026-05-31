@@ -4,9 +4,9 @@
 
 ## Overview
 
-This document maps the EWM microservice to selected NATO Architecture Framework v4 viewpoints.
+This document maps the IBP microservice to selected NATO Architecture Framework v4 viewpoints.
 
-The mapping is aligned with SAP Integrated Business Planning guidance from SAP Help and translates warehouse process concerns into a cloud-native service architecture.
+The mapping is aligned with SAP Integrated Business Planning guidance from SAP Help and translates planning process concerns into a cloud-native service architecture.
 
 ## C1 Capability View
 
@@ -14,47 +14,47 @@ The mapping is aligned with SAP Integrated Business Planning guidance from SAP H
 
 | Capability | Sub-Capability | Service Realization |
 |---|---|---|
-| Warehouse Master Control | Warehouse profile and status management | /api/v1/ibp/demand-plans |
-| Bin and Layout Governance | Storage bin organization | /api/v1/ibp/supply-plans |
-| Task Execution | Warehouse task lifecycle | /api/v1/ibp/response-plans |
-| Inbound Processing | Receipt-oriented delivery handling | /api/v1/ibp/inventory-plans |
-| Outbound Processing | Shipment-oriented delivery handling | /api/v1/ibp/scenario-simulations |
-| Handling Unit Management | Packaging unit lifecycle | /api/v1/ibp/sop-cycles |
-| Resource Orchestration | Queue and assignment coordination | /api/v1/ibp/collaboration-workspaces |
-| Stock Visibility | Stock item representation and synchronization | /api/v1/ibp/planning-areas, /api/v1/ibp/integrations/* |
+| Demand Planning | Baseline and consensus demand plans | /api/v1/ibp/demand-plans |
+| Supply Planning | Supply balancing and replenishment planning | /api/v1/ibp/supply-plans |
+| Response and Supply | Short-term response orchestration | /api/v1/ibp/response-plans |
+| Inventory Planning | Target stock and policy planning | /api/v1/ibp/inventory-plans |
+| Scenario Modeling | What-if simulation and version comparison | /api/v1/ibp/scenario-simulations |
+| S&OP Coordination | Planning cycle alignment and governance | /api/v1/ibp/sop-cycles |
+| Collaboration | Cross-functional planning workspace coordination | /api/v1/ibp/collaboration-workspaces |
+| Planning Model Governance | Planning area assignment and synchronization | /api/v1/ibp/planning-areas, /api/v1/ibp/integrations/* |
 
 ### C1.2 Capability Dependencies
 
 ```text
-Warehouse Master Control
-  -> Bin and Layout Governance
-  -> Task Execution
-  -> Stock Visibility
+Demand Planning
+  -> Supply Planning
+  -> Inventory Planning
+  -> Scenario Modeling
 
-Inbound Processing
-  -> Task Execution
-  -> Handling Unit Management
+Supply Planning
+  -> Response and Supply
+  -> Planning Model Governance
 
-Outbound Processing
-  -> Task Execution
-  -> Resource Orchestration
-  -> Stock Visibility
+S&OP Coordination
+  -> Collaboration
+  -> Demand Planning
+  -> Supply Planning
 ```
 
 ## C2 Enterprise Vision
 
 ### Vision Statement
 
-Provide an IBP-like warehouse execution backend that supports controlled inbound/outbound processing, warehouse task orchestration, and synchronized stock visibility for SAP-centric landscapes.
+Provide an IBP-like planning backend that enables synchronized demand, supply, and inventory planning with collaborative decision support and scenario-driven adjustments.
 
 ### Goals
 
 | Goal | Description |
 |---|---|
-| Operational consistency | Keep warehouse entities and stock states coherent |
-| Process traceability | Track task and delivery lifecycle transitions |
-| Integration readiness | Expose stable synchronization ports |
-| Reliable operations | Support health, deployment, and runtime controls |
+| Planning consistency | Keep planning records coherent across demand, supply, and inventory |
+| Faster response | Enable quick response planning and scenario evaluation |
+| Integration readiness | Expose stable synchronization ports for planning data exchange |
+| Operational reliability | Support health, configuration, and deployment standards |
 
 ## C4 Standards View
 
@@ -71,22 +71,22 @@ Provide an IBP-like warehouse execution backend that supports controlled inbound
 
 | Service | Endpoint Prefix | Consumers |
 |---|---|---|
-| Warehouse Service | /api/v1/ibp/demand-plans | Warehouse master data teams |
-| Storage Bin Service | /api/v1/ibp/supply-plans | Warehouse design and operations |
-| Warehouse Task Service | /api/v1/ibp/response-plans | Operational supervisors and automation flows |
-| Inbound Delivery Service | /api/v1/ibp/inventory-plans | Receiving processes |
-| Outbound Delivery Service | /api/v1/ibp/scenario-simulations | Shipping processes |
-| Handling Unit Service | /api/v1/ibp/sop-cycles | Packaging and staging processes |
-| Resource Queue Service | /api/v1/ibp/collaboration-workspaces | Workforce and queue planning |
-| Stock Service | /api/v1/ibp/planning-areas | Inventory visibility workflows |
-| Integration Orchestration Service | /api/v1/ibp/integrations/* | ERP and warehouse integration operations |
+| Demand Plan Service | /api/v1/ibp/demand-plans | Demand planning teams |
+| Supply Plan Service | /api/v1/ibp/supply-plans | Supply and operations planners |
+| Response Plan Service | /api/v1/ibp/response-plans | Response and fulfillment planners |
+| Inventory Plan Service | /api/v1/ibp/inventory-plans | Inventory optimization teams |
+| Scenario Simulation Service | /api/v1/ibp/scenario-simulations | Decision support and analytics teams |
+| S&OP Cycle Service | /api/v1/ibp/sop-cycles | Executive planning and governance groups |
+| Collaboration Workspace Service | /api/v1/ibp/collaboration-workspaces | Cross-functional planning roles |
+| Planning Area Service | /api/v1/ibp/planning-areas | Master planning and model governance |
+| Integration Orchestration Service | /api/v1/ibp/integrations/* | ERP and analytics integration operations |
 
 ### C7.2 Service Dependencies
 
 ```text
 IBP Service
-  consumes: tenant-scoped warehouse payloads
-  produces: governed warehouse records and synchronization events
+  consumes: tenant-scoped planning payloads
+  produces: governed planning records and synchronization events
   exposes: stable service interfaces for IBP-like operations
 ```
 
@@ -96,10 +96,10 @@ IBP Service
 
 | Driver | Description |
 |---|---|
-| Warehouse transparency | Improve visibility of warehouse entities and stock |
-| Process efficiency | Streamline inbound/outbound and task execution flows |
-| Integration continuity | Keep warehouse data aligned with enterprise systems |
-| Maintainability | Isolate domain behavior from adapters and transport concerns |
+| Demand-supply alignment | Improve synchronization between forecast and supply decisions |
+| Planning agility | Support rapid response through scenario simulation |
+| Collaborative decision making | Enable shared planning workflows across business functions |
+| Maintainability | Isolate domain behavior from transport and adapters |
 
 ### Constraints
 

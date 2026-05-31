@@ -9,20 +9,20 @@ uim.platform.ibp
 ├── domain
 │   ├── types
 │   ├── entities
-│   │   ├── Warehouse
-│   │   ├── StorageBin
-│   │   ├── WarehouseTask
-│   │   ├── InboundDelivery
-│   │   ├── OutboundDelivery
-│   │   ├── HandlingUnit
-│   │   ├── ResourceQueue
-│   │   └── StockItem
+│   │   ├── DemandPlan
+│   │   ├── SupplyPlan
+│   │   ├── ResponsePlan
+│   │   ├── InventoryPlan
+│   │   ├── ScenarioSimulation
+│   │   ├── SopCycle
+│   │   ├── CollaborationWorkspace
+│   │   └── PlanningArea
 │   ├── integration
-│   │   ├── WarehouseSyncGateway
-│   │   └── StockSyncGateway
+│   │   ├── PlanningMasterSyncGateway
+│   │   └── ScenarioAnalyticsSyncGateway
 │   ├── repositories
 │   └── services
-│       └── EwmValidator
+│       └── IbpValidator
 ├── application
 │   ├── dto
 │   ├── usecases.manage
@@ -43,69 +43,69 @@ uim.platform.ibp
 classDiagram
     direction TB
 
-    class Warehouse {
+    class DemandPlan {
         +id
         +tenantId
-        +warehouseNumber
+        +planNumber
         +status
     }
 
-    class StorageBin {
+    class SupplyPlan {
         +id
         +tenantId
         +demandPlanId
-        +binCode
+        +supplyRevision
     }
 
-    class WarehouseTask {
+    class ResponsePlan {
         +id
         +tenantId
         +demandPlanId
-        +status
+        +responseStatus
     }
 
-    class InboundDelivery {
+    class InventoryPlan {
         +id
         +tenantId
         +demandPlanId
-        +deliveryNumber
+        +targetStock
     }
 
-    class OutboundDelivery {
+    class ScenarioSimulation {
         +id
         +tenantId
         +demandPlanId
-        +deliveryNumber
+        +scenarioName
     }
 
-    class HandlingUnit {
+    class SopCycle {
         +id
         +tenantId
         +demandPlanId
-        +huNumber
+        +cycleName
     }
 
-    class ResourceQueue {
+    class CollaborationWorkspace {
         +id
         +tenantId
         +demandPlanId
-        +queueName
+        +workspaceName
     }
 
-    class StockItem {
+    class PlanningArea {
         +id
         +tenantId
         +demandPlanId
-        +materialNumber
+        +areaCode
     }
 
-    Warehouse --> StorageBin : contains
-    Warehouse --> WarehouseTask : executes
-    Warehouse --> InboundDelivery : receives
-    Warehouse --> OutboundDelivery : ships
-    Warehouse --> HandlingUnit : packs
-    Warehouse --> ResourceQueue : allocates
-    Warehouse --> StockItem : tracks
+    DemandPlan --> SupplyPlan : balanced by
+    DemandPlan --> ResponsePlan : fulfilled by
+    DemandPlan --> InventoryPlan : constrained by
+    DemandPlan --> ScenarioSimulation : evaluated by
+    DemandPlan --> SopCycle : aligned by
+    DemandPlan --> CollaborationWorkspace : coordinated in
+    DemandPlan --> PlanningArea : modeled in
 ```
 
 ## Hexagonal View
@@ -125,7 +125,7 @@ graph LR
         EN[Entities]
         RP[Repository Ports]
         IP[Integration Ports]
-        VL[EwmValidator]
+        VL[IbpValidator]
     end
 
     subgraph D[Secondary Adapters]
