@@ -1,14 +1,14 @@
-# Engineering Control Center Service
+# Warehouse Management Service
 
 <!-- markdownlint-disable MD040 MD060 MD047 -->
 
-A vibe.d microservice in D that implements an SAP Engineering Control Center for SAP S/4HANA inspired backend using a combination of clean architecture and hexagonal architecture.
+A vibe.d microservice in D that implements an SAP Extended Warehouse Management for SAP S/4HANA inspired backend using a combination of clean architecture and hexagonal architecture.
 
 The service models core engineering control capabilities around CAD-driven product data management, document control, structure governance, engineering change, and synchronization with SAP S/4HANA business objects.
 
 ## Scope
 
-This solution is designed as an ECC-like engineering integration core for:
+This solution is designed as an EWM-like engineering integration core for:
 
 - CAD document metadata and version control
 - Material and engineering object master synchronization
@@ -37,7 +37,7 @@ source/
       config.d
       container.d
       persistence/memory/
-      integrations/sap_ecc/   # outbound adapter stubs
+      integrations/sap_ewm/   # outbound adapter stubs
     presentation/
       http/
         controllers/
@@ -55,16 +55,16 @@ source/
 
 | Method | Endpoint | Purpose |
 |---|---|---|
-| GET/POST/PUT/DELETE | /api/v1/ecc/materials | Engineering material records |
-| GET/POST/PUT/DELETE | /api/v1/ecc/boms | Engineering BOM structures |
-| GET/POST/PUT/DELETE | /api/v1/ecc/change-requests | Engineering change management |
-| GET/POST/PUT/DELETE | /api/v1/ecc/documents | CAD and engineering document metadata |
-| GET/POST/PUT/DELETE | /api/v1/ecc/document-attributes | Classification and document attribute metadata |
-| GET/POST/PUT/DELETE | /api/v1/ecc/cad-items | CAD item metadata and references |
-| GET/POST/PUT/DELETE | /api/v1/ecc/workspaces | Engineering collaboration workspaces |
-| GET/POST/PUT/DELETE | /api/v1/ecc/assembly-structures | Product assembly hierarchy |
-| POST | /api/v1/ecc/integrations/material-master-sync/:productId | Trigger material master sync stub |
-| POST | /api/v1/ecc/integrations/document-info-record-sync/:specificationId | Trigger document info record sync stub |
+| GET/POST/PUT/DELETE | /api/v1/ewm/warehouses | Engineering material records |
+| GET/POST/PUT/DELETE | /api/v1/ewm/storage-bins | Engineering BOM structures |
+| GET/POST/PUT/DELETE | /api/v1/ewm/warehouse-tasks | Engineering change management |
+| GET/POST/PUT/DELETE | /api/v1/ewm/inbound-deliveries | CAD and engineering document metadata |
+| GET/POST/PUT/DELETE | /api/v1/ewm/outbound-deliveries | Classification and document attribute metadata |
+| GET/POST/PUT/DELETE | /api/v1/ewm/handling-units | CAD item metadata and references |
+| GET/POST/PUT/DELETE | /api/v1/ewm/resource-queues | Engineering collaboration workspaces |
+| GET/POST/PUT/DELETE | /api/v1/ewm/stock-items | Product assembly hierarchy |
+| POST | /api/v1/ewm/integrations/warehouse-master-sync/:warehouseId | Trigger material master sync stub |
+| POST | /api/v1/ewm/integrations/stock-sync/:stockId | Trigger document info record sync stub |
 | GET | /health | Service health |
 | GET | /api/v1/health | Service health |
 
@@ -74,16 +74,16 @@ All write operations are tenant-scoped via X-Tenant-Id.
 
 | Variable | Default | Purpose |
 |---|---|---|
-| ECC_HOST | 0.0.0.0 | HTTP bind address |
-| ECC_PORT | 8132 | HTTP listen port |
+| EWM_HOST | 0.0.0.0 | HTTP bind address |
+| EWM_PORT | 8132 | HTTP listen port |
 
 ## Container and Kubernetes
 
-- Container build files: Containerfile and Dockerfile in the ECC root
+- Container build files: Containerfile and Dockerfile in the EWM root
 - Kubernetes manifests: k8s/configmap.yaml, k8s/deployment.yaml, k8s/service.yaml
 
 ```bash
-docker build -t uim-platform/ecc -f Dockerfile .
+docker build -t uim-platform/ewm -f Dockerfile .
 kubectl apply -f k8s/
 ```
 
@@ -97,6 +97,6 @@ dub test
 
 ## SAP Reference
 
-Based on SAP Help Portal documentation for SAP Engineering Control Center for SAP S/4HANA:
+Based on SAP Help Portal documentation for SAP Extended Warehouse Management for SAP S/4HANA:
 
-[https://help.sap.com/docs/SAP_ENGINEERING_CONTROL_CENTER_S4HANA?locale=en-US](https://help.sap.com/docs/SAP_ENGINEERING_CONTROL_CENTER_S4HANA?locale=en-US)
+[https://help.sap.com/docs/SAP_EXTENDED_WAREHOUSE_MANAGEMENT?locale=en-US](https://help.sap.com/docs/SAP_EXTENDED_WAREHOUSE_MANAGEMENT?locale=en-US)

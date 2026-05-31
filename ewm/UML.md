@@ -1,11 +1,11 @@
-# Engineering Control Center Service - UML
+# Warehouse Management Service - UML
 
 <!-- markdownlint-disable MD040 MD060 MD047 -->
 
 ## Package Overview
 
 ```text
-uim.platform.ecc
+uim.platform.ewm
 ├── domain
 │   ├── types
 │   ├── entities
@@ -30,7 +30,7 @@ uim.platform.ecc
 ├── infrastructure
 │   ├── config
 │   ├── container
-│   ├── integrations.sap_ecc
+│   ├── integrations.sap_ewm
 │   └── persistence.memory
 └── presentation.http
     ├── controllers
@@ -61,14 +61,14 @@ classDiagram
     class BillOfMaterial {
         +id
         +tenantId
-        +productId
+        +warehouseId
         +revision
     }
 
     class ProductStructure {
         +id
         +tenantId
-        +productId
+        +warehouseId
         +parentNodeId
         +childNodeIds
     }
@@ -76,7 +76,7 @@ classDiagram
     class ChangeRequest {
         +id
         +tenantId
-        +productId
+        +warehouseId
         +title
         +status
     }
@@ -84,21 +84,21 @@ classDiagram
     class Specification {
         +id
         +tenantId
-        +productId
+        +warehouseId
         +specificationNumber
     }
 
     class Collaboration {
         +id
         +tenantId
-        +productId
+        +warehouseId
         +title
     }
 
     class Recipe {
         +id
         +tenantId
-        +productId
+        +warehouseId
         +recipeNumber
     }
 
@@ -132,7 +132,7 @@ graph LR
 
     subgraph D[Secondary Adapters]
         MR[Memory Repositories]
-        SG[SAP ECC Stub Gateways]
+        SG[SAP EWM Stub Gateways]
     end
 
     HC --> MU

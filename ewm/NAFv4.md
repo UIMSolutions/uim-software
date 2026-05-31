@@ -1,4 +1,4 @@
-# Engineering Control Center Service - NAFv4 Mapping
+# Warehouse Management Service - NAFv4 Mapping
 
 <!-- markdownlint-disable MD040 MD060 MD047 -->
 
@@ -6,7 +6,7 @@
 
 This document maps the ECC microservice to selected NATO Architecture Framework v4 viewpoints.
 
-The mapping is aligned to the SAP Engineering Control Center for SAP S/4HANA documentation areas (installation and upgrade, configuration, security, and application help), and translates those concerns into a cloud-native service architecture.
+The mapping is aligned to the SAP Extended Warehouse Management for SAP S/4HANA documentation areas (installation and upgrade, configuration, security, and application help), and translates those concerns into a cloud-native service architecture.
 
 ## C1 Capability View
 
@@ -14,13 +14,13 @@ The mapping is aligned to the SAP Engineering Control Center for SAP S/4HANA doc
 
 | Capability | Sub-Capability | Service Realization |
 |---|---|---|
-| Engineering Data Control | Material-centric engineering records | /api/v1/ecc/materials |
-| Document Governance | CAD and engineering document metadata | /api/v1/ecc/documents |
-| Structure Governance | BOM and assembly hierarchy | /api/v1/ecc/boms, /api/v1/ecc/assembly-structures |
-| Engineering Change | Change request lifecycle | /api/v1/ecc/change-requests |
-| Attribute and Classification | Document and specification attributes | /api/v1/ecc/document-attributes |
-| Collaboration | Engineering workspace coordination | /api/v1/ecc/workspaces |
-| S/4HANA Synchronization | Material and document sync orchestration | /api/v1/ecc/integrations/* |
+| Engineering Data Control | Material-centric engineering records | /api/v1/ewm/warehouses |
+| Document Governance | CAD and engineering document metadata | /api/v1/ewm/inbound-deliveries |
+| Structure Governance | BOM and assembly hierarchy | /api/v1/ewm/storage-bins, /api/v1/ewm/stock-items |
+| Engineering Change | Change request lifecycle | /api/v1/ewm/warehouse-tasks |
+| Attribute and Classification | Document and specification attributes | /api/v1/ewm/outbound-deliveries |
+| Collaboration | Engineering workspace coordination | /api/v1/ewm/resource-queues |
+| S/4HANA Synchronization | Material and document sync orchestration | /api/v1/ewm/integrations/* |
 
 ### C1.2 Capability Dependencies
 
@@ -42,7 +42,7 @@ Structure Governance
 
 ### Vision Statement
 
-Provide an ECC-like engineering control service that keeps CAD-facing engineering data and SAP S/4HANA-aligned business objects synchronized, traceable, and governable across product lifecycle activities.
+Provide an EWM-like engineering control service that keeps CAD-facing engineering data and SAP S/4HANA-aligned business objects synchronized, traceable, and governable across product lifecycle activities.
 
 ### Goals
 
@@ -68,22 +68,22 @@ Provide an ECC-like engineering control service that keeps CAD-facing engineerin
 
 | Service | Endpoint Prefix | Consumers |
 |---|---|---|
-| Material Engineering Service | /api/v1/ecc/materials | Engineering and master data teams |
-| Document Service | /api/v1/ecc/documents | CAD and document control teams |
-| BOM Service | /api/v1/ecc/boms | Product structure governance |
-| Assembly Structure Service | /api/v1/ecc/assembly-structures | Product architects |
-| Change Service | /api/v1/ecc/change-requests | Change control boards |
-| Attribute Service | /api/v1/ecc/document-attributes | Metadata and classification teams |
-| Workspace Service | /api/v1/ecc/workspaces | Engineering collaboration roles |
-| Integration Orchestration Service | /api/v1/ecc/integrations/* | ERP integration operations |
+| Material Engineering Service | /api/v1/ewm/warehouses | Engineering and master data teams |
+| Document Service | /api/v1/ewm/inbound-deliveries | CAD and document control teams |
+| BOM Service | /api/v1/ewm/storage-bins | Product structure governance |
+| Assembly Structure Service | /api/v1/ewm/stock-items | Product architects |
+| Change Service | /api/v1/ewm/warehouse-tasks | Change control boards |
+| Attribute Service | /api/v1/ewm/outbound-deliveries | Metadata and classification teams |
+| Workspace Service | /api/v1/ewm/resource-queues | Engineering collaboration roles |
+| Integration Orchestration Service | /api/v1/ewm/integrations/* | ERP integration operations |
 
 ### C7.2 Service Dependencies
 
 ```text
-ECC Service
+EWM Service
   consumes: tenant-scoped engineering payloads
   produces: governed engineering records and synchronization events
-  exposes: stable service interfaces for ECC-like operations
+  exposes: stable service interfaces for EWM-like operations
 ```
 
 ## C8 Motivation View
@@ -109,7 +109,7 @@ ECC Service
 
 ```text
 Kubernetes Namespace
-  ECC Pod
+  EWM Pod
     vibe.d HTTP server
       presentation adapters
       application orchestration
@@ -118,8 +118,8 @@ Kubernetes Namespace
       SAP ECC integration stub adapters
 
 ConfigMap
-  ECC_HOST
-  ECC_PORT
+  EWM_HOST
+  EWM_PORT
 ```
 
 ## Pr Physical Resource View
@@ -134,4 +134,4 @@ ConfigMap
 ## Source Reference
 
 SAP Help Portal:
-[https://help.sap.com/docs/SAP_ENGINEERING_CONTROL_CENTER_S4HANA?locale=en-US](https://help.sap.com/docs/SAP_ENGINEERING_CONTROL_CENTER_S4HANA?locale=en-US)
+[https://help.sap.com/docs/SAP_EXTENDED_WAREHOUSE_MANAGEMENT?locale=en-US](https://help.sap.com/docs/SAP_EXTENDED_WAREHOUSE_MANAGEMENT?locale=en-US)

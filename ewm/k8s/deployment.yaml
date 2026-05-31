@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ewm
+  namespace: uim-platform
+  labels:
+    app: ewm
+    part-of: uim-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ewm
+  template:
+    metadata:
+      labels:
+        app: ewm
+    spec:
+      containers:
+      - name: ewm
+        image: uim-platform/ewm:latest
+        ports:
+        - containerPort: 8132
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: ewm-config
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8132
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8132
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
