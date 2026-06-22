@@ -24,7 +24,7 @@ class ManageBillOfMaterialsUseCase : UIMUseCase {
         value.baseUnit = dto.baseUnit;
         value.isActive = dto.isActive.length ? dto.isActive : value.isActive;
         value.createdBy = dto.createdBy;
-        if (!IbpValidator.isValidBillOfMaterial(value)) {
+        if (!MesValidator.isValidBillOfMaterial(value)) {
             return CommandResult(false, "", "Invalid BOM data");
         }
         repo.save(value); return CommandResult(true, dto.id, "");

@@ -25,7 +25,7 @@ class ManageDocumentsUseCase : UIMUseCase {
         value.author = dto.author;
         value.approvedBy = dto.approvedBy;
         value.createdBy = dto.createdBy;
-        if (!IbpValidator.isValidDocument(value)) {
+        if (!MesValidator.isValidDocument(value)) {
             return CommandResult(false, "", "Invalid document data");
         }
         repo.save(value);

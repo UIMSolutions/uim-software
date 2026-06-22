@@ -12,7 +12,7 @@ class EwmHealthController : SAPController {
     }
 
     private void handleRoot(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        writeJsonBody(res, Json(["service": Json("Warehouse Management"), "status": Json("ok") ]));
+        writeJsonBody(res, Json(["service": Json("Extended Warehouse Management"), "status": Json("ok") ]));
     }
 
     private void handleHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: apm-config
+  namespace: uim-platform
+  labels:
+    app: apm
+    part-of: uim-platform
+data:
+  APM_HOST: "0.0.0.0"
+  APM_PORT: "8140"

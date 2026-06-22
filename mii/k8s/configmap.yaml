@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mii-config
+  namespace: uim-platform
+  labels:
+    app: mii
+    part-of: uim-platform
+data:
+  MII_HOST: "0.0.0.0"
+  MII_PORT: "8132"

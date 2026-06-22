@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apm
+  namespace: uim-platform
+  labels:
+    app: apm
+    part-of: uim-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apm
+  template:
+    metadata:
+      labels:
+        app: apm
+    spec:
+      containers:
+      - name: apm
+        image: uim-platform/apm:latest
+        ports:
+        - containerPort: 8140
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: apm-config
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8140
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8140
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"

@@ -71,6 +71,168 @@ source/
 
 All write operations are tenant-scoped via X-Tenant-Id.
 
+## Endpoint Details and Examples
+
+### Common Headers
+
+- Content-Type: application/json
+- X-Tenant-Id: tenant identifier required for all write operations
+
+### Response Conventions
+
+- List responses: { "count": number, "resources": [ ... ] }
+- Create or update responses: { "id": "..." }
+- Integration responses: { "id": "...", "externalId": "...", "message": "..." }
+- Error responses: { "error": "..." }
+
+### Production Orders
+
+POST /api/v1/mes/production-orders
+
+Example request body:
+
+```json
+{
+  "id": "PO-100",
+  "name": "Pump Assembly Order",
+  "description": "Execute pump line order",
+  "productNumber": "PO-100",
+  "productType": "production",
+  "lifecycleStatus": "released",
+  "category": "manufacturing",
+  "baseUnit": "EA",
+  "validFrom": "2026-06-01",
+  "validTo": "2026-06-30",
+  "createdBy": "operator-1"
+}
+```
+
+Example response (201):
+
+```json
+{
+  "id": "PO-100"
+}
+```
+
+GET /api/v1/mes/production-orders
+
+Example response (200):
+
+```json
+{
+  "count": 1,
+  "resources": [
+    {
+      "id": "PO-100",
+      "tenantId": "T1",
+      "name": "Pump Assembly Order",
+      "description": "Execute pump line order"
+    }
+  ]
+}
+```
+
+### Operations
+
+POST /api/v1/mes/operations
+
+Example request body:
+
+```json
+{
+  "id": "OP-100",
+  "orderId": "PO-100",
+  "name": "Assembly Operation 10",
+  "description": "Primary assembly step",
+  "bomType": "operation",
+  "revision": "1",
+  "usage": "execution",
+  "plant": "LINE-01",
+  "baseQuantity": "1",
+  "baseUnit": "EA",
+  "isActive": "true",
+  "createdBy": "operator-1"
+}
+```
+
+Example response (201):
+
+```json
+{
+  "id": "OP-100"
+}
+```
+
+### Work Center Assignments
+
+POST /api/v1/mes/work-center-assignments
+
+Example request body:
+
+```json
+{
+  "id": "WCA-10",
+  "orderId": "PO-100",
+  "title": "Assign Work Center WC-01",
+  "description": "Route order to WC-01",
+  "priority": "high",
+  "status": "open",
+  "reason": "Initial dispatch",
+  "impact": "Medium",
+  "requestedBy": "operator-1",
+  "assignedTo": "operator-2",
+  "createdBy": "operator-1"
+}
+```
+
+Example response (201):
+
+```json
+{
+  "id": "WCA-10"
+}
+```
+
+### Integration Endpoints
+
+POST /api/v1/mes/integrations/order-sync/:orderId
+
+Example response (200):
+
+```json
+{
+  "id": "PO-100",
+  "externalId": "sap-mes-order-PO-100",
+  "message": "Stub order sync completed for production order PO-100"
+}
+```
+
+POST /api/v1/mes/integrations/quality-sync/:inspectionId
+
+Example response (200):
+
+```json
+{
+  "id": "QI-100",
+  "externalId": "sap-mes-quality-QI-100",
+  "message": "Stub quality sync completed for inspection QI-100"
+}
+```
+
+### Curl Quickstart
+
+```bash
+curl -sS -X POST http://localhost:8132/api/v1/mes/production-orders \
+  -H "Content-Type: application/json" \
+  -H "X-Tenant-Id: T1" \
+  -d '{"id":"PO-100","name":"Pump Assembly Order","description":"Execute pump line order","productNumber":"PO-100","productType":"production","lifecycleStatus":"released","category":"manufacturing","baseUnit":"EA","createdBy":"operator-1"}'
+
+curl -sS http://localhost:8132/api/v1/mes/production-orders
+
+curl -sS -X POST http://localhost:8132/api/v1/mes/integrations/order-sync/PO-100
+```
+
 ## Configuration
 
 | Variable | Default | Purpose |

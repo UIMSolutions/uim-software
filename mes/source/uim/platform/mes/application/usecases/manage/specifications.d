@@ -27,7 +27,7 @@ class ManageSpecificationsUseCase : UIMUseCase {
         value.testMethod = dto.testMethod;
         value.complianceStandard = dto.complianceStandard;
         value.createdBy = dto.createdBy;
-        if (!IbpValidator.isValidSpecification(value)) {
+        if (!MesValidator.isValidSpecification(value)) {
             return CommandResult(false, "", "Invalid specification data");
         }
         repo.save(value);

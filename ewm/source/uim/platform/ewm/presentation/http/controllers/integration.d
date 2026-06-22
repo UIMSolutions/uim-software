@@ -13,11 +13,11 @@ class IntegrationController : SAPController {
     }
 
     override void registerRoutes(URLRouter router) {
-        router.post("/api/v1/ewm/integrations/warehouse-master-sync/*", &handleProductHandover);
-        router.post("/api/v1/ewm/integrations/stock-sync/*", &handleSpecificationSync);
+        router.post("/api/v1/ewm/integrations/warehouse-master-sync/*", &handleWarehouseSync);
+        router.post("/api/v1/ewm/integrations/stock-sync/*", &handleStockSync);
     }
 
-    private void handleProductHandover(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    private void handleWarehouseSync(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         auto id = extractIdFromPath(req.requestPath.to!string);
         auto result = useCase.handoverProduct(id);
         if (!result.success) {
@@ -33,7 +33,7 @@ class IntegrationController : SAPController {
         ]));
     }
 
-    private void handleSpecificationSync(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    private void handleStockSync(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         auto id = extractIdFromPath(req.requestPath.to!string);
         auto result = useCase.syncSpecification(id);
         if (!result.success) {
