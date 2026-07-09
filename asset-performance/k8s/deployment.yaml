@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: asset-performance
+  namespace: uim-platform
+  labels:
+    app: asset-performance
+    part-of: uim-platform
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: asset-performance
+  template:
+    metadata:
+      labels:
+        app: asset-performance
+        part-of: uim-platform
+        component: apm-service
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+      - name: asset-performance
+        image: uim-platform/asset-performance:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8105
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: asset-performance-config
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsNonRoot: true
+          runAsUser: 10001
+          readOnlyRootFilesystem: true
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8105
+          initialDelaySeconds: 15
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8105
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 3
+          failureThreshold: 3
+        startupProbe:
+          httpGet:
+            path: /health
+            port: 8105
+          periodSeconds: 5
+          failureThreshold: 20
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"

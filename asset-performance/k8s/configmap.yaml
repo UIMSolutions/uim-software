@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: asset-performance-config
+  namespace: uim-platform
+  labels:
+    app: asset-performance
+    part-of: uim-platform
+data:
+  ASSET_PERFORMANCE_HOST: "0.0.0.0"
+  ASSET_PERFORMANCE_PORT: "8105"
+  ASSET_PERFORMANCE_SEED_ON_START: "false"
