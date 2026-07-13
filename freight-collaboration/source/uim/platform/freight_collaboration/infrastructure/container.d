@@ -27,7 +27,16 @@ Container buildContainer(AppConfig config) {
     auto tenderRepo = new MemoryTenderRepository();
     auto milestoneRepo = new MemoryMilestoneRepository();
 
-    auto tenderSyncGateway = new SapBnTenderSyncStubGateway();
+    TenderSyncGateway tenderSyncGateway;
+    if (config.useStubIntegration) {
+        tenderSyncGateway = new SapBnTenderSyncStubGateway();
+    } else {
+        tenderSyncGateway = new SapBnTenderSyncHttpGateway(
+            config.sapBnBaseUrl,
+            config.sapBnTenderSyncPath,
+            config.sapBnApiToken
+        );
+    }
 
     container.manageFreightOrdersUseCase = new ManageFreightOrdersUseCase(freightOrderRepo);
     container.manageTendersUseCase = new ManageTendersUseCase(tenderRepo);

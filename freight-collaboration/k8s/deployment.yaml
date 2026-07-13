@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: freight-collaboration
+  namespace: uim-platform
+  labels:
+    app: freight-collaboration
+    part-of: uim-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: freight-collaboration
+  template:
+    metadata:
+      labels:
+        app: freight-collaboration
+    spec:
+      containers:
+      - name: freight-collaboration
+        image: uim-platform/freight-collaboration:latest
+        ports:
+        - containerPort: 8140
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: freight-collaboration-config
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8140
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8140
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"

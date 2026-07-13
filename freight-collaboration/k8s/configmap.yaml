@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: freight-collaboration-config
+  namespace: uim-platform
+  labels:
+    app: freight-collaboration
+    part-of: uim-platform
+data:
+  FREIGHT_COLLAB_HOST: "0.0.0.0"
+  FREIGHT_COLLAB_PORT: "8140"
+  FREIGHT_COLLAB_USE_STUB_INTEGRATION: "true"
+  FREIGHT_COLLAB_SAP_BN_BASE_URL: ""
+  FREIGHT_COLLAB_SAP_BN_TENDER_SYNC_PATH: "/api/v1/freight-collaboration/tenders/sync"
