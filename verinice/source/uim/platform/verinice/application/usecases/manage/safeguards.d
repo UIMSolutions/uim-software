@@ -27,7 +27,9 @@ class ManageSafeguardsUseCase : UIMUseCase {
         value.code = dto.code;
         value.title = dto.title;
         value.description = dto.description;
-        value.implementationStatus = dto.implementationStatus.length ? dto.implementationStatus : value.implementationStatus;
+        value.implementationStatus = dto.implementationStatus.length
+            ? dto.implementationStatus
+            : value.implementationStatus;
         value.maturityLevel = dto.maturityLevel;
         value.owner = dto.owner;
         value.createdBy = dto.createdBy;

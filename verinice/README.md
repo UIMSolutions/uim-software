@@ -4,8 +4,8 @@
 
 A vibe.d microservice in D that models core IT-Grundschutz workflows inspired by Sernet verinice and the domain documentation at:
 
-- https://docs.eu.verinice.cloud/en/domain-it-gs/
-- https://github.com/sernet/verinice
+- [https://docs.eu.verinice.cloud/en/domain-it-gs/](https://docs.eu.verinice.cloud/en/domain-it-gs/)
+- [https://github.com/sernet/verinice](https://github.com/sernet/verinice)
 
 This implementation uses a combination of clean architecture and hexagonal architecture and is intentionally structured as a standalone platform service module.
 

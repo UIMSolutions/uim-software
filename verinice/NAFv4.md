@@ -120,5 +120,5 @@ ConfigMap
 
 ## Source References
 
-- https://docs.eu.verinice.cloud/en/domain-it-gs/
-- https://github.com/sernet/verinice
+- [https://docs.eu.verinice.cloud/en/domain-it-gs/](https://docs.eu.verinice.cloud/en/domain-it-gs/)
+- [https://github.com/sernet/verinice](https://github.com/sernet/verinice)
