@@ -1,4 +1,4 @@
-module uim.platform.defemse.infrastructure.persistence.memory.maintenance_tasks;
+module uim.platform.defemse.infrastructure.persistence.repositories.maintenance_tasks;
 
 import uim.platform.defemse;
 

@@ -4,5 +4,5 @@ public {
     import uim.platform.mii.infrastructure.config;
     import uim.platform.mii.infrastructure.container;
     import uim.platform.mii.infrastructure.integrations;
-    import uim.platform.mii.infrastructure.persistence.memory;
+    import uim.platform.mii.infrastructure.persistence.repositories;
 }

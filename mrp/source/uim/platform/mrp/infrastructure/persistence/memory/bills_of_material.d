@@ -1,4 +1,4 @@
-module uim.platform.mrp.infrastructure.persistence.memory.bills_of_material;
+module uim.platform.mrp.infrastructure.persistence.repositories.bills_of_material;
 
 import uim.platform.mrp;
 

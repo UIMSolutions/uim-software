@@ -1,4 +1,4 @@
-module uim.platform.ibp.infrastructure.persistence.memory.collaborations;
+module uim.platform.ibp.infrastructure.persistence.repositories.collaborations;
 
 import uim.platform.ibp;
 

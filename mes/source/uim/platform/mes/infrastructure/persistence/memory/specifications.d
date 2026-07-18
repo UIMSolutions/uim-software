@@ -1,4 +1,4 @@
-module uim.platform.mes.infrastructure.persistence.memory.specifications;
+module uim.platform.mes.infrastructure.persistence.repositories.specifications;
 
 import uim.platform.mes;
 

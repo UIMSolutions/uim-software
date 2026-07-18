@@ -1,4 +1,4 @@
-module uim.platform.etd.infrastructure.persistence.memory.detection_rules;
+module uim.platform.etd.infrastructure.persistence.repositories.detection_rules;
 
 import uim.platform.etd;
 

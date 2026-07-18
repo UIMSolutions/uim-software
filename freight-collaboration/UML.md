@@ -24,7 +24,7 @@ uim.platform.freight_collaboration
 │   ├── config
 │   ├── container
 │   ├── integrations.sap_bn_fc
-│   └── persistence.memory
+│   └── persistence.repositories
 └── presentation.http
     ├── controllers
     └── json_utils

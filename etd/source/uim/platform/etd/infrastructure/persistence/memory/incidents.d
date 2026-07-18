@@ -1,4 +1,4 @@
-module uim.platform.etd.infrastructure.persistence.memory.incidents;
+module uim.platform.etd.infrastructure.persistence.repositories.incidents;
 
 import uim.platform.etd;
 

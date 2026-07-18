@@ -1,8 +1,8 @@
-module uim.platform.content.infrastructure.persistence.memory.repositories;
+module uim.platform.content.infrastructure.persistence.repositories.repositories;
 
 public {
-    import uim.platform.content.infrastructure.persistence.memory.contents;
-    import uim.platform.content.infrastructure.persistence.memory.folders;
-    import uim.platform.content.infrastructure.persistence.memory.documents;
-    import uim.platform.content.infrastructure.persistence.memory.document_versions;
+    import uim.platform.content.infrastructure.persistence.repositories.contents;
+    import uim.platform.content.infrastructure.persistence.repositories.folders;
+    import uim.platform.content.infrastructure.persistence.repositories.documents;
+    import uim.platform.content.infrastructure.persistence.repositories.document_versions;
 }

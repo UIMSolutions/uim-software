@@ -1,4 +1,4 @@
-module uim.platform.mrp.infrastructure.persistence.memory.materials;
+module uim.platform.mrp.infrastructure.persistence.repositories.materials;
 
 import uim.platform.mrp;
 

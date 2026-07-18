@@ -1,4 +1,4 @@
-module uim.platform.maif.infrastructure.persistence.memory.mobile_apps;
+module uim.platform.maif.infrastructure.persistence.repositories.mobile_apps;
 
 import uim.platform.maif;
 

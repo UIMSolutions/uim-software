@@ -1,12 +1,12 @@
-module uim.platform.sci.infrastructure.persistence.memory;
+module uim.platform.sci.infrastructure.persistence.repositories;
 
 public {
-    import uim.platform.sci.infrastructure.persistence.memory.instances;
-    import uim.platform.sci.infrastructure.persistence.memory.volumes;
-    import uim.platform.sci.infrastructure.persistence.memory.networks;
-    import uim.platform.sci.infrastructure.persistence.memory.security_groups;
-    import uim.platform.sci.infrastructure.persistence.memory.floating_ips;
-    import uim.platform.sci.infrastructure.persistence.memory.load_balancers;
-    import uim.platform.sci.infrastructure.persistence.memory.dns_zones;
-    import uim.platform.sci.infrastructure.persistence.memory.key_pairs;
+    import uim.platform.sci.infrastructure.persistence.repositories.instances;
+    import uim.platform.sci.infrastructure.persistence.repositories.volumes;
+    import uim.platform.sci.infrastructure.persistence.repositories.networks;
+    import uim.platform.sci.infrastructure.persistence.repositories.security_groups;
+    import uim.platform.sci.infrastructure.persistence.repositories.floating_ips;
+    import uim.platform.sci.infrastructure.persistence.repositories.load_balancers;
+    import uim.platform.sci.infrastructure.persistence.repositories.dns_zones;
+    import uim.platform.sci.infrastructure.persistence.repositories.key_pairs;
 }

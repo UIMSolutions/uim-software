@@ -1,4 +1,4 @@
-module uim.platform.defemse.infrastructure.persistence.memory.exercises;
+module uim.platform.defemse.infrastructure.persistence.repositories.exercises;
 
 import uim.platform.defemse;
 

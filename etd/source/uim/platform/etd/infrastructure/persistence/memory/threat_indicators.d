@@ -1,4 +1,4 @@
-module uim.platform.etd.infrastructure.persistence.memory.threat_indicators;
+module uim.platform.etd.infrastructure.persistence.repositories.threat_indicators;
 
 import uim.platform.etd;
 

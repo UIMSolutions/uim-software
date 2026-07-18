@@ -1,4 +1,4 @@
-module uim.platform.plm.infrastructure.persistence.memory.specifications;
+module uim.platform.plm.infrastructure.persistence.repositories.specifications;
 
 import uim.platform.plm;
 

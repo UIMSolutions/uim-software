@@ -1,4 +1,4 @@
-module uim.platform.maif.infrastructure.persistence.memory.sync_jobs;
+module uim.platform.maif.infrastructure.persistence.repositories.sync_jobs;
 
 import uim.platform.maif;
 

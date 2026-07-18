@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.itil.infrastructure.persistence.memory.memory_knowledge_article_repository;
+module uim.platform.itil.infrastructure.persistence.repositories.it_assets;
 
 import uim.platform.itil;
 import std.algorithm : filter;
@@ -13,41 +13,41 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryKnowledgeArticleRepository : KnowledgeArticleRepository {
-    private KnowledgeArticle[] store;
+class MemoryITAssetRepository : ITAssetRepository {
+    private ITAsset[] store;
 
-    KnowledgeArticle[] findAll() { return store.dup; }
+    ITAsset[] findAll() { return store.dup; }
 
-    KnowledgeArticle* findById(KnowledgeArticleId id) {
+    ITAsset* findById(ITAssetId id) {
         foreach (ref s; store) if (s.id == id) return &s;
         return null;
     }
 
-    KnowledgeArticle[] findByTenant(TenantId tenantId) {
+    ITAsset[] findByTenant(TenantId tenantId) {
         return store.filter!(s => s.tenantId == tenantId).array;
     }
 
-    KnowledgeArticle[] findByStatus(KnowledgeStatus knowledgeStatus) {
-        return store.filter!(s => s.knowledgeStatus == knowledgeStatus).array;
+    ITAsset[] findByStatus(AssetStatus assetStatus) {
+        return store.filter!(s => s.assetStatus == assetStatus).array;
     }
 
-    KnowledgeArticle[] findByService(ITServiceId serviceId) {
-        return store.filter!(s => s.serviceId == serviceId).array;
+    ITAsset[] findByType(AssetType assetType) {
+        return store.filter!(s => s.assetType == assetType).array;
     }
 
-    KnowledgeArticle[] findByAuthor(string author) {
-        return store.filter!(s => s.author == author).array;
+    ITAsset[] findByAssignee(string assignedTo) {
+        return store.filter!(s => s.assignedTo == assignedTo).array;
     }
 
-    void save(KnowledgeArticle s) { store ~= s; }
+    void save(ITAsset s) { store ~= s; }
 
-    void update(KnowledgeArticle s) {
+    void update(ITAsset s) {
         foreach (ref item; store) {
             if (item.id == s.id) { item = s; return; }
         }
     }
 
-    void remove(KnowledgeArticleId id) {
+    void remove(ITAssetId id) {
         store = store.filter!(s => s.id != id).array;
     }
 }

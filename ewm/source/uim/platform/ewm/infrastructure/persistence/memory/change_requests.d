@@ -1,4 +1,4 @@
-module uim.platform.ewm.infrastructure.persistence.memory.change_requests;
+module uim.platform.ewm.infrastructure.persistence.repositories.change_requests;
 
 import uim.platform.ewm;
 

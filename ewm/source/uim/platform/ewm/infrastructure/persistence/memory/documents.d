@@ -1,4 +1,4 @@
-module uim.platform.ewm.infrastructure.persistence.memory.documents;
+module uim.platform.ewm.infrastructure.persistence.repositories.documents;
 
 import uim.platform.ewm;
 

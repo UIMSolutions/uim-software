@@ -1,4 +1,4 @@
-module uim.platform.epd.infrastructure.persistence.memory.documents;
+module uim.platform.epd.infrastructure.persistence.repositories.documents;
 
 import uim.platform.epd;
 

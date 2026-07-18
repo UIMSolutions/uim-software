@@ -1,4 +1,4 @@
-module uim.platform.freight_collaboration.infrastructure.persistence.memory.milestones;
+module uim.platform.freight_collaboration.infrastructure.persistence.repositories.milestones;
 
 import uim.platform.freight_collaboration;
 

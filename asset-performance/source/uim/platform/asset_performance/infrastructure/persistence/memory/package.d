@@ -1,12 +1,12 @@
-module uim.software.asset_performance.infrastructure.persistence.memory;
+module uim.software.asset_performance.infrastructure.persistence.repositories;
 
 public {
-    import uim.software.asset_performance.infrastructure.persistence.memory.equipment;
-    import uim.software.asset_performance.infrastructure.persistence.memory.models;
-    import uim.software.asset_performance.infrastructure.persistence.memory.locations;
-    import uim.software.asset_performance.infrastructure.persistence.memory.failure_modes;
-    import uim.software.asset_performance.infrastructure.persistence.memory.assessments;
-    import uim.software.asset_performance.infrastructure.persistence.memory.instructions;
-    import uim.software.asset_performance.infrastructure.persistence.memory.functions;
-    import uim.software.asset_performance.infrastructure.persistence.memory.indicators;
+    import uim.software.asset_performance.infrastructure.persistence.repositories.equipment;
+    import uim.software.asset_performance.infrastructure.persistence.repositories.models;
+    import uim.software.asset_performance.infrastructure.persistence.repositories.locations;
+    import uim.software.asset_performance.infrastructure.persistence.repositories.failure_modes;
+    import uim.software.asset_performance.infrastructure.persistence.repositories.assessments;
+    import uim.software.asset_performance.infrastructure.persistence.repositories.instructions;
+    import uim.software.asset_performance.infrastructure.persistence.repositories.functions;
+    import uim.software.asset_performance.infrastructure.persistence.repositories.indicators;
 }

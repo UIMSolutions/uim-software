@@ -1,8 +1,8 @@
-module uim.platform.team.infrastructure.persistence.memory;
+module uim.platform.team.infrastructure.persistence.repositories;
 
 public {
-    import uim.platform.team.infrastructure.persistence.memory.parts;
-    import uim.platform.team.infrastructure.persistence.memory.boms;
-    import uim.platform.team.infrastructure.persistence.memory.documents;
-    import uim.platform.team.infrastructure.persistence.memory.changes;
+    import uim.platform.team.infrastructure.persistence.repositories.parts;
+    import uim.platform.team.infrastructure.persistence.repositories.boms;
+    import uim.platform.team.infrastructure.persistence.repositories.documents;
+    import uim.platform.team.infrastructure.persistence.repositories.changes;
 }

@@ -1,4 +1,4 @@
-module uim.platform.ewm.infrastructure.persistence.memory.collaborations;
+module uim.platform.ewm.infrastructure.persistence.repositories.collaborations;
 
 import uim.platform.ewm;
 

@@ -4,5 +4,5 @@ public {
     import uim.platform.etd.infrastructure.config;
     import uim.platform.etd.infrastructure.container;
     import uim.platform.etd.infrastructure.integrations;
-    import uim.platform.etd.infrastructure.persistence.memory;
+    import uim.platform.etd.infrastructure.persistence.repositories;
 }

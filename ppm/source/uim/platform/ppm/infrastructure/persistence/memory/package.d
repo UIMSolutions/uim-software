@@ -1,10 +1,10 @@
-module uim.platform.ppm.infrastructure.persistence.memory;
+module uim.platform.ppm.infrastructure.persistence.repositories;
 
 public {
-    import uim.platform.ppm.infrastructure.persistence.memory.portfolios;
-    import uim.platform.ppm.infrastructure.persistence.memory.initiatives;
-    import uim.platform.ppm.infrastructure.persistence.memory.programs;
-    import uim.platform.ppm.infrastructure.persistence.memory.projects;
-    import uim.platform.ppm.infrastructure.persistence.memory.demands;
-    import uim.platform.ppm.infrastructure.persistence.memory.resource_requests;
+    import uim.platform.ppm.infrastructure.persistence.repositories.portfolios;
+    import uim.platform.ppm.infrastructure.persistence.repositories.initiatives;
+    import uim.platform.ppm.infrastructure.persistence.repositories.programs;
+    import uim.platform.ppm.infrastructure.persistence.repositories.projects;
+    import uim.platform.ppm.infrastructure.persistence.repositories.demands;
+    import uim.platform.ppm.infrastructure.persistence.repositories.resource_requests;
 }

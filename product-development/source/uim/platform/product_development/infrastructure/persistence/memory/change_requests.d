@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.software.product_development.infrastructure.persistence.memory.change_requests;
+module uim.software.product_development.infrastructure.persistence.repositories.change_requests;
 
 import uim.software.product_development;
 

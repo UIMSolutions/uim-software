@@ -1,4 +1,4 @@
-module uim.platform.ibp.infrastructure.persistence.memory.specifications;
+module uim.platform.ibp.infrastructure.persistence.repositories.specifications;
 
 import uim.platform.ibp;
 

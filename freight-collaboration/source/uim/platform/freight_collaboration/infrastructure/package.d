@@ -4,5 +4,5 @@ public {
     import uim.platform.freight_collaboration.infrastructure.config;
     import uim.platform.freight_collaboration.infrastructure.container;
     import uim.platform.freight_collaboration.infrastructure.integrations;
-    import uim.platform.freight_collaboration.infrastructure.persistence.memory;
+    import uim.platform.freight_collaboration.infrastructure.persistence.repositories;
 }

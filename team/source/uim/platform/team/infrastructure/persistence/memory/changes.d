@@ -1,4 +1,4 @@
-module uim.platform.team.infrastructure.persistence.memory.changes;
+module uim.platform.team.infrastructure.persistence.repositories.changes;
 
 import std.algorithm : remove;
 import uim.platform.team;

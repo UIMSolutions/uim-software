@@ -1,4 +1,4 @@
-module uim.platform.verinice.infrastructure.persistence.memory.assets;
+module uim.platform.verinice.infrastructure.persistence.repositories.assets;
 
 import uim.platform.verinice;
 

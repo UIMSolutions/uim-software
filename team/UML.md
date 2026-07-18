@@ -30,7 +30,7 @@ uim.platform.team
 ├── infrastructure
 │   ├── config
 │   ├── container
-│   └── persistence.memory
+│   └── persistence.repositories
 └── presentation
     └── http.controllers
 ```

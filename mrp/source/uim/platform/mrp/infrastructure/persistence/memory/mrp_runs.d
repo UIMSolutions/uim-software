@@ -1,4 +1,4 @@
-module uim.platform.mrp.infrastructure.persistence.memory.mrp_runs;
+module uim.platform.mrp.infrastructure.persistence.repositories.mrp_runs;
 
 import uim.platform.mrp;
 

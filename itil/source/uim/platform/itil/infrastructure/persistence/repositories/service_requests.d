@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.itil.infrastructure.persistence.memory.memory_it_service_repository;
+module uim.platform.itil.infrastructure.persistence.repositories.service_requests;
 
 import uim.platform.itil;
 import std.algorithm : filter;
@@ -13,37 +13,41 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryITServiceRepository : ITServiceRepository {
-    private ITService[] store;
+class MemoryServiceRequestRepository : ServiceRequestRepository {
+    private ServiceRequest[] store;
 
-    ITService[] findAll() { return store.dup; }
+    ServiceRequest[] findAll() { return store.dup; }
 
-    ITService* findById(ITServiceId id) {
+    ServiceRequest* findById(ServiceRequestId id) {
         foreach (ref s; store) if (s.id == id) return &s;
         return null;
     }
 
-    ITService[] findByTenant(TenantId tenantId) {
+    ServiceRequest[] findByTenant(TenantId tenantId) {
         return store.filter!(s => s.tenantId == tenantId).array;
     }
 
-    ITService[] findByStatus(RecordStatus status) {
+    ServiceRequest[] findByStatus(RecordStatus status) {
         return store.filter!(s => s.status == status).array;
     }
 
-    ITService[] findByOwner(string owner) {
-        return store.filter!(s => s.serviceOwner == owner).array;
+    ServiceRequest[] findByPriority(Priority priority) {
+        return store.filter!(s => s.priority == priority).array;
     }
 
-    void save(ITService s) { store ~= s; }
+    ServiceRequest[] findByService(ITServiceId serviceId) {
+        return store.filter!(s => s.serviceId == serviceId).array;
+    }
 
-    void update(ITService s) {
+    void save(ServiceRequest s) { store ~= s; }
+
+    void update(ServiceRequest s) {
         foreach (ref item; store) {
             if (item.id == s.id) { item = s; return; }
         }
     }
 
-    void remove(ITServiceId id) {
+    void remove(ServiceRequestId id) {
         store = store.filter!(s => s.id != id).array;
     }
 }

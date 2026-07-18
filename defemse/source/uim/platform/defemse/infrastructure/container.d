@@ -6,7 +6,7 @@
 module uim.platform.defemse.infrastructure.container;
 
 import uim.platform.defemse.infrastructure.config;
-import uim.platform.defemse.infrastructure.persistence.memory;
+import uim.platform.defemse.infrastructure.persistence.repositories;
 import uim.platform.defemse.presentation.http.controllers;
 
 struct Container {

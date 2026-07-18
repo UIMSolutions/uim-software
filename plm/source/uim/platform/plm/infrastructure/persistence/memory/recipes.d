@@ -1,4 +1,4 @@
-module uim.platform.plm.infrastructure.persistence.memory.recipes;
+module uim.platform.plm.infrastructure.persistence.repositories.recipes;
 
 import uim.platform.plm;
 

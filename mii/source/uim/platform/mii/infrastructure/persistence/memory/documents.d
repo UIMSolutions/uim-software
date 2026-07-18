@@ -1,4 +1,4 @@
-module uim.platform.mii.infrastructure.persistence.memory.documents;
+module uim.platform.mii.infrastructure.persistence.repositories.documents;
 
 import uim.platform.mii;
 

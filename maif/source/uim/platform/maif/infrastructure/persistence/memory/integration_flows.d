@@ -1,4 +1,4 @@
-module uim.platform.maif.infrastructure.persistence.memory.integration_flows;
+module uim.platform.maif.infrastructure.persistence.repositories.integration_flows;
 
 import uim.platform.maif;
 

@@ -1,4 +1,4 @@
-module uim.platform.apm.infrastructure.persistence.memory.assessments;
+module uim.platform.apm.infrastructure.persistence.repositories.assessments;
 
 import std.algorithm : remove;
 import uim.platform.apm;

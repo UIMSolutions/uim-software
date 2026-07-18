@@ -9,5 +9,5 @@ public {
     import uim.platform.ewm.infrastructure.config;
     import uim.platform.ewm.infrastructure.container;
     import uim.platform.ewm.infrastructure.integrations;
-    import uim.platform.ewm.infrastructure.persistence.memory;
+    import uim.platform.ewm.infrastructure.persistence.repositories;
 }

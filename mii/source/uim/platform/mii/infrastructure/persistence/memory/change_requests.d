@@ -1,4 +1,4 @@
-module uim.platform.mii.infrastructure.persistence.memory.change_requests;
+module uim.platform.mii.infrastructure.persistence.repositories.change_requests;
 
 import uim.platform.mii;
 

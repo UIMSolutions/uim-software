@@ -1,4 +1,4 @@
-module uim.platform.mes.infrastructure.persistence.memory.collaborations;
+module uim.platform.mes.infrastructure.persistence.repositories.collaborations;
 
 import uim.platform.mes;
 

@@ -1,4 +1,4 @@
-module uim.platform.team.infrastructure.persistence.memory.documents;
+module uim.platform.team.infrastructure.persistence.repositories.documents;
 
 import std.algorithm : remove;
 import uim.platform.team;

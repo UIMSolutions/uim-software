@@ -34,7 +34,7 @@ uim.platform.siem
 ├── infrastructure
 │   ├── config                  (AppConfig, loadConfig)
 │   ├── container               (Container, buildContainer)
-│   └── persistence.memory
+│   └── persistence.repositories
 │       ├── MemorySecurityEventRepository
 │       ├── MemoryAlertRepository
 │       ├── MemoryIncidentRepository

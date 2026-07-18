@@ -1,4 +1,4 @@
-module uim.platform.ps.infrastructure.persistence.memory.milestones;
+module uim.platform.ps.infrastructure.persistence.repositories.milestones;
 
 import uim.platform.ps;
 

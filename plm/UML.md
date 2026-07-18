@@ -42,7 +42,7 @@ uim.platform.plm
 ├── infrastructure
 │   ├── config
 │   ├── container
-│   └── persistence.memory
+│   └── persistence.repositories
 └── presentation.http
     ├── json_utils
     └── controllers

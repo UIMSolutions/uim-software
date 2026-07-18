@@ -1,4 +1,4 @@
-module uim.platform.team.infrastructure.persistence.memory.boms;
+module uim.platform.team.infrastructure.persistence.repositories.boms;
 
 import std.algorithm : remove;
 import uim.platform.team;

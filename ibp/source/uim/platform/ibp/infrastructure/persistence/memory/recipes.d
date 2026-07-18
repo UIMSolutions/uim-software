@@ -1,4 +1,4 @@
-module uim.platform.ibp.infrastructure.persistence.memory.recipes;
+module uim.platform.ibp.infrastructure.persistence.repositories.recipes;
 
 import uim.platform.ibp;
 

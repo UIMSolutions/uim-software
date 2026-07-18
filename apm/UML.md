@@ -23,7 +23,7 @@ uim.platform.apm
 ├── infrastructure
 │   ├── config
 │   ├── container
-│   └── persistence.memory
+│   └── persistence.repositories
 │       ├── MemoryPortfolioItemRepository
 │       └── MemoryAssessmentRepository
 └── presentation

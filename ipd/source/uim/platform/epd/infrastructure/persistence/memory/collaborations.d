@@ -1,4 +1,4 @@
-module uim.platform.epd.infrastructure.persistence.memory.collaborations;
+module uim.platform.epd.infrastructure.persistence.repositories.collaborations;
 
 import uim.platform.epd;
 

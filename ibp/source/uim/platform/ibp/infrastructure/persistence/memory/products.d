@@ -1,4 +1,4 @@
-module uim.platform.ibp.infrastructure.persistence.memory.products;
+module uim.platform.ibp.infrastructure.persistence.repositories.products;
 
 import uim.platform.ibp;
 

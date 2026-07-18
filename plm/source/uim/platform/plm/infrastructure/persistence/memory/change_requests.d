@@ -1,4 +1,4 @@
-module uim.platform.plm.infrastructure.persistence.memory.change_requests;
+module uim.platform.plm.infrastructure.persistence.repositories.change_requests;
 
 import uim.platform.plm;
 

@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.itil.infrastructure.persistence.memory.memory_release_record_repository;
+module uim.platform.itil.infrastructure.persistence.repositories.configuration_items;
 
 import uim.platform.itil;
 import std.algorithm : filter;
@@ -13,37 +13,41 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryReleaseRecordRepository : ReleaseRecordRepository {
-    private ReleaseRecord[] store;
+class MemoryConfigurationItemRepository : ConfigurationItemRepository {
+    private ConfigurationItem[] store;
 
-    ReleaseRecord[] findAll() { return store.dup; }
+    ConfigurationItem[] findAll() { return store.dup; }
 
-    ReleaseRecord* findById(ReleaseRecordId id) {
+    ConfigurationItem* findById(ConfigurationItemId id) {
         foreach (ref s; store) if (s.id == id) return &s;
         return null;
     }
 
-    ReleaseRecord[] findByTenant(TenantId tenantId) {
+    ConfigurationItem[] findByTenant(TenantId tenantId) {
         return store.filter!(s => s.tenantId == tenantId).array;
     }
 
-    ReleaseRecord[] findByStatus(ReleaseStatus releaseStatus) {
-        return store.filter!(s => s.releaseStatus == releaseStatus).array;
+    ConfigurationItem[] findByStatus(CIStatus ciStatus) {
+        return store.filter!(s => s.ciStatus == ciStatus).array;
     }
 
-    ReleaseRecord[] findByType(ReleaseType releaseType) {
-        return store.filter!(s => s.releaseType == releaseType).array;
+    ConfigurationItem[] findByType(CIType ciType) {
+        return store.filter!(s => s.ciType == ciType).array;
     }
 
-    void save(ReleaseRecord s) { store ~= s; }
+    ConfigurationItem[] findByOwner(string ownerId) {
+        return store.filter!(s => s.ownerId == ownerId).array;
+    }
 
-    void update(ReleaseRecord s) {
+    void save(ConfigurationItem s) { store ~= s; }
+
+    void update(ConfigurationItem s) {
         foreach (ref item; store) {
             if (item.id == s.id) { item = s; return; }
         }
     }
 
-    void remove(ReleaseRecordId id) {
+    void remove(ConfigurationItemId id) {
         store = store.filter!(s => s.id != id).array;
     }
 }

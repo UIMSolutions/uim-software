@@ -1,4 +1,4 @@
-module uim.platform.defemse.infrastructure.persistence.memory.contingents;
+module uim.platform.defemse.infrastructure.persistence.repositories.contingents;
 
 import uim.platform.defemse;
 

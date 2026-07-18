@@ -1,4 +1,4 @@
-module uim.platform.mes.infrastructure.persistence.memory.change_requests;
+module uim.platform.mes.infrastructure.persistence.repositories.change_requests;
 
 import uim.platform.mes;
 

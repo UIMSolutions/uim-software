@@ -1,4 +1,4 @@
-module uim.platform.defemse.infrastructure.persistence.memory.redeployment_orders;
+module uim.platform.defemse.infrastructure.persistence.repositories.redeployment_orders;
 
 import uim.platform.defemse;
 

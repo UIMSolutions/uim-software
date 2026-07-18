@@ -31,7 +31,7 @@ uim.platform.mii
 │   ├── config
 │   ├── container
 │   ├── integrations.sap_mii
-│   └── persistence.memory
+│   └── persistence.repositories
 └── presentation.http
     ├── controllers
     └── json_utils

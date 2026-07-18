@@ -1,4 +1,4 @@
-module uim.platform.mii.infrastructure.persistence.memory.collaborations;
+module uim.platform.mii.infrastructure.persistence.repositories.collaborations;
 
 import uim.platform.mii;
 

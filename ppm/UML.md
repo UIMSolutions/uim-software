@@ -21,7 +21,7 @@ uim.platform.ppm
 ├── infrastructure
 │   ├── config
 │   ├── container
-│   └── persistence.memory
+│   └── persistence.repositories
 └── presentation.http
 ```
 

@@ -1,4 +1,4 @@
-module uim.platform.ppm.infrastructure.persistence.memory.programs;
+module uim.platform.ppm.infrastructure.persistence.repositories.programs;
 
 import uim.platform.ppm;
 

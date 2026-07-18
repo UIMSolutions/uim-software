@@ -1,4 +1,4 @@
-module uim.platform.ibp.infrastructure.persistence.memory.change_requests;
+module uim.platform.ibp.infrastructure.persistence.repositories.change_requests;
 
 import uim.platform.ibp;
 

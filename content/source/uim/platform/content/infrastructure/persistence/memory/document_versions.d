@@ -1,4 +1,4 @@
-module uim.platform.content.infrastructure.persistence.memory.document_versions;
+module uim.platform.content.infrastructure.persistence.repositories.document_versions;
 
 import uim.platform.content;
 

@@ -1,4 +1,4 @@
-module uim.platform.mes.infrastructure.persistence.memory.documents;
+module uim.platform.mes.infrastructure.persistence.repositories.documents;
 
 import uim.platform.mes;
 

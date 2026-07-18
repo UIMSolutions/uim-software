@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.eam.infrastructure.persistence.memory.maintenance_orders;
+module uim.platform.eam.infrastructure.persistence.repositories.maintenance_orders;
 
 import uim.platform.eam;
 

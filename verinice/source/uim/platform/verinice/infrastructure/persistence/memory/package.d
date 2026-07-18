@@ -1,7 +1,7 @@
-module uim.platform.verinice.infrastructure.persistence.memory;
+module uim.platform.verinice.infrastructure.persistence.repositories;
 
 public {
-    import uim.platform.verinice.infrastructure.persistence.memory.assets;
-    import uim.platform.verinice.infrastructure.persistence.memory.safeguards;
-    import uim.platform.verinice.infrastructure.persistence.memory.assessments;
+    import uim.platform.verinice.infrastructure.persistence.repositories.assets;
+    import uim.platform.verinice.infrastructure.persistence.repositories.safeguards;
+    import uim.platform.verinice.infrastructure.persistence.repositories.assessments;
 }

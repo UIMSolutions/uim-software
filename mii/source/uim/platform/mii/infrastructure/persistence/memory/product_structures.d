@@ -1,4 +1,4 @@
-module uim.platform.mii.infrastructure.persistence.memory.product_structures;
+module uim.platform.mii.infrastructure.persistence.repositories.product_structures;
 
 import uim.platform.mii;
 

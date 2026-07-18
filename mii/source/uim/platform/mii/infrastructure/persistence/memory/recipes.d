@@ -1,4 +1,4 @@
-module uim.platform.mii.infrastructure.persistence.memory.recipes;
+module uim.platform.mii.infrastructure.persistence.repositories.recipes;
 
 import uim.platform.mii;
 

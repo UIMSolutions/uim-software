@@ -31,7 +31,7 @@ uim.platform.ewm
 │   ├── config
 │   ├── container
 │   ├── integrations.sap_ewm
-│   └── persistence.memory
+│   └── persistence.repositories
 └── presentation.http
     ├── controllers
     └── json_utils

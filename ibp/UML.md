@@ -31,7 +31,7 @@ uim.platform.ibp
 │   ├── config
 │   ├── container
 │   ├── integrations.sap_ibp
-│   └── persistence.memory
+│   └── persistence.repositories
 └── presentation.http
     ├── controllers
     └── json_utils

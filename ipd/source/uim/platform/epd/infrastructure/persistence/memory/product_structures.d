@@ -1,4 +1,4 @@
-module uim.platform.epd.infrastructure.persistence.memory.product_structures;
+module uim.platform.epd.infrastructure.persistence.repositories.product_structures;
 
 import uim.platform.epd;
 

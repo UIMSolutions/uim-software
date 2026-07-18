@@ -1,4 +1,4 @@
-module uim.platform.ps.infrastructure.persistence.memory.projects;
+module uim.platform.ps.infrastructure.persistence.repositories.projects;
 
 import uim.platform.ps;
 

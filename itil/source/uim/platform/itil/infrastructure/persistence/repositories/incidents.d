@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.itil.infrastructure.persistence.memory.memory_configuration_item_repository;
+module uim.platform.itil.infrastructure.persistence.repositories.incidents;
 
 import uim.platform.itil;
 import std.algorithm : filter;
@@ -13,41 +13,41 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryConfigurationItemRepository : ConfigurationItemRepository {
-    private ConfigurationItem[] store;
+class MemoryIncidentRepository : IncidentRepository {
+    private Incident[] store;
 
-    ConfigurationItem[] findAll() { return store.dup; }
+    Incident[] findAll() { return store.dup; }
 
-    ConfigurationItem* findById(ConfigurationItemId id) {
+    Incident* findById(IncidentId id) {
         foreach (ref s; store) if (s.id == id) return &s;
         return null;
     }
 
-    ConfigurationItem[] findByTenant(TenantId tenantId) {
+    Incident[] findByTenant(TenantId tenantId) {
         return store.filter!(s => s.tenantId == tenantId).array;
     }
 
-    ConfigurationItem[] findByStatus(CIStatus ciStatus) {
-        return store.filter!(s => s.ciStatus == ciStatus).array;
+    Incident[] findByStatus(RecordStatus status) {
+        return store.filter!(s => s.status == status).array;
     }
 
-    ConfigurationItem[] findByType(CIType ciType) {
-        return store.filter!(s => s.ciType == ciType).array;
+    Incident[] findByPriority(Priority priority) {
+        return store.filter!(s => s.priority == priority).array;
     }
 
-    ConfigurationItem[] findByOwner(string ownerId) {
-        return store.filter!(s => s.ownerId == ownerId).array;
+    Incident[] findByService(ITServiceId serviceId) {
+        return store.filter!(s => s.affectedServiceId == serviceId).array;
     }
 
-    void save(ConfigurationItem s) { store ~= s; }
+    void save(Incident s) { store ~= s; }
 
-    void update(ConfigurationItem s) {
+    void update(Incident s) {
         foreach (ref item; store) {
             if (item.id == s.id) { item = s; return; }
         }
     }
 
-    void remove(ConfigurationItemId id) {
+    void remove(IncidentId id) {
         store = store.filter!(s => s.id != id).array;
     }
 }

@@ -31,7 +31,7 @@ uim.platform.mes
 │   ├── config
 │   ├── container
 │   ├── integrations.sap_mes
-│   └── persistence.memory
+│   └── persistence.repositories
 └── presentation.http
     ├── controllers
     └── json_utils

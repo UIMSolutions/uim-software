@@ -1,4 +1,4 @@
-module uim.platform.ps.infrastructure.persistence.memory.project_costs;
+module uim.platform.ps.infrastructure.persistence.repositories.project_costs;
 
 import uim.platform.ps;
 

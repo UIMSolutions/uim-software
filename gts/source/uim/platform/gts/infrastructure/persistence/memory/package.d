@@ -1,3 +1,3 @@
-module uim.platform.gts.infrastructure.persistence.memory;
+module uim.platform.gts.infrastructure.persistence.repositories;
 
-public import uim.platform.gts.infrastructure.persistence.memory.trade_repositories;
+public import uim.platform.gts.infrastructure.persistence.repositories.trade_repositories;

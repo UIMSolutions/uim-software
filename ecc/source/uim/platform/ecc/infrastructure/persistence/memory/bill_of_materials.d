@@ -1,4 +1,4 @@
-module uim.platform.ecc.infrastructure.persistence.memory.bill_of_materials;
+module uim.platform.ecc.infrastructure.persistence.repositories.bill_of_materials;
 
 import uim.platform.ecc;
 

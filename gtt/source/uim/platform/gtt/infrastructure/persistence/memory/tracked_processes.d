@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.gtt.infrastructure.persistence.memory.tracked_processes;
+module uim.platform.gtt.infrastructure.persistence.repositories.tracked_processes;
 
 import uim.platform.gtt;
 

@@ -1,4 +1,4 @@
-module uim.platform.ibp.infrastructure.persistence.memory.bill_of_materials;
+module uim.platform.ibp.infrastructure.persistence.repositories.bill_of_materials;
 
 import uim.platform.ibp;
 

@@ -1,4 +1,4 @@
-module uim.platform.mes.infrastructure.persistence.memory.recipes;
+module uim.platform.mes.infrastructure.persistence.repositories.recipes;
 
 import uim.platform.mes;
 

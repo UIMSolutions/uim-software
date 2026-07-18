@@ -1,4 +1,4 @@
-module uim.platform.plm.infrastructure.persistence.memory.collaborations;
+module uim.platform.plm.infrastructure.persistence.repositories.collaborations;
 
 import uim.platform.plm;
 

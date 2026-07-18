@@ -1,4 +1,4 @@
-module uim.platform.content.infrastructure.persistence.memory.documents;
+module uim.platform.content.infrastructure.persistence.repositories.documents;
 
 import uim.platform.content;
 

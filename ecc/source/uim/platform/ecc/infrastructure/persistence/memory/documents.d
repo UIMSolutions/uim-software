@@ -1,4 +1,4 @@
-module uim.platform.ecc.infrastructure.persistence.memory.documents;
+module uim.platform.ecc.infrastructure.persistence.repositories.documents;
 
 import uim.platform.ecc;
 

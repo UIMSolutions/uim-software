@@ -1,4 +1,4 @@
-module uim.platform.gts.infrastructure.persistence.memory.trade_repositories;
+module uim.platform.gts.infrastructure.persistence.repositories.trade_repositories;
 
 import std.algorithm : remove;
 

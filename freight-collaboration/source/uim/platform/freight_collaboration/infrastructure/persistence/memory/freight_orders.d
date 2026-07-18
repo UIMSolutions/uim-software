@@ -1,4 +1,4 @@
-module uim.platform.freight_collaboration.infrastructure.persistence.memory.freight_orders;
+module uim.platform.freight_collaboration.infrastructure.persistence.repositories.freight_orders;
 
 import uim.platform.freight_collaboration;
 

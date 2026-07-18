@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.itil.infrastructure.persistence.memory.memory_sla_repository;
+module uim.platform.itil.infrastructure.persistence.repositories.improvement_items;
 
 import uim.platform.itil;
 import std.algorithm : filter;
@@ -13,41 +13,41 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemorySLARepository : SLARepository {
-    private ServiceLevelAgreement[] store;
+class MemoryImprovementItemRepository : ImprovementItemRepository {
+    private ImprovementItem[] store;
 
-    ServiceLevelAgreement[] findAll() { return store.dup; }
+    ImprovementItem[] findAll() { return store.dup; }
 
-    ServiceLevelAgreement* findById(ServiceLevelAgreementId id) {
+    ImprovementItem* findById(ImprovementItemId id) {
         foreach (ref s; store) if (s.id == id) return &s;
         return null;
     }
 
-    ServiceLevelAgreement[] findByTenant(TenantId tenantId) {
+    ImprovementItem[] findByTenant(TenantId tenantId) {
         return store.filter!(s => s.tenantId == tenantId).array;
     }
 
-    ServiceLevelAgreement[] findByStatus(SLAStatus slaStatus) {
-        return store.filter!(s => s.slaStatus == slaStatus).array;
+    ImprovementItem[] findByStatus(ImprovementStatus improvementStatus) {
+        return store.filter!(s => s.improvementStatus == improvementStatus).array;
     }
 
-    ServiceLevelAgreement[] findByService(ITServiceId serviceId) {
-        return store.filter!(s => s.serviceId == serviceId).array;
+    ImprovementItem[] findByPriority(Priority priority) {
+        return store.filter!(s => s.priority == priority).array;
     }
 
-    ServiceLevelAgreement[] findByCustomer(string customerId) {
-        return store.filter!(s => s.customerId == customerId).array;
+    ImprovementItem[] findByService(ITServiceId serviceId) {
+        return store.filter!(s => s.relatedServiceId == serviceId).array;
     }
 
-    void save(ServiceLevelAgreement s) { store ~= s; }
+    void save(ImprovementItem s) { store ~= s; }
 
-    void update(ServiceLevelAgreement s) {
+    void update(ImprovementItem s) {
         foreach (ref item; store) {
             if (item.id == s.id) { item = s; return; }
         }
     }
 
-    void remove(ServiceLevelAgreementId id) {
+    void remove(ImprovementItemId id) {
         store = store.filter!(s => s.id != id).array;
     }
 }

@@ -1,4 +1,4 @@
-module uim.platform.ecc.infrastructure.persistence.memory.recipes;
+module uim.platform.ecc.infrastructure.persistence.repositories.recipes;
 
 import uim.platform.ecc;
 

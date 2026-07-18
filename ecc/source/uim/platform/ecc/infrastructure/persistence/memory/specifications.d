@@ -1,4 +1,4 @@
-module uim.platform.ecc.infrastructure.persistence.memory.specifications;
+module uim.platform.ecc.infrastructure.persistence.repositories.specifications;
 
 import uim.platform.ecc;
 

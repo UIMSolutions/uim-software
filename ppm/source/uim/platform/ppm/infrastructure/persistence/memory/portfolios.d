@@ -1,4 +1,4 @@
-module uim.platform.ppm.infrastructure.persistence.memory.portfolios;
+module uim.platform.ppm.infrastructure.persistence.repositories.portfolios;
 
 import uim.platform.ppm;
 

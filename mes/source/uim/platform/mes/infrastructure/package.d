@@ -4,5 +4,5 @@ public {
     import uim.platform.mes.infrastructure.config;
     import uim.platform.mes.infrastructure.container;
     import uim.platform.mes.infrastructure.integrations;
-    import uim.platform.mes.infrastructure.persistence.memory;
+    import uim.platform.mes.infrastructure.persistence.repositories;
 }

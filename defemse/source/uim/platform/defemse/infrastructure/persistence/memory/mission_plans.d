@@ -1,4 +1,4 @@
-module uim.platform.defemse.infrastructure.persistence.memory.mission_plans;
+module uim.platform.defemse.infrastructure.persistence.repositories.mission_plans;
 
 import uim.platform.defemse;
 

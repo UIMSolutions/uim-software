@@ -15,7 +15,7 @@ uim.platform.lean
 │   └── usecases.manage      (12 ManageXxx use cases)
 ├── infrastructure
 │   ├── config               (AppConfig, loadConfig)
-│   ├── persistence.memory   (12 in-memory repository adapters)
+│   ├── persistence.repositories   (12 in-memory repository adapters)
 │   └── container            (Container struct, buildContainer)
 └── presentation
     └── http

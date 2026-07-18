@@ -1,4 +1,4 @@
-module uim.platform.ps.infrastructure.persistence.memory.wbs_elements;
+module uim.platform.ps.infrastructure.persistence.repositories.wbs_elements;
 
 import uim.platform.ps;
 

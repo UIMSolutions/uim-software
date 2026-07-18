@@ -1,4 +1,4 @@
-module uim.platform.defemse.infrastructure.persistence.memory.offline_sync_records;
+module uim.platform.defemse.infrastructure.persistence.repositories.offline_sync_records;
 
 import uim.platform.defemse;
 

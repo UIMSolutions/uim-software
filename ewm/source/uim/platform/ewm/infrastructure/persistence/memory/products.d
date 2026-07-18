@@ -1,4 +1,4 @@
-module uim.platform.ewm.infrastructure.persistence.memory.products;
+module uim.platform.ewm.infrastructure.persistence.repositories.products;
 
 import uim.platform.ewm;
 

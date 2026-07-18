@@ -1,4 +1,4 @@
-module uim.platform.defemse.infrastructure.persistence.memory.readiness_profiles;
+module uim.platform.defemse.infrastructure.persistence.repositories.readiness_profiles;
 
 import uim.platform.defemse;
 

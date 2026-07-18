@@ -29,7 +29,7 @@ uim.platform.epd
 │   ├── config
 │   ├── container
 │   ├── integrations.sap_ipd
-│   └── persistence.memory
+│   └── persistence.repositories
 └── presentation.http
     ├── controllers
     └── json_utils

@@ -1,4 +1,4 @@
-module uim.platform.mrp.infrastructure.persistence.memory.plants;
+module uim.platform.mrp.infrastructure.persistence.repositories.plants;
 
 import uim.platform.mrp;
 

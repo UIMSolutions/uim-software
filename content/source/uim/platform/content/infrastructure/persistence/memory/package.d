@@ -1,5 +1,5 @@
-module uim.platform.content.infrastructure.persistence.memory;
+module uim.platform.content.infrastructure.persistence.repositories;
 
 public {
-    import uim.platform.content.infrastructure.persistence.memory.repositories;
+    import uim.platform.content.infrastructure.persistence.repositories.repositories;
 }

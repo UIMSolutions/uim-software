@@ -1,4 +1,4 @@
-module uim.platform.mrp.infrastructure.persistence.memory.inventory_positions;
+module uim.platform.mrp.infrastructure.persistence.repositories.inventory_positions;
 
 import uim.platform.mrp;
 

@@ -1,4 +1,4 @@
-module uim.platform.plm.infrastructure.persistence.memory.products;
+module uim.platform.plm.infrastructure.persistence.repositories.products;
 
 import uim.platform.plm;
 

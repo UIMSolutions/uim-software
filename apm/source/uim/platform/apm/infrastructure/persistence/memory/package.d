@@ -1,6 +1,6 @@
-module uim.platform.apm.infrastructure.persistence.memory;
+module uim.platform.apm.infrastructure.persistence.repositories;
 
 public {
-    import uim.platform.apm.infrastructure.persistence.memory.portfolio_items;
-    import uim.platform.apm.infrastructure.persistence.memory.assessments;
+    import uim.platform.apm.infrastructure.persistence.repositories.portfolio_items;
+    import uim.platform.apm.infrastructure.persistence.repositories.assessments;
 }

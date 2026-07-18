@@ -25,7 +25,7 @@ uim.platform.verinice
 │   ├── config
 │   ├── container
 │   ├── integrations.verinice_cloud
-│   └── persistence.memory
+│   └── persistence.repositories
 └── presentation.http
     ├── controllers
     └── json_utils

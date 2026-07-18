@@ -1,4 +1,4 @@
-module uim.platform.defemse.infrastructure.persistence.memory.budget_triggers;
+module uim.platform.defemse.infrastructure.persistence.repositories.budget_triggers;
 
 import uim.platform.defemse;
 

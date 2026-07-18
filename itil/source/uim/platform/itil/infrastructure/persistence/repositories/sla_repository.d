@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.itil.infrastructure.persistence.memory.memory_improvement_item_repository;
+module uim.platform.itil.infrastructure.persistence.repositories.memory_sla_repository;
 
 import uim.platform.itil;
 import std.algorithm : filter;
@@ -13,41 +13,41 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryImprovementItemRepository : ImprovementItemRepository {
-    private ImprovementItem[] store;
+class MemorySLARepository : SLARepository {
+    private ServiceLevelAgreement[] store;
 
-    ImprovementItem[] findAll() { return store.dup; }
+    ServiceLevelAgreement[] findAll() { return store.dup; }
 
-    ImprovementItem* findById(ImprovementItemId id) {
+    ServiceLevelAgreement* findById(ServiceLevelAgreementId id) {
         foreach (ref s; store) if (s.id == id) return &s;
         return null;
     }
 
-    ImprovementItem[] findByTenant(TenantId tenantId) {
+    ServiceLevelAgreement[] findByTenant(TenantId tenantId) {
         return store.filter!(s => s.tenantId == tenantId).array;
     }
 
-    ImprovementItem[] findByStatus(ImprovementStatus improvementStatus) {
-        return store.filter!(s => s.improvementStatus == improvementStatus).array;
+    ServiceLevelAgreement[] findByStatus(SLAStatus slaStatus) {
+        return store.filter!(s => s.slaStatus == slaStatus).array;
     }
 
-    ImprovementItem[] findByPriority(Priority priority) {
-        return store.filter!(s => s.priority == priority).array;
+    ServiceLevelAgreement[] findByService(ITServiceId serviceId) {
+        return store.filter!(s => s.serviceId == serviceId).array;
     }
 
-    ImprovementItem[] findByService(ITServiceId serviceId) {
-        return store.filter!(s => s.relatedServiceId == serviceId).array;
+    ServiceLevelAgreement[] findByCustomer(string customerId) {
+        return store.filter!(s => s.customerId == customerId).array;
     }
 
-    void save(ImprovementItem s) { store ~= s; }
+    void save(ServiceLevelAgreement s) { store ~= s; }
 
-    void update(ImprovementItem s) {
+    void update(ServiceLevelAgreement s) {
         foreach (ref item; store) {
             if (item.id == s.id) { item = s; return; }
         }
     }
 
-    void remove(ImprovementItemId id) {
+    void remove(ServiceLevelAgreementId id) {
         store = store.filter!(s => s.id != id).array;
     }
 }

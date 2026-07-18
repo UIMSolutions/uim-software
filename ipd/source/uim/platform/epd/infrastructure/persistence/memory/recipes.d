@@ -1,4 +1,4 @@
-module uim.platform.epd.infrastructure.persistence.memory.recipes;
+module uim.platform.epd.infrastructure.persistence.repositories.recipes;
 
 import uim.platform.epd;
 

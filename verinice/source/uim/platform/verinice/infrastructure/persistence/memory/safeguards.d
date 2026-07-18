@@ -1,4 +1,4 @@
-module uim.platform.verinice.infrastructure.persistence.memory.safeguards;
+module uim.platform.verinice.infrastructure.persistence.repositories.safeguards;
 
 import uim.platform.verinice;
 

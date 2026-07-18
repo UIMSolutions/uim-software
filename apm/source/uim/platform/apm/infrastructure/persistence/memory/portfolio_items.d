@@ -1,4 +1,4 @@
-module uim.platform.apm.infrastructure.persistence.memory.portfolio_items;
+module uim.platform.apm.infrastructure.persistence.repositories.portfolio_items;
 
 import std.algorithm : remove;
 import uim.platform.apm;

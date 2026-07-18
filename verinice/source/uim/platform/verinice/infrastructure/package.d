@@ -4,5 +4,5 @@ public {
     import uim.platform.verinice.infrastructure.config;
     import uim.platform.verinice.infrastructure.container;
     import uim.platform.verinice.infrastructure.integrations;
-    import uim.platform.verinice.infrastructure.persistence.memory;
+    import uim.platform.verinice.infrastructure.persistence.repositories;
 }

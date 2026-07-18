@@ -1,4 +1,4 @@
-module uim.platform.content.infrastructure.persistence.memory.folders;
+module uim.platform.content.infrastructure.persistence.repositories.folders;
 
 import uim.platform.content;
 

@@ -1,4 +1,4 @@
-module uim.platform.mrp.infrastructure.persistence.memory.procurement_proposals;
+module uim.platform.mrp.infrastructure.persistence.repositories.procurement_proposals;
 
 import uim.platform.mrp;
 

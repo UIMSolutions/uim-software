@@ -1,4 +1,4 @@
-module uim.platform.ppm.infrastructure.persistence.memory.resource_requests;
+module uim.platform.ppm.infrastructure.persistence.repositories.resource_requests;
 
 import uim.platform.ppm;
 

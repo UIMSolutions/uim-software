@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.siem.infrastructure.persistence.memory.threat_indicators;
+module uim.platform.siem.infrastructure.persistence.repositories.threat_indicators;
 
 import uim.platform.siem;
 

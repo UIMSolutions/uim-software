@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.itil.infrastructure.persistence.memory.memory_incident_repository;
+module uim.platform.itil.infrastructure.persistence.repositories.knowledge_articles;
 
 import uim.platform.itil;
 import std.algorithm : filter;
@@ -13,41 +13,41 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryIncidentRepository : IncidentRepository {
-    private Incident[] store;
+class MemoryKnowledgeArticleRepository : KnowledgeArticleRepository {
+    private KnowledgeArticle[] store;
 
-    Incident[] findAll() { return store.dup; }
+    KnowledgeArticle[] findAll() { return store.dup; }
 
-    Incident* findById(IncidentId id) {
+    KnowledgeArticle* findById(KnowledgeArticleId id) {
         foreach (ref s; store) if (s.id == id) return &s;
         return null;
     }
 
-    Incident[] findByTenant(TenantId tenantId) {
+    KnowledgeArticle[] findByTenant(TenantId tenantId) {
         return store.filter!(s => s.tenantId == tenantId).array;
     }
 
-    Incident[] findByStatus(RecordStatus status) {
-        return store.filter!(s => s.status == status).array;
+    KnowledgeArticle[] findByStatus(KnowledgeStatus knowledgeStatus) {
+        return store.filter!(s => s.knowledgeStatus == knowledgeStatus).array;
     }
 
-    Incident[] findByPriority(Priority priority) {
-        return store.filter!(s => s.priority == priority).array;
+    KnowledgeArticle[] findByService(ITServiceId serviceId) {
+        return store.filter!(s => s.serviceId == serviceId).array;
     }
 
-    Incident[] findByService(ITServiceId serviceId) {
-        return store.filter!(s => s.affectedServiceId == serviceId).array;
+    KnowledgeArticle[] findByAuthor(string author) {
+        return store.filter!(s => s.author == author).array;
     }
 
-    void save(Incident s) { store ~= s; }
+    void save(KnowledgeArticle s) { store ~= s; }
 
-    void update(Incident s) {
+    void update(KnowledgeArticle s) {
         foreach (ref item; store) {
             if (item.id == s.id) { item = s; return; }
         }
     }
 
-    void remove(IncidentId id) {
+    void remove(KnowledgeArticleId id) {
         store = store.filter!(s => s.id != id).array;
     }
 }

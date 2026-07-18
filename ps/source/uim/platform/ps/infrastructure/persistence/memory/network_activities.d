@@ -1,4 +1,4 @@
-module uim.platform.ps.infrastructure.persistence.memory.network_activities;
+module uim.platform.ps.infrastructure.persistence.repositories.network_activities;
 
 import uim.platform.ps;
 
