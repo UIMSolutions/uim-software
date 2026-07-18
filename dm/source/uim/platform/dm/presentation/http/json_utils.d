@@ -100,7 +100,7 @@ Json workInstructionToJson(ref WorkInstruction value) {
     j["operationActivityId"] = Json(value.operationActivityId);
     j["title"] = Json(value.title);
     j["documentRef"] = Json(value.documentRef);
-    j["version"] = Json(value.version);
+    j["version"] = Json(value.instructionVersion);
     j["language"] = Json(value.language);
     j["createdBy"] = Json(value.createdBy);
     j["modifiedBy"] = Json(value.modifiedBy);

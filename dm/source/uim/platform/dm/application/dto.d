@@ -88,7 +88,7 @@ struct WorkInstructionDTO {
     string operationActivityId;
     string title;
     string documentRef;
-    string version;
+    string instructionVersion;
     string language;
     string createdBy;
     string modifiedBy;

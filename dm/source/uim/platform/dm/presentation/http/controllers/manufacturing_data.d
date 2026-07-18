@@ -553,7 +553,7 @@ class WorkInstructionController : SAPController {
             dto.operationActivityId = jsonStr(j, "operationActivityId");
             dto.title = jsonStr(j, "title");
             dto.documentRef = jsonStr(j, "documentRef");
-            dto.version = jsonStr(j, "version");
+            dto.instructionVersion = jsonStr(j, "version");
             dto.language = jsonStr(j, "language");
             dto.createdBy = jsonStr(j, "createdBy");
 
@@ -574,7 +574,7 @@ class WorkInstructionController : SAPController {
             dto.id = extractIdFromPath(req.requestURI.to!string);
             dto.title = jsonStr(j, "title");
             dto.documentRef = jsonStr(j, "documentRef");
-            dto.version = jsonStr(j, "version");
+            dto.instructionVersion = jsonStr(j, "version");
             dto.language = jsonStr(j, "language");
             dto.modifiedBy = jsonStr(j, "modifiedBy");
 

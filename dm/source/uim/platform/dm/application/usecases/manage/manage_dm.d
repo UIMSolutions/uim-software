@@ -366,7 +366,7 @@ class ManageWorkInstructionsUseCase {
         value.operationActivityId = dto.operationActivityId;
         value.title = dto.title;
         value.documentRef = dto.documentRef;
-        value.version = dto.version;
+        value.instructionVersion = dto.instructionVersion;
         value.language = dto.language;
         value.createdBy = dto.createdBy;
 
@@ -381,7 +381,7 @@ class ManageWorkInstructionsUseCase {
 
         if (dto.title.length > 0) existing.title = dto.title;
         if (dto.documentRef.length > 0) existing.documentRef = dto.documentRef;
-        if (dto.version.length > 0) existing.version = dto.version;
+        if (dto.instructionVersion.length > 0) existing.instructionVersion = dto.instructionVersion;
         if (dto.language.length > 0) existing.language = dto.language;
         if (dto.modifiedBy.length > 0) existing.modifiedBy = dto.modifiedBy;
 
