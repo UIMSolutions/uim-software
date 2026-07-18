@@ -65,13 +65,12 @@ private string buildUrl(string baseUrl, string path) {
 
 @trusted
 private void sendJson(string url, string payload, string apiToken) {
-    auto http = new HTTP();
+    auto http = HTTP();
     http.addRequestHeader("Content-Type", "application/json");
     http.addRequestHeader("Accept", "application/json");
     if (apiToken.length) {
         http.addRequestHeader("Authorization", "Bearer " ~ apiToken);
     }
 
-    auto bytes = cast(ubyte[]) payload.dup;
-    post(url, bytes, http);
+    post(url, payload, http);
 }
