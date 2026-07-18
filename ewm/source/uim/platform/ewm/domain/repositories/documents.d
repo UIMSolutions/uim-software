@@ -3,13 +3,17 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.ewm;
+module uim.platform.ewm.domain.repositories.documents;
 
-public {
-    import uim.platform.core;
-    import uim.platform.ewm.domain;
-    import uim.platform.ewm.application;
-    import uim.platform.ewm.infrastructure;
-    import uim.platform.ewm.presentation;
+import uim.platform.ewm.domain.entities.document;
+import uim.platform.ewm.domain.types;
+
+@safe:
+
+interface DocumentRepository {
+    Document[] findAll();
+    Document* findById(DocumentId id);
+    void save(Document value);
+    void update(Document value);
+    void remove(DocumentId id);
 }
-

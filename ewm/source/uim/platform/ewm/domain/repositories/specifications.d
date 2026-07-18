@@ -3,13 +3,17 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.ewm;
+module uim.platform.ewm.domain.repositories.specifications;
 
-public {
-    import uim.platform.core;
-    import uim.platform.ewm.domain;
-    import uim.platform.ewm.application;
-    import uim.platform.ewm.infrastructure;
-    import uim.platform.ewm.presentation;
+import uim.platform.ewm.domain.entities.specification;
+import uim.platform.ewm.domain.types;
+
+@safe:
+
+interface SpecificationRepository {
+    Specification[] findAll();
+    Specification* findById(SpecificationId id);
+    void save(Specification value);
+    void update(Specification value);
+    void remove(SpecificationId id);
 }
-

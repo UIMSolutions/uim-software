@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.itil.infrastructure.persistence.memory.memory_change_record_repository;
+module uim.platform.itil.infrastructure.persistence.memory.change_record_repository;
 
 import uim.platform.itil;
 import std.algorithm : filter;
