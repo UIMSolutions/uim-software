@@ -1,12 +1,12 @@
 module uim.software.asset_performance.domain.repositories;
 
 public {
-    import uim.software.asset_performance.domain.repositories.equipment_repository;
-    import uim.software.asset_performance.domain.repositories.model_repository;
-    import uim.software.asset_performance.domain.repositories.location_repository;
-    import uim.software.asset_performance.domain.repositories.failure_mode_repository;
-    import uim.software.asset_performance.domain.repositories.assessment_repository;
-    import uim.software.asset_performance.domain.repositories.instruction_repository;
-    import uim.software.asset_performance.domain.repositories.function_repository;
-    import uim.software.asset_performance.domain.repositories.indicator_repository;
+    import uim.software.asset_performance.domain.repositories.equipments;
+    import uim.software.asset_performance.domain.repositories.models;
+    import uim.software.asset_performance.domain.repositories.locations;
+    import uim.software.asset_performance.domain.repositories.failure_modes;
+    import uim.software.asset_performance.domain.repositories.assessments;
+    import uim.software.asset_performance.domain.repositories.instructions;
+    import uim.software.asset_performance.domain.repositories.functions;
+    import uim.software.asset_performance.domain.repositories.indicators;
 }

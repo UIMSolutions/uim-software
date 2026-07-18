@@ -3,21 +3,21 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.software.asset_performance.domain.repositories.indicator_repository;
+module uim.platform.asset_strategy_performance.domain.repositories.functions;
 
-import uim.software.asset_performance;
+import uim.software.asset_strategy_performance;
 
 mixin(ShowModule!());
 
 @safe:
 
-interface IndicatorRepository {
-    Indicator[] findAll();
-    Indicator* findById(IndicatorId id);
-    Indicator[] findByTenant(TenantId tenantId);
-    Indicator[] findByEquipment(EquipmentId equipmentId);
-    Indicator[] findByType(IndicatorType indicatorType);
-    void save(Indicator indicator);
-    void update(Indicator indicator);
-    void remove(IndicatorId id);
+interface FunctionRepository {
+    Function[] findAll();
+    Function* findById(FunctionId id);
+    Function[] findByTenant(TenantId tenantId);
+    Function[] findByEquipment(EquipmentId equipmentId);
+    Function[] findByStatus(FunctionStatus status);
+    void save(Function func);
+    void update(Function func);
+    void remove(FunctionId id);
 }

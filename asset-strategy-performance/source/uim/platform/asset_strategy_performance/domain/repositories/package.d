@@ -1,7 +1,7 @@
 module uim.software.asset_strategy_performance.domain.repositories;
 
 public {
-    import uim.software.asset_strategy_performance.domain.repositories.equipment_repository;
+    import uim.software.asset_strategy_performance.domain.repositories.equipments;
     import uim.software.asset_strategy_performance.domain.repositories.model_repository;
     import uim.software.asset_strategy_performance.domain.repositories.location_repository;
     import uim.software.asset_strategy_performance.domain.repositories.failure_mode_repository;

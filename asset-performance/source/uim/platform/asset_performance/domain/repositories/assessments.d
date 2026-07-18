@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.software.asset_performance.domain.repositories.equipment_repository;
+module uim.platform.asset_performance.domain.repositories.assessments;
 
 import uim.software.asset_performance;
 
@@ -11,14 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-interface EquipmentRepository {
-    Equipment[] findAll();
-    Equipment* findById(EquipmentId id);
-    Equipment[] findByTenant(TenantId tenantId);
-    Equipment[] findByModel(ModelId modelId);
-    Equipment[] findByLocation(LocationId locationId);
-    Equipment[] findByStatus(EquipmentStatus status);
-    void save(Equipment equipment);
-    void update(Equipment equipment);
-    void remove(EquipmentId id);
+interface AssessmentRepository {
+    Assessment[] findAll();
+    Assessment* findById(AssessmentId id);
+    Assessment[] findByTenant(TenantId tenantId);
+    Assessment[] findByEquipment(EquipmentId equipmentId);
+    Assessment[] findByType(AssessmentType assessmentType);
+    Assessment[] findByStatus(AssessmentStatus status);
+    void save(Assessment assessment);
+    void update(Assessment assessment);
+    void remove(AssessmentId id);
 }

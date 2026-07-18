@@ -1,4 +1,4 @@
-module uim.platform.apm.domain.repositories.assessment_repository;
+module uim.platform.apm.domain.repositories.assessments;
 
 import uim.platform.apm.domain;
 
