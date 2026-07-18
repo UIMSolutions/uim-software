@@ -1,4 +1,4 @@
-module uim.platform.defemse.domain.repositories.maintenance_task_repository;
+module uim.platform.defemse.domain.repositories.maintenance_tasks;
 
 import uim.platform.defemse.domain.entities.maintenance_task;
 import uim.platform.defemse.domain.types;

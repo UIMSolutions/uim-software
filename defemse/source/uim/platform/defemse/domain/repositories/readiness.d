@@ -1,4 +1,4 @@
-module uim.platform.defemse.domain.repositories.readiness_repository;
+module uim.platform.defemse.domain.repositories.readiness;
 
 import uim.platform.defemse.domain.entities.readiness_profile;
 import uim.platform.defemse.domain.types;

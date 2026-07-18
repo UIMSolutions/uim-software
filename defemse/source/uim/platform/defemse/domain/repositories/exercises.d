@@ -1,4 +1,4 @@
-module uim.platform.defemse.domain.repositories.exercise_repository;
+module uim.platform.defemse.domain.repositories.exercises;
 
 import uim.platform.defemse.domain.entities.exercise;
 import uim.platform.defemse.domain.types;

@@ -1,4 +1,5 @@
-module uim.platform.defemse.domain.repositories.offline_sync_record_repository;
+module uim.platform.defemse.domain.repositories.offline_sync_records
+;
 
 import uim.platform.defemse.domain.entities.offline_sync_record;
 import uim.platform.defemse.domain.types;

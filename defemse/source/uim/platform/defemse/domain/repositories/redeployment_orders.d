@@ -1,4 +1,4 @@
-module uim.platform.defemse.domain.repositories.redeployment_order_repository;
+module uim.platform.defemse.domain.repositories.redeployment_orders;
 
 import uim.platform.defemse.domain.entities.redeployment_order;
 import uim.platform.defemse.domain.types;

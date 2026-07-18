@@ -1,4 +1,4 @@
-module uim.platform.defemse.domain.repositories.contingent_repository;
+module uim.platform.defemse.domain.repositories.contingents;
 
 import uim.platform.defemse.domain.entities.contingent;
 import uim.platform.defemse.domain.types;

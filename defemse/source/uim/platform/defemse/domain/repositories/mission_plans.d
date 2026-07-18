@@ -1,4 +1,4 @@
-module uim.platform.defemse.domain.repositories.mission_plan_repository;
+module uim.platform.defemse.domain.repositories.mission_plans;
 
 import uim.platform.defemse.domain.entities.mission_plan;
 import uim.platform.defemse.domain.types;

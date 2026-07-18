@@ -1,4 +1,4 @@
-module uim.platform.defemse.domain.repositories.budget_trigger_repository;
+module uim.platform.defemse.domain.repositories.budget_triggers;
 
 import uim.platform.defemse.domain.entities.budget_trigger;
 import uim.platform.defemse.domain.types;
