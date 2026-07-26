@@ -10,6 +10,7 @@ struct Container {
     ManageWorkflowDataUseCase manageWorkflowDataUseCase;
 
     WorkflowHealthController healthController;
+    WorkflowOpenApiController openApiController;
     WorkflowWebClientController webClientController;
     WorkflowDefinitionController workflowDefinitionController;
     WorkflowInstanceController workflowInstanceController;
@@ -25,14 +26,34 @@ Container buildContainer(AppConfig config) {
     Container container;
     container.config = config;
 
-    auto definitionRepo = new MemoryWorkflowDefinitionRepository();
-    auto instanceRepo = new MemoryWorkflowInstanceRepository();
-    auto taskRepo = new MemoryWorkflowTaskRepository();
-    auto decisionRepo = new MemoryApprovalDecisionRepository();
-    auto deadlineRepo = new MemoryDeadlineEscalationRepository();
-    auto substitutionRepo = new MemoryWorkflowSubstitutionRepository();
-    auto contextRepo = new MemoryWorkflowContextRepository();
-    auto eventRepo = new MemoryWorkflowEventRepository();
+    WorkflowDefinitionRepository definitionRepo;
+    WorkflowInstanceRepository instanceRepo;
+    WorkflowTaskRepository taskRepo;
+    ApprovalDecisionRepository decisionRepo;
+    DeadlineEscalationRepository deadlineRepo;
+    WorkflowSubstitutionRepository substitutionRepo;
+    WorkflowContextRepository contextRepo;
+    WorkflowEventRepository eventRepo;
+
+    if (config.storage == "file") {
+        definitionRepo = new FileWorkflowDefinitionRepository(config.storagePath);
+        instanceRepo = new FileWorkflowInstanceRepository(config.storagePath);
+        taskRepo = new FileWorkflowTaskRepository(config.storagePath);
+        decisionRepo = new FileApprovalDecisionRepository(config.storagePath);
+        deadlineRepo = new FileDeadlineEscalationRepository(config.storagePath);
+        substitutionRepo = new FileWorkflowSubstitutionRepository(config.storagePath);
+        contextRepo = new FileWorkflowContextRepository(config.storagePath);
+        eventRepo = new FileWorkflowEventRepository(config.storagePath);
+    } else {
+        definitionRepo = new MemoryWorkflowDefinitionRepository();
+        instanceRepo = new MemoryWorkflowInstanceRepository();
+        taskRepo = new MemoryWorkflowTaskRepository();
+        decisionRepo = new MemoryApprovalDecisionRepository();
+        deadlineRepo = new MemoryDeadlineEscalationRepository();
+        substitutionRepo = new MemoryWorkflowSubstitutionRepository();
+        contextRepo = new MemoryWorkflowContextRepository();
+        eventRepo = new MemoryWorkflowEventRepository();
+    }
 
     container.manageWorkflowDataUseCase = new ManageWorkflowDataUseCase(
         definitionRepo,
@@ -46,6 +67,7 @@ Container buildContainer(AppConfig config) {
     );
 
     container.healthController = new WorkflowHealthController();
+    container.openApiController = new WorkflowOpenApiController();
     container.webClientController = new WorkflowWebClientController();
     container.workflowDefinitionController = new WorkflowDefinitionController(container.manageWorkflowDataUseCase);
     container.workflowInstanceController = new WorkflowInstanceController(container.manageWorkflowDataUseCase);

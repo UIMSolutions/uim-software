@@ -53,6 +53,15 @@ source/
 | GET/POST/PUT/DELETE | /api/v1/workflow/substitutions |
 | GET/POST/PUT/DELETE | /api/v1/workflow/contexts |
 | GET/POST/PUT/DELETE | /api/v1/workflow/events |
+| GET/POST/PUT/DELETE | /api/v1/sap-advanced-workflow/workflow-definitions |
+| GET/POST/PUT/DELETE | /api/v1/sap-advanced-workflow/workflow-instances |
+| GET/POST/PUT/DELETE | /api/v1/sap-advanced-workflow/workflow-tasks |
+| GET/POST/PUT/DELETE | /api/v1/sap-advanced-workflow/approval-decisions |
+| GET/POST/PUT/DELETE | /api/v1/sap-advanced-workflow/deadline-escalations |
+| GET/POST/PUT/DELETE | /api/v1/sap-advanced-workflow/workflow-substitutions |
+| GET/POST/PUT/DELETE | /api/v1/sap-advanced-workflow/workflow-contexts |
+| GET/POST/PUT/DELETE | /api/v1/sap-advanced-workflow/workflow-events |
+| GET | /api/v1/openapi.yaml |
 | GET | /client |
 | GET | /health |
 | GET | /api/v1/health |
@@ -65,6 +74,8 @@ All write calls require tenant context using header `X-Tenant-Id`.
 | --- | --- | --- |
 | WORKFLOW_HOST | 0.0.0.0 | HTTP bind address |
 | WORKFLOW_PORT | 8148 | HTTP listen port |
+| WORKFLOW_STORAGE | memory | `memory` or `file` repository adapter |
+| WORKFLOW_STORAGE_PATH | .data/workflow | Base path for file-backed persistence |
 
 ## Build and Run
 
@@ -82,6 +93,7 @@ Unit tests validate:
 - definition creation
 - task transition update
 - decision create/delete lifecycle
+- OpenAPI contract paths for standard and SAP-compat routes
 
 ## Web Client
 

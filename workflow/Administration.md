@@ -25,17 +25,20 @@ dub test
 
 - `WORKFLOW_HOST`: bind host, default `0.0.0.0`
 - `WORKFLOW_PORT`: bind port, default `8148`
+- `WORKFLOW_STORAGE`: repository adapter mode, `memory` (default) or `file`
+- `WORKFLOW_STORAGE_PATH`: directory used by file-backed adapters, default `.data/workflow`
 
 Example:
 
 ```bash
-WORKFLOW_HOST=0.0.0.0 WORKFLOW_PORT=8148 dub run
+WORKFLOW_HOST=0.0.0.0 WORKFLOW_PORT=8148 WORKFLOW_STORAGE=file WORKFLOW_STORAGE_PATH=.data/workflow dub run
 ```
 
 ## Health Checks
 
 - Liveness: `GET /health`
 - API health: `GET /api/v1/health`
+- OpenAPI: `GET /api/v1/openapi.yaml`
 
 ## Multi-tenant Governance
 

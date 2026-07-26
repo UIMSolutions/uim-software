@@ -15,6 +15,7 @@ void main() {
 
     auto router = new URLRouter();
     container.healthController.registerRoutes(router);
+    container.openApiController.registerRoutes(router);
     container.webClientController.registerRoutes(router);
     container.workflowDefinitionController.registerRoutes(router);
     container.workflowInstanceController.registerRoutes(router);
@@ -35,6 +36,7 @@ void main() {
     writeln("  Endpoints:");
     writeln("    GET    /health");
     writeln("    GET    /api/v1/health");
+    writeln("    GET    /api/v1/openapi.yaml");
     writeln("    GET    /client");
     writeln("    CRUD   /api/v1/workflow/definitions");
     writeln("    CRUD   /api/v1/workflow/instances");
@@ -44,6 +46,7 @@ void main() {
     writeln("    CRUD   /api/v1/workflow/substitutions");
     writeln("    CRUD   /api/v1/workflow/contexts");
     writeln("    CRUD   /api/v1/workflow/events");
+    writeln("    CRUD   /api/v1/sap-advanced-workflow/* (compatibility)");
     writeln("====================================================");
     writeln("  Listening on ", config.host, ":", config.port);
     writeln("====================================================");

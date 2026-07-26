@@ -26,6 +26,22 @@ private bool jsonBool(in Json j, string key, bool fallback = false) {
     catch (Exception ex) return jsonStr(j, key).toLower() == "true";
 }
 
+private string jsonStrAny(in Json j, string[] keys) {
+    foreach (key; keys) {
+        auto value = jsonStr(j, key);
+        if (value.length > 0)
+            return value;
+    }
+    return "";
+}
+
+private bool jsonBoolAny(in Json j, string[] keys, bool fallback = false) {
+    foreach (key; keys)
+        if ((key in j) !is null)
+            return jsonBool(j, key, fallback);
+    return fallback;
+}
+
 class WorkflowDefinitionController : SAPController {
     private ManageWorkflowDataUseCase uc;
 
@@ -38,6 +54,11 @@ class WorkflowDefinitionController : SAPController {
         router.post("/api/v1/workflow/definitions", &handleCreate);
         router.put("/api/v1/workflow/definitions/*", &handleUpdate);
         router.delete_("/api/v1/workflow/definitions/*", &handleDelete);
+        router.get("/api/v1/sap-advanced-workflow/workflow-definitions", &handleList);
+        router.get("/api/v1/sap-advanced-workflow/workflow-definitions/*", &handleGet);
+        router.post("/api/v1/sap-advanced-workflow/workflow-definitions", &handleCreate);
+        router.put("/api/v1/sap-advanced-workflow/workflow-definitions/*", &handleUpdate);
+        router.delete_("/api/v1/sap-advanced-workflow/workflow-definitions/*", &handleDelete);
     }
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -57,14 +78,14 @@ class WorkflowDefinitionController : SAPController {
         try {
             auto j = req.json;
             WorkflowDefinitionDTO dto;
-            dto.id = jsonStr(j, "id");
+            dto.id = jsonStrAny(j, ["id", "workflowDefinitionId"]);
             dto.tenantId = req.headers.get("X-Tenant-Id", "");
-            dto.name = jsonStr(j, "name");
-            dto.category = jsonStr(j, "category");
-            dto.starterRole = jsonStr(j, "starterRole");
-            dto.priority = jsonStr(j, "priority");
-            dto.status = jsonStr(j, "status");
-            dto.createdBy = jsonStr(j, "createdBy");
+            dto.name = jsonStrAny(j, ["name", "workflowDefinitionName"]);
+            dto.category = jsonStrAny(j, ["category", "workflowScenario"]);
+            dto.starterRole = jsonStrAny(j, ["starterRole", "initiatedByRole"]);
+            dto.priority = jsonStrAny(j, ["priority", "workflowPriority"]);
+            dto.status = jsonStrAny(j, ["status", "lifecycleStatus"]);
+            dto.createdBy = jsonStrAny(j, ["createdBy", "initiatedBy"]);
 
             auto result = uc.createDefinition(dto);
             if (result.success) {
@@ -81,12 +102,12 @@ class WorkflowDefinitionController : SAPController {
             auto j = req.json;
             WorkflowDefinitionDTO dto;
             dto.id = extractIdFromPath(req.requestURI.to!string);
-            dto.name = jsonStr(j, "name");
-            dto.category = jsonStr(j, "category");
-            dto.starterRole = jsonStr(j, "starterRole");
-            dto.priority = jsonStr(j, "priority");
-            dto.status = jsonStr(j, "status");
-            dto.modifiedBy = jsonStr(j, "modifiedBy");
+            dto.name = jsonStrAny(j, ["name", "workflowDefinitionName"]);
+            dto.category = jsonStrAny(j, ["category", "workflowScenario"]);
+            dto.starterRole = jsonStrAny(j, ["starterRole", "initiatedByRole"]);
+            dto.priority = jsonStrAny(j, ["priority", "workflowPriority"]);
+            dto.status = jsonStrAny(j, ["status", "lifecycleStatus"]);
+            dto.modifiedBy = jsonStrAny(j, ["modifiedBy", "changedBy"]);
 
             auto result = uc.updateDefinition(dto);
             if (result.success) {
@@ -122,6 +143,11 @@ class WorkflowInstanceController : SAPController {
         router.post("/api/v1/workflow/instances", &handleCreate);
         router.put("/api/v1/workflow/instances/*", &handleUpdate);
         router.delete_("/api/v1/workflow/instances/*", &handleDelete);
+        router.get("/api/v1/sap-advanced-workflow/workflow-instances", &handleList);
+        router.get("/api/v1/sap-advanced-workflow/workflow-instances/*", &handleGet);
+        router.post("/api/v1/sap-advanced-workflow/workflow-instances", &handleCreate);
+        router.put("/api/v1/sap-advanced-workflow/workflow-instances/*", &handleUpdate);
+        router.delete_("/api/v1/sap-advanced-workflow/workflow-instances/*", &handleDelete);
     }
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -141,15 +167,15 @@ class WorkflowInstanceController : SAPController {
         try {
             auto j = req.json;
             WorkflowInstanceDTO dto;
-            dto.id = jsonStr(j, "id");
+            dto.id = jsonStrAny(j, ["id", "workflowInstanceId"]);
             dto.tenantId = req.headers.get("X-Tenant-Id", "");
-            dto.definitionId = jsonStr(j, "definitionId");
-            dto.businessObjectType = jsonStr(j, "businessObjectType");
-            dto.businessObjectId = jsonStr(j, "businessObjectId");
-            dto.status = jsonStr(j, "status");
-            dto.startedBy = jsonStr(j, "startedBy");
-            dto.startedAt = jsonStr(j, "startedAt");
-            dto.completedAt = jsonStr(j, "completedAt");
+            dto.definitionId = jsonStrAny(j, ["definitionId", "workflowDefinitionId"]);
+            dto.businessObjectType = jsonStrAny(j, ["businessObjectType", "businessContextType"]);
+            dto.businessObjectId = jsonStrAny(j, ["businessObjectId", "businessContextId"]);
+            dto.status = jsonStrAny(j, ["status", "lifecycleStatus"]);
+            dto.startedBy = jsonStrAny(j, ["startedBy", "initiatedBy"]);
+            dto.startedAt = jsonStrAny(j, ["startedAt", "initiatedAt"]);
+            dto.completedAt = jsonStrAny(j, ["completedAt", "finishedAt"]);
 
             auto result = uc.createInstance(dto);
             if (result.success) {
@@ -166,9 +192,9 @@ class WorkflowInstanceController : SAPController {
             auto j = req.json;
             WorkflowInstanceDTO dto;
             dto.id = extractIdFromPath(req.requestURI.to!string);
-            dto.status = jsonStr(j, "status");
-            dto.completedAt = jsonStr(j, "completedAt");
-            dto.modifiedBy = jsonStr(j, "modifiedBy");
+            dto.status = jsonStrAny(j, ["status", "lifecycleStatus"]);
+            dto.completedAt = jsonStrAny(j, ["completedAt", "finishedAt"]);
+            dto.modifiedBy = jsonStrAny(j, ["modifiedBy", "changedBy"]);
 
             auto result = uc.updateInstance(dto);
             if (result.success) {
@@ -204,6 +230,11 @@ class WorkflowTaskController : SAPController {
         router.post("/api/v1/workflow/tasks", &handleCreate);
         router.put("/api/v1/workflow/tasks/*", &handleUpdate);
         router.delete_("/api/v1/workflow/tasks/*", &handleDelete);
+        router.get("/api/v1/sap-advanced-workflow/workflow-tasks", &handleList);
+        router.get("/api/v1/sap-advanced-workflow/workflow-tasks/*", &handleGet);
+        router.post("/api/v1/sap-advanced-workflow/workflow-tasks", &handleCreate);
+        router.put("/api/v1/sap-advanced-workflow/workflow-tasks/*", &handleUpdate);
+        router.delete_("/api/v1/sap-advanced-workflow/workflow-tasks/*", &handleDelete);
     }
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -223,14 +254,14 @@ class WorkflowTaskController : SAPController {
         try {
             auto j = req.json;
             WorkflowTaskDTO dto;
-            dto.id = jsonStr(j, "id");
+            dto.id = jsonStrAny(j, ["id", "workflowTaskId"]);
             dto.tenantId = req.headers.get("X-Tenant-Id", "");
-            dto.instanceId = jsonStr(j, "instanceId");
-            dto.title = jsonStr(j, "title");
-            dto.assignee = jsonStr(j, "assignee");
-            dto.dueDate = jsonStr(j, "dueDate");
-            dto.priority = jsonStr(j, "priority");
-            dto.state = jsonStr(j, "state");
+            dto.instanceId = jsonStrAny(j, ["instanceId", "workflowInstanceId"]);
+            dto.title = jsonStrAny(j, ["title", "taskTitle"]);
+            dto.assignee = jsonStrAny(j, ["assignee", "processor"]);
+            dto.dueDate = jsonStrAny(j, ["dueDate", "latestEndDate"]);
+            dto.priority = jsonStrAny(j, ["priority", "taskPriority"]);
+            dto.state = jsonStrAny(j, ["state", "taskState"]);
 
             auto result = uc.createTask(dto);
             if (result.success) {
@@ -247,13 +278,13 @@ class WorkflowTaskController : SAPController {
             auto j = req.json;
             WorkflowTaskDTO dto;
             dto.id = extractIdFromPath(req.requestURI.to!string);
-            dto.assignee = jsonStr(j, "assignee");
-            dto.dueDate = jsonStr(j, "dueDate");
-            dto.priority = jsonStr(j, "priority");
-            dto.state = jsonStr(j, "state");
-            dto.completedBy = jsonStr(j, "completedBy");
-            dto.completedAt = jsonStr(j, "completedAt");
-            dto.modifiedBy = jsonStr(j, "modifiedBy");
+            dto.assignee = jsonStrAny(j, ["assignee", "processor"]);
+            dto.dueDate = jsonStrAny(j, ["dueDate", "latestEndDate"]);
+            dto.priority = jsonStrAny(j, ["priority", "taskPriority"]);
+            dto.state = jsonStrAny(j, ["state", "taskState"]);
+            dto.completedBy = jsonStrAny(j, ["completedBy", "processedBy"]);
+            dto.completedAt = jsonStrAny(j, ["completedAt", "processedAt"]);
+            dto.modifiedBy = jsonStrAny(j, ["modifiedBy", "changedBy"]);
 
             auto result = uc.updateTask(dto);
             if (result.success) {
@@ -289,6 +320,11 @@ class ApprovalDecisionController : SAPController {
         router.post("/api/v1/workflow/decisions", &handleCreate);
         router.put("/api/v1/workflow/decisions/*", &handleUpdate);
         router.delete_("/api/v1/workflow/decisions/*", &handleDelete);
+        router.get("/api/v1/sap-advanced-workflow/approval-decisions", &handleList);
+        router.get("/api/v1/sap-advanced-workflow/approval-decisions/*", &handleGet);
+        router.post("/api/v1/sap-advanced-workflow/approval-decisions", &handleCreate);
+        router.put("/api/v1/sap-advanced-workflow/approval-decisions/*", &handleUpdate);
+        router.delete_("/api/v1/sap-advanced-workflow/approval-decisions/*", &handleDelete);
     }
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -308,13 +344,13 @@ class ApprovalDecisionController : SAPController {
         try {
             auto j = req.json;
             ApprovalDecisionDTO dto;
-            dto.id = jsonStr(j, "id");
+            dto.id = jsonStrAny(j, ["id", "workflowDecisionId"]);
             dto.tenantId = req.headers.get("X-Tenant-Id", "");
-            dto.taskId = jsonStr(j, "taskId");
-            dto.decision = jsonStr(j, "decision");
-            dto.comment = jsonStr(j, "comment");
-            dto.decidedBy = jsonStr(j, "decidedBy");
-            dto.decidedAt = jsonStr(j, "decidedAt");
+            dto.taskId = jsonStrAny(j, ["taskId", "workflowTaskId"]);
+            dto.decision = jsonStrAny(j, ["decision", "decisionType"]);
+            dto.comment = jsonStrAny(j, ["comment", "decisionComment"]);
+            dto.decidedBy = jsonStrAny(j, ["decidedBy", "approver"]);
+            dto.decidedAt = jsonStrAny(j, ["decidedAt", "approvalDate"]);
 
             auto result = uc.createDecision(dto);
             if (result.success) {
@@ -331,10 +367,10 @@ class ApprovalDecisionController : SAPController {
             auto j = req.json;
             ApprovalDecisionDTO dto;
             dto.id = extractIdFromPath(req.requestURI.to!string);
-            dto.decision = jsonStr(j, "decision");
-            dto.comment = jsonStr(j, "comment");
-            dto.decidedBy = jsonStr(j, "decidedBy");
-            dto.decidedAt = jsonStr(j, "decidedAt");
+            dto.decision = jsonStrAny(j, ["decision", "decisionType"]);
+            dto.comment = jsonStrAny(j, ["comment", "decisionComment"]);
+            dto.decidedBy = jsonStrAny(j, ["decidedBy", "approver"]);
+            dto.decidedAt = jsonStrAny(j, ["decidedAt", "approvalDate"]);
 
             auto result = uc.updateDecision(dto);
             if (result.success) {
@@ -370,6 +406,11 @@ class DeadlineEscalationController : SAPController {
         router.post("/api/v1/workflow/deadlines", &handleCreate);
         router.put("/api/v1/workflow/deadlines/*", &handleUpdate);
         router.delete_("/api/v1/workflow/deadlines/*", &handleDelete);
+        router.get("/api/v1/sap-advanced-workflow/deadline-escalations", &handleList);
+        router.get("/api/v1/sap-advanced-workflow/deadline-escalations/*", &handleGet);
+        router.post("/api/v1/sap-advanced-workflow/deadline-escalations", &handleCreate);
+        router.put("/api/v1/sap-advanced-workflow/deadline-escalations/*", &handleUpdate);
+        router.delete_("/api/v1/sap-advanced-workflow/deadline-escalations/*", &handleDelete);
     }
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -389,13 +430,13 @@ class DeadlineEscalationController : SAPController {
         try {
             auto j = req.json;
             DeadlineEscalationDTO dto;
-            dto.id = jsonStr(j, "id");
+            dto.id = jsonStrAny(j, ["id", "deadlineEscalationId"]);
             dto.tenantId = req.headers.get("X-Tenant-Id", "");
-            dto.taskId = jsonStr(j, "taskId");
-            dto.escalationRole = jsonStr(j, "escalationRole");
-            dto.escalationAt = jsonStr(j, "escalationAt");
-            dto.reason = jsonStr(j, "reason");
-            dto.notified = jsonBool(j, "notified", false);
+            dto.taskId = jsonStrAny(j, ["taskId", "workflowTaskId"]);
+            dto.escalationRole = jsonStrAny(j, ["escalationRole", "escalationTargetRole"]);
+            dto.escalationAt = jsonStrAny(j, ["escalationAt", "escalatedAt"]);
+            dto.reason = jsonStrAny(j, ["reason", "escalationReason"]);
+            dto.notified = jsonBoolAny(j, ["notified", "notificationSent"], false);
 
             auto result = uc.createDeadline(dto);
             if (result.success) {
@@ -412,10 +453,10 @@ class DeadlineEscalationController : SAPController {
             auto j = req.json;
             DeadlineEscalationDTO dto;
             dto.id = extractIdFromPath(req.requestURI.to!string);
-            dto.escalationRole = jsonStr(j, "escalationRole");
-            dto.escalationAt = jsonStr(j, "escalationAt");
-            dto.reason = jsonStr(j, "reason");
-            dto.notified = jsonBool(j, "notified", false);
+            dto.escalationRole = jsonStrAny(j, ["escalationRole", "escalationTargetRole"]);
+            dto.escalationAt = jsonStrAny(j, ["escalationAt", "escalatedAt"]);
+            dto.reason = jsonStrAny(j, ["reason", "escalationReason"]);
+            dto.notified = jsonBoolAny(j, ["notified", "notificationSent"], false);
 
             auto result = uc.updateDeadline(dto);
             if (result.success) {
@@ -451,6 +492,11 @@ class WorkflowSubstitutionController : SAPController {
         router.post("/api/v1/workflow/substitutions", &handleCreate);
         router.put("/api/v1/workflow/substitutions/*", &handleUpdate);
         router.delete_("/api/v1/workflow/substitutions/*", &handleDelete);
+        router.get("/api/v1/sap-advanced-workflow/workflow-substitutions", &handleList);
+        router.get("/api/v1/sap-advanced-workflow/workflow-substitutions/*", &handleGet);
+        router.post("/api/v1/sap-advanced-workflow/workflow-substitutions", &handleCreate);
+        router.put("/api/v1/sap-advanced-workflow/workflow-substitutions/*", &handleUpdate);
+        router.delete_("/api/v1/sap-advanced-workflow/workflow-substitutions/*", &handleDelete);
     }
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -470,13 +516,13 @@ class WorkflowSubstitutionController : SAPController {
         try {
             auto j = req.json;
             WorkflowSubstitutionDTO dto;
-            dto.id = jsonStr(j, "id");
+            dto.id = jsonStrAny(j, ["id", "workflowSubstitutionId"]);
             dto.tenantId = req.headers.get("X-Tenant-Id", "");
-            dto.principalUser = jsonStr(j, "principalUser");
-            dto.substituteUser = jsonStr(j, "substituteUser");
-            dto.validFrom = jsonStr(j, "validFrom");
-            dto.validTo = jsonStr(j, "validTo");
-            dto.active = jsonBool(j, "active", false);
+            dto.principalUser = jsonStrAny(j, ["principalUser", "originalUser"]);
+            dto.substituteUser = jsonStrAny(j, ["substituteUser", "delegateUser"]);
+            dto.validFrom = jsonStrAny(j, ["validFrom", "substituteFrom"]);
+            dto.validTo = jsonStrAny(j, ["validTo", "substituteTo"]);
+            dto.active = jsonBoolAny(j, ["active", "isActive"], false);
 
             auto result = uc.createSubstitution(dto);
             if (result.success) {
@@ -493,10 +539,10 @@ class WorkflowSubstitutionController : SAPController {
             auto j = req.json;
             WorkflowSubstitutionDTO dto;
             dto.id = extractIdFromPath(req.requestURI.to!string);
-            dto.substituteUser = jsonStr(j, "substituteUser");
-            dto.validFrom = jsonStr(j, "validFrom");
-            dto.validTo = jsonStr(j, "validTo");
-            dto.active = jsonBool(j, "active", false);
+            dto.substituteUser = jsonStrAny(j, ["substituteUser", "delegateUser"]);
+            dto.validFrom = jsonStrAny(j, ["validFrom", "substituteFrom"]);
+            dto.validTo = jsonStrAny(j, ["validTo", "substituteTo"]);
+            dto.active = jsonBoolAny(j, ["active", "isActive"], false);
 
             auto result = uc.updateSubstitution(dto);
             if (result.success) {
@@ -532,6 +578,11 @@ class WorkflowContextController : SAPController {
         router.post("/api/v1/workflow/contexts", &handleCreate);
         router.put("/api/v1/workflow/contexts/*", &handleUpdate);
         router.delete_("/api/v1/workflow/contexts/*", &handleDelete);
+        router.get("/api/v1/sap-advanced-workflow/workflow-contexts", &handleList);
+        router.get("/api/v1/sap-advanced-workflow/workflow-contexts/*", &handleGet);
+        router.post("/api/v1/sap-advanced-workflow/workflow-contexts", &handleCreate);
+        router.put("/api/v1/sap-advanced-workflow/workflow-contexts/*", &handleUpdate);
+        router.delete_("/api/v1/sap-advanced-workflow/workflow-contexts/*", &handleDelete);
     }
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -551,11 +602,11 @@ class WorkflowContextController : SAPController {
         try {
             auto j = req.json;
             WorkflowContextDTO dto;
-            dto.id = jsonStr(j, "id");
+            dto.id = jsonStrAny(j, ["id", "workflowContextId"]);
             dto.tenantId = req.headers.get("X-Tenant-Id", "");
-            dto.instanceId = jsonStr(j, "instanceId");
-            dto.key = jsonStr(j, "key");
-            dto.value = jsonStr(j, "value");
+            dto.instanceId = jsonStrAny(j, ["instanceId", "workflowInstanceId"]);
+            dto.key = jsonStrAny(j, ["key", "contextKey"]);
+            dto.value = jsonStrAny(j, ["value", "contextValue"]);
 
             auto result = uc.createContext(dto);
             if (result.success) {
@@ -572,7 +623,7 @@ class WorkflowContextController : SAPController {
             auto j = req.json;
             WorkflowContextDTO dto;
             dto.id = extractIdFromPath(req.requestURI.to!string);
-            dto.value = jsonStr(j, "value");
+            dto.value = jsonStrAny(j, ["value", "contextValue"]);
 
             auto result = uc.updateContext(dto);
             if (result.success) {
@@ -608,6 +659,11 @@ class WorkflowEventController : SAPController {
         router.post("/api/v1/workflow/events", &handleCreate);
         router.put("/api/v1/workflow/events/*", &handleUpdate);
         router.delete_("/api/v1/workflow/events/*", &handleDelete);
+        router.get("/api/v1/sap-advanced-workflow/workflow-events", &handleList);
+        router.get("/api/v1/sap-advanced-workflow/workflow-events/*", &handleGet);
+        router.post("/api/v1/sap-advanced-workflow/workflow-events", &handleCreate);
+        router.put("/api/v1/sap-advanced-workflow/workflow-events/*", &handleUpdate);
+        router.delete_("/api/v1/sap-advanced-workflow/workflow-events/*", &handleDelete);
     }
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -627,13 +683,13 @@ class WorkflowEventController : SAPController {
         try {
             auto j = req.json;
             WorkflowEventDTO dto;
-            dto.id = jsonStr(j, "id");
+            dto.id = jsonStrAny(j, ["id", "workflowEventId"]);
             dto.tenantId = req.headers.get("X-Tenant-Id", "");
-            dto.instanceId = jsonStr(j, "instanceId");
-            dto.kind = jsonStr(j, "kind");
-            dto.actor = jsonStr(j, "actor");
-            dto.occurredAt = jsonStr(j, "occurredAt");
-            dto.details = jsonStr(j, "details");
+            dto.instanceId = jsonStrAny(j, ["instanceId", "workflowInstanceId"]);
+            dto.kind = jsonStrAny(j, ["kind", "eventType"]);
+            dto.actor = jsonStrAny(j, ["actor", "eventActor"]);
+            dto.occurredAt = jsonStrAny(j, ["occurredAt", "eventTime"]);
+            dto.details = jsonStrAny(j, ["details", "eventDetails"]);
 
             auto result = uc.createEvent(dto);
             if (result.success) {
@@ -650,10 +706,10 @@ class WorkflowEventController : SAPController {
             auto j = req.json;
             WorkflowEventDTO dto;
             dto.id = extractIdFromPath(req.requestURI.to!string);
-            dto.kind = jsonStr(j, "kind");
-            dto.actor = jsonStr(j, "actor");
-            dto.occurredAt = jsonStr(j, "occurredAt");
-            dto.details = jsonStr(j, "details");
+            dto.kind = jsonStrAny(j, ["kind", "eventType"]);
+            dto.actor = jsonStrAny(j, ["actor", "eventActor"]);
+            dto.occurredAt = jsonStrAny(j, ["occurredAt", "eventTime"]);
+            dto.details = jsonStrAny(j, ["details", "eventDetails"]);
 
             auto result = uc.updateEvent(dto);
             if (result.success) {
