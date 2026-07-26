@@ -6,7 +6,7 @@ license "Apache-2.0"
 
 targetType "library"
 
-dependency "uim-platform:core" path=".."
+dependency "core" path="../core"
 
 sourcePaths "source"
 importPaths "source"
