@@ -41,6 +41,7 @@ class ManageConfigurationItemsUseCase : UIMUseCase {
         ci.createdBy = dto.createdBy;
         if (!ITILValidator.isValidConfigurationItem(ci))
             return CommandResult(false, "", "Invalid configuration item data");
+            
         repo.save(ci);
         return CommandResult(true, dto.id, "");
     }
