@@ -28,6 +28,7 @@ void main() {
     container.providerController.registerRoutes(router);
     container.itComponentController.registerRoutes(router);
     container.techCategoryController.registerRoutes(router);
+    container.leanWebController.registerRoutes(router);
 
     auto settings = new HTTPServerSettings();
     settings.bindAddresses = [config.host];
@@ -96,6 +97,8 @@ void main() {
     writeln("  POST   /api/v1/lean/tech-categories");
     writeln("  PUT    /api/v1/lean/tech-categories/*");
     writeln("  DELETE /api/v1/lean/tech-categories/*");
+    writeln("  GET    /web/lean");
+    writeln("  GET    /web/lean/*");
 
     listenHTTP(settings, router);
     runApplication();

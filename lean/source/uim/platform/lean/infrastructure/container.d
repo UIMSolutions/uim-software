@@ -38,6 +38,7 @@ struct Container {
     ITComponentController itComponentController;
     TechCategoryController techCategoryController;
     HealthController healthController;
+    LeanWebController leanWebController;
 }
 
 Container buildContainer(AppConfig config) {
@@ -85,6 +86,7 @@ Container buildContainer(AppConfig config) {
     c.itComponentController = new ITComponentController(c.manageITComponentsUseCase);
     c.techCategoryController = new TechCategoryController(c.manageTechCategoriesUseCase);
     c.healthController = new HealthController("lean", "1.0.0");
+    c.leanWebController = new LeanWebController();
 
     return c;
 }

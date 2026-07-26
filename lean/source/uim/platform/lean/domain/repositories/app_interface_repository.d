@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 interface AppInterfaceRepository {
     AppInterface[] findAll();
-    AppInterface* findById(AppInterfaceId id);
+    AppInterface findById(AppInterfaceId id);
     AppInterface[] findByTenant(TenantId tenantId);
     AppInterface[] findByStatus(FactSheetStatus status);
     AppInterface[] findBySourceApplication(LeanApplicationId appId);
