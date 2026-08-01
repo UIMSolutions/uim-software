@@ -5,7 +5,7 @@ import uim.platform.ecm.domain.entities.ecm_object : EcmObject;
 
 @safe:
 
-Json objectToJson(EcmObject value) {
+Json objectToJson(in EcmObject value) {
     auto j = Json.emptyObject;
     j["id"] = Json(value.id);
     j["objectType"] = Json(value.objectType);
@@ -32,14 +32,20 @@ Json objectToJson(EcmObject value) {
 
 string[string] jsonStringMap(Json j, string key) {
     string[string] result;
-    if (!j.isObject || !j.hasKey(key) || !j[key].isObject) {
+    if ((key in j) is null) {
         return result;
     }
 
-    foreach (string k, value; j[key].toMap) {
-        if (value.isString) {
-            result[k] = value.get!string;
+    try {
+        auto map = j[key].get!(Json[string]);
+        foreach (string k, value; map) {
+            if (value.type == Json.Type.string) {
+                result[k] = value.get!string;
+            }
         }
+    } catch (Exception ex) {
+        // Ignore invalid metadata payloads and keep result empty.
     }
+
     return result;
 }

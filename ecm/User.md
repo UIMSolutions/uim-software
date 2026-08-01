@@ -33,6 +33,22 @@ Use document search endpoint:
 
 `GET /api/v1/ecm/search/documents?q=contract`
 
+## Explicit Object Endpoints
+
+Each business object has dedicated endpoints under `/api/v1/ecm/<objectType>`, for example:
+
+- `/api/v1/ecm/repositories`
+- `/api/v1/ecm/folders`
+- `/api/v1/ecm/documents`
+- `/api/v1/ecm/workflows`
+
+For object details use `/api/v1/ecm/<objectType>/<id>`.
+
+## Authorization
+
+- Include `Authorization: Bearer <token>` for all API calls.
+- Include `X-ECM-Roles` for write operations.
+
 ## Document Versioning
 
 When a document is created, version `1.0` is automatically seeded.

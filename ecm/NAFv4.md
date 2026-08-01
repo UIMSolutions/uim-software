@@ -23,7 +23,13 @@ Provide a modular ECM capability with business-object centric APIs and clear sep
 - Inbound adapters: vibe.d HTTP controllers.
 - Application layer: use cases for command and query operations.
 - Domain layer: business object model and validation.
-- Outbound adapters: repository implementations.
+- Outbound adapters: memory, PostgreSQL, and Mongo repository implementations.
+
+## Security View
+
+- Middleware-style auth guard validates bearer token for read/write access.
+- Role checks (`ecm.admin`, `ecm.write`, and object-specific write role) protect state changes.
+- Audit entries are generated for create/update/delete operations.
 
 ## Deployment Considerations
 
