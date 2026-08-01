@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ECM Console</title>
+  <style>
+    :root {
+      --bg: #f7f4ed;
+      --panel: #fffdf8;
+      --text: #1e1c1a;
+      --muted: #666058;
+      --accent: #005f73;
+      --accent-2: #ee9b00;
+      --border: #d6cec0;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% 0%, #fef6e4 0%, transparent 45%),
+        radial-gradient(circle at 100% 100%, #d9f0ff 0%, transparent 35%),
+        var(--bg);
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+    }
+
+    .shell {
+      width: min(1100px, 100%);
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: 0 20px 50px rgba(40, 36, 30, 0.12);
+      overflow: hidden;
+      animation: rise 500ms ease;
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    header {
+      background: linear-gradient(120deg, var(--accent), #0a9396);
+      color: white;
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .main {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      min-height: 580px;
+    }
+
+    .sidebar {
+      border-right: 1px solid var(--border);
+      padding: 20px;
+      background: #fffcf5;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    label { display: block; font-size: 0.82rem; color: var(--muted); margin-bottom: 6px; }
+    select, input, textarea, button {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      padding: 10px;
+      font: inherit;
+      background: white;
+      margin-bottom: 12px;
+    }
+
+    button {
+      border: none;
+      background: var(--accent);
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.15s ease, background 0.2s ease;
+    }
+
+    button:hover { transform: translateY(-1px); background: #014f60; }
+
+    .secondary { background: var(--accent-2); color: #2f2300; }
+    .secondary:hover { background: #d88f00; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .result {
+      margin-top: 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: white;
+      max-height: 440px;
+      overflow: auto;
+      padding: 12px;
+      font-family: "IBM Plex Mono", Consolas, monospace;
+      font-size: 0.84rem;
+    }
+
+    .status {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    @media (max-width: 900px) {
+      .main { grid-template-columns: 1fr; }
+      .sidebar { border-right: 0; border-bottom: 1px solid var(--border); }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <h1>ECM Service Console</h1>
+      <span id="health">Checking health...</span>
+    </header>
+    <div class="main">
+      <div class="sidebar">
+        <label for="objectType">Business Object</label>
+        <select id="objectType">
+          <option value="repositories">repositories</option>
+          <option value="workspaces">workspaces</option>
+          <option value="folders">folders</option>
+          <option value="documents">documents</option>
+          <option value="document-versions">document-versions</option>
+          <option value="metadata-categories">metadata-categories</option>
+          <option value="users">users</option>
+          <option value="groups">groups</option>
+          <option value="permissions">permissions</option>
+          <option value="records">records</option>
+          <option value="retention-policies">retention-policies</option>
+          <option value="workflows">workflows</option>
+          <option value="audit-entries">audit-entries</option>
+        </select>
+
+        <button id="listBtn">List Objects</button>
+
+        <div class="grid">
+          <div>
+            <label for="name">Name</label>
+            <input id="name" placeholder="Object name" />
+          </div>
+          <div>
+            <label for="title">Title</label>
+            <input id="title" placeholder="Object title" />
+          </div>
+        </div>
+
+        <label for="owner">Owner</label>
+        <input id="owner" placeholder="owner.group" />
+
+        <label for="parentId">Parent ID</label>
+        <input id="parentId" placeholder="folder/document id" />
+
+        <label for="description">Description</label>
+        <textarea id="description" rows="4" placeholder="Business context"></textarea>
+
+        <button id="createBtn" class="secondary">Create Object</button>
+      </div>
+
+      <div class="content">
+        <div class="status" id="status">Ready.</div>
+        <label for="search">Document Search</label>
+        <div class="grid">
+          <input id="search" placeholder="search document text" />
+          <button id="searchBtn">Search</button>
+        </div>
+        <div class="result" id="result">{
+  "message": "Use controls to query / create business objects"
+}</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const result = $("result");
+    const status = $("status");
+
+    function pretty(v) {
+      return JSON.stringify(v, null, 2);
+    }
+
+    function setStatus(message) {
+      status.textContent = message;
+    }
+
+    async function api(path, options = {}) {
+      const res = await fetch(path, {
+        headers: {
+          "Content-Type": "application/json",
+          "X-Tenant-Id": "demo"
+        },
+        ...options
+      });
+
+      const text = await res.text();
+      let data;
+      try { data = JSON.parse(text); } catch (_) { data = { raw: text }; }
+
+      if (!res.ok) {
+        throw new Error(pretty(data));
+      }
+
+      return data;
+    }
+
+    async function refreshHealth() {
+      try {
+        const h = await api("/health");
+        $("health").textContent = "Health: " + h.status;
+      } catch (_) {
+        $("health").textContent = "Health: unavailable";
+      }
+    }
+
+    async function listObjects() {
+      const objectType = $("objectType").value;
+      setStatus("Loading " + objectType + "...");
+      try {
+        const data = await api("/api/v1/ecm/" + objectType);
+        result.textContent = pretty(data);
+        setStatus("Loaded " + objectType + ".");
+      } catch (err) {
+        result.textContent = String(err.message || err);
+        setStatus("Failed to list objects.");
+      }
+    }
+
+    async function createObject() {
+      const objectType = $("objectType").value;
+      const payload = {
+        name: $("name").value,
+        title: $("title").value,
+        owner: $("owner").value,
+        parentId: $("parentId").value,
+        description: $("description").value,
+        status: "active",
+        createdBy: "ecm.web"
+      };
+
+      setStatus("Creating " + objectType + "...");
+      try {
+        const created = await api("/api/v1/ecm/" + objectType, {
+          method: "POST",
+          body: JSON.stringify(payload)
+        });
+        result.textContent = pretty(created);
+        setStatus("Created " + objectType + " with id " + created.id + ".");
+      } catch (err) {
+        result.textContent = String(err.message || err);
+        setStatus("Failed to create object.");
+      }
+    }
+
+    async function searchDocuments() {
+      const q = encodeURIComponent($("search").value || "");
+      setStatus("Searching documents...");
+      try {
+        const data = await api("/api/v1/ecm/search/documents?q=" + q);
+        result.textContent = pretty(data);
+        setStatus("Search complete.");
+      } catch (err) {
+        result.textContent = String(err.message || err);
+        setStatus("Search failed.");
+      }
+    }
+
+    $("listBtn").addEventListener("click", listObjects);
+    $("createBtn").addEventListener("click", createObject);
+    $("searchBtn").addEventListener("click", searchDocuments);
+
+    refreshHealth();
+  </script>
+</body>
+</html>

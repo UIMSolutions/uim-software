@@ -9,6 +9,7 @@ dependency "core" path="../core"
 
 sourcePaths "source"
 importPaths "source"
+stringImportPaths "source"
 
 configuration "defaultRun" {
     targetType "executable"
