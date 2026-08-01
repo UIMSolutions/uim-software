@@ -3,6 +3,8 @@ module uim.platform.mm.domain.services;
 import std.conv : to;
 import uim.platform.mm.domain.entities;
 
+@safe:
+
 struct MaterialManagementValidator {
     static bool isValidMaterial(in Material value) {
         return value.id.length > 0 &&

@@ -3,6 +3,8 @@ module app;
 import std.stdio : writeln, writefln;
 import uim.platform.mm;
 
+version (unittest) {
+} else
 void main() {
     auto config = loadConfig();
     auto container = buildContainer(config);
@@ -24,7 +26,7 @@ void main() {
     writeln("    GET    /api/v1/mm/vendors");
     writeln("    GET    /api/v1/mm/purchasing-info-records");
     writeln("    GET    /api/v1/mm/purchase-requisitions");
-    writeln("    POST   /api/v1/mm/purchase-requisitions/:id/convert");
+    writeln("    POST   /api/v1/mm/purchase-requisition-conversions/:id");
     writeln("    GET    /api/v1/mm/purchase-orders");
     writeln("    GET    /api/v1/mm/stock-items");
     writeln("    GET    /api/v1/mm/goods-receipts");

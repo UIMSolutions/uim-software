@@ -77,7 +77,11 @@ class ProcurementController : SAPController {
     }
 
     private void handleDeleteRequisition(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        writeDeleteResult(res, procurement.removeRequisition(extractIdFromPath(req.requestURI.to!string)), "Purchase requisition deleted");
+        writeDeleteResult(
+            res,
+            procurement.removeRequisition(extractIdFromPath(req.requestURI.to!string)),
+            "Purchase requisition deleted"
+        );
     }
 
     private void handleConvertRequisition(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -156,14 +160,24 @@ class ProcurementController : SAPController {
     }
 
     private void handleDeleteOrder(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        writeDeleteResult(res, procurement.removeOrder(extractIdFromPath(req.requestURI.to!string)), "Purchase order deleted");
+        writeDeleteResult(
+            res,
+            procurement.removeOrder(extractIdFromPath(req.requestURI.to!string)),
+            "Purchase order deleted"
+        );
     }
 
     private string tenantIdOf(scope HTTPServerRequest req) {
         return req.headers.get("X-Tenant-Id", "");
     }
 
-    private void writeCommandResult(scope HTTPServerResponse res, CommandResult result, int successStatus, string successMessage, int failureStatus) {
+    private void writeCommandResult(
+        scope HTTPServerResponse res,
+        CommandResult result,
+        int successStatus,
+        string successMessage,
+        int failureStatus
+    ) {
         if (result.success) {
             res.writeJsonBody(successPayload(result.id, successMessage), successStatus);
         } else {
@@ -179,7 +193,7 @@ class ProcurementController : SAPController {
         }
     }
 
-    private void writeListResponse(T)(scope HTTPServerResponse res, T[] items, Json function(T) mapper) {
+    private void writeListResponse(T)(scope HTTPServerResponse res, T[] items, Json function(T) @safe mapper) {
         auto resources = Json.emptyArray;
         foreach (item; items) resources ~= mapper(item);
         auto payload = Json.emptyObject;

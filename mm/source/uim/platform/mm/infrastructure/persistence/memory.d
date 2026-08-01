@@ -66,7 +66,9 @@ class MemoryPurchasingInfoRecordRepository : PurchasingInfoRecordRepository {
         return null;
     }
     void save(PurchasingInfoRecord value) { store ~= value; }
-    void update(PurchasingInfoRecord value) { foreach (ref item; store) if (item.id == value.id) { item = value; return; } }
+    void update(PurchasingInfoRecord value) {
+        foreach (ref item; store) if (item.id == value.id) { item = value; return; }
+    }
     void remove(PurchasingInfoRecordId id) { store = store.remove!(item => item.id == id); }
 }
 
@@ -79,7 +81,9 @@ class MemoryPurchaseRequisitionRepository : PurchaseRequisitionRepository {
         return null;
     }
     void save(PurchaseRequisition value) { store ~= value; }
-    void update(PurchaseRequisition value) { foreach (ref item; store) if (item.id == value.id) { item = value; return; } }
+    void update(PurchaseRequisition value) {
+        foreach (ref item; store) if (item.id == value.id) { item = value; return; }
+    }
     void remove(PurchaseRequisitionId id) { store = store.remove!(item => item.id == id); }
 }
 
@@ -117,9 +121,17 @@ class MemoryStockItemRepository : StockItemRepository {
         return null;
     }
 
-    @trusted StockItem* findByMaterialLocation(MaterialId materialId, PlantId plantId, StorageLocationId storageLocationId) {
+    @trusted StockItem* findByMaterialLocation(
+        MaterialId materialId,
+        PlantId plantId,
+        StorageLocationId storageLocationId
+    ) {
         foreach (idx, ref item; store) {
-            if (item.materialId == materialId && item.plantId == plantId && item.storageLocationId == storageLocationId) {
+            if (
+                item.materialId == materialId &&
+                item.plantId == plantId &&
+                item.storageLocationId == storageLocationId
+            ) {
                 return &store[idx];
             }
         }

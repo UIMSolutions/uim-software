@@ -3,6 +3,8 @@ module uim.platform.mm.domain.repositories;
 import uim.platform.mm.domain.entities;
 import uim.platform.mm.domain.types;
 
+@safe:
+
 interface MaterialRepository {
     Material[] findAll();
     Material* findById(MaterialId id);

@@ -31,7 +31,7 @@ The service covers the main operational objects needed for an SAP MM-style refer
 - `GET|POST|PUT|DELETE /api/v1/mm/vendors`
 - `GET|POST|PUT|DELETE /api/v1/mm/purchasing-info-records`
 - `GET|POST|PUT|DELETE /api/v1/mm/purchase-requisitions`
-- `POST /api/v1/mm/purchase-requisitions/:id/convert`
+- `POST /api/v1/mm/purchase-requisition-conversions/:id`
 - `GET|POST|PUT|DELETE /api/v1/mm/purchase-orders`
 - `GET|POST|PUT|DELETE /api/v1/mm/stock-items`
 - `GET|POST|DELETE /api/v1/mm/goods-receipts`
@@ -45,9 +45,22 @@ cd mm
 dub run
 ```
 
+Use file-backed procurement and inventory persistence with:
+
+```bash
+MM_STORAGE=file MM_STORAGE_PATH=.data/mm dub run
+```
+
 ## Test
 
 ```bash
 cd mm
 dub test
+```
+
+HTTP smoke test:
+
+```bash
+MM_STORAGE=file MM_STORAGE_PATH=.data/mm dub run
+./examples/http-smoke.sh
 ```

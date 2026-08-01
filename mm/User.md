@@ -10,6 +10,8 @@ The MM service supports a standard procurement and inventory flow:
 4. Post a goods receipt for the purchase order.
 5. Review updated stock levels.
 
+The same end-to-end path can be replayed from the browser client or from `examples/http-smoke.sh`.
+
 ## Quick Start
 
 1. Open the browser client at `/client`.
@@ -39,7 +41,7 @@ Content-Type: application/json
 ```
 
 ```http
-POST /api/v1/mm/purchase-requisitions/PR-1000/convert
+POST /api/v1/mm/purchase-requisition-conversions/PR-1000
 X-Tenant-Id: TEN-1
 Content-Type: application/json
 

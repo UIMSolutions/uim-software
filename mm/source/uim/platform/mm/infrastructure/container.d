@@ -1,6 +1,10 @@
 module uim.platform.mm.infrastructure.container;
 
+import std.string : toLower;
+
 import uim.platform.mm;
+
+@safe:
 
 struct Container {
     ManageMaterialsUseCase manageMaterialsUseCase;
@@ -26,17 +30,34 @@ Container buildContainer(AppConfig config) {
     auto storageRepo = new MemoryStorageLocationRepository();
     auto vendorRepo = new MemoryVendorRepository();
     auto infoRecordRepo = new MemoryPurchasingInfoRecordRepository();
-    auto requisitionRepo = new MemoryPurchaseRequisitionRepository();
-    auto orderRepo = new MemoryPurchaseOrderRepository();
-    auto receiptRepo = new MemoryGoodsReceiptRepository();
-    auto stockRepo = new MemoryStockItemRepository();
+    PurchaseRequisitionRepository requisitionRepo;
+    PurchaseOrderRepository orderRepo;
+    GoodsReceiptRepository receiptRepo;
+    StockItemRepository stockRepo;
+
+    if (config.storage.toLower() == "file") {
+        requisitionRepo = new FilePurchaseRequisitionRepository(config.storagePath);
+        orderRepo = new FilePurchaseOrderRepository(config.storagePath);
+        receiptRepo = new FileGoodsReceiptRepository(config.storagePath);
+        stockRepo = new FileStockItemRepository(config.storagePath);
+    } else {
+        requisitionRepo = new MemoryPurchaseRequisitionRepository();
+        orderRepo = new MemoryPurchaseOrderRepository();
+        receiptRepo = new MemoryGoodsReceiptRepository();
+        stockRepo = new MemoryStockItemRepository();
+    }
 
     container.manageMaterialsUseCase = new ManageMaterialsUseCase(materialRepo);
     container.managePlantsUseCase = new ManagePlantsUseCase(plantRepo);
     container.manageStorageLocationsUseCase = new ManageStorageLocationsUseCase(storageRepo);
     container.manageVendorsUseCase = new ManageVendorsUseCase(vendorRepo);
     container.managePurchasingInfoRecordsUseCase = new ManagePurchasingInfoRecordsUseCase(infoRecordRepo);
-    container.manageProcurementUseCase = new ManageProcurementUseCase(requisitionRepo, orderRepo, vendorRepo, infoRecordRepo);
+    container.manageProcurementUseCase = new ManageProcurementUseCase(
+        requisitionRepo,
+        orderRepo,
+        vendorRepo,
+        infoRecordRepo
+    );
     container.manageInventoryUseCase = new ManageInventoryUseCase(receiptRepo, stockRepo, orderRepo);
 
     container.masterDataController = new MasterDataController(

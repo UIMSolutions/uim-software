@@ -57,7 +57,9 @@ class ManageMaterialsUseCase : UIMUseCase {
         if (dto.materialNumber.length > 0) value.materialNumber = dto.materialNumber;
         if (dto.description.length > 0) value.description = dto.description;
         if (dto.baseUnit.length > 0) value.baseUnit = dto.baseUnit;
-        if (dto.materialType.length > 0) value.materialType = parseEnumValue!MaterialType(dto.materialType, value.materialType);
+        if (dto.materialType.length > 0) {
+            value.materialType = parseEnumValue!MaterialType(dto.materialType, value.materialType);
+        }
         if (dto.materialGroup.length > 0) value.materialGroup = dto.materialGroup;
         if (dto.valuationClass.length > 0) value.valuationClass = dto.valuationClass;
         if (dto.status.length > 0) value.status = parseEnumValue!MaterialStatus(dto.status, value.status);
@@ -347,7 +349,9 @@ class ManageProcurementUseCase : UIMUseCase {
         if (dto.unit.length > 0) existing.unit = dto.unit;
         if (dto.requiredDate.length > 0) existing.requiredDate = dto.requiredDate;
         if (dto.accountAssignment.length > 0) existing.accountAssignment = dto.accountAssignment;
-        if (dto.status.length > 0) existing.status = parseEnumValue!PurchaseRequisitionStatus(dto.status, existing.status);
+        if (dto.status.length > 0) {
+            existing.status = parseEnumValue!PurchaseRequisitionStatus(dto.status, existing.status);
+        }
         if (dto.requestedBy.length > 0) existing.requestedBy = dto.requestedBy;
         if (dto.sourceVendorId.length > 0) existing.sourceVendorId = dto.sourceVendorId;
         if (dto.modifiedAt.length > 0) existing.modifiedAt = dto.modifiedAt;
@@ -591,7 +595,9 @@ class ManageInventoryUseCase : UIMUseCase {
         auto totalReceived = currentReceived + receiptQty;
 
         order.receivedQuantity = quantityToString(totalReceived);
-        order.status = totalReceived >= orderedQty ? PurchaseOrderStatus.received : PurchaseOrderStatus.partiallyReceived;
+        order.status = totalReceived >= orderedQty
+            ? PurchaseOrderStatus.received
+            : PurchaseOrderStatus.partiallyReceived;
         order.modifiedAt = value.modifiedAt;
         orderRepo.update(*order);
 

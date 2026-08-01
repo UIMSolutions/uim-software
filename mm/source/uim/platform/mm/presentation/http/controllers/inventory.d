@@ -73,7 +73,11 @@ class InventoryController : SAPController {
     }
 
     private void handleDeleteStockItem(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        writeDeleteResult(res, inventory.removeStockItem(extractIdFromPath(req.requestURI.to!string)), "Stock item deleted");
+        writeDeleteResult(
+            res,
+            inventory.removeStockItem(extractIdFromPath(req.requestURI.to!string)),
+            "Stock item deleted"
+        );
     }
 
     private void handleListGoodsReceipts(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -106,14 +110,24 @@ class InventoryController : SAPController {
     }
 
     private void handleDeleteGoodsReceipt(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        writeDeleteResult(res, inventory.removeGoodsReceipt(extractIdFromPath(req.requestURI.to!string)), "Goods receipt deleted");
+        writeDeleteResult(
+            res,
+            inventory.removeGoodsReceipt(extractIdFromPath(req.requestURI.to!string)),
+            "Goods receipt deleted"
+        );
     }
 
     private string tenantIdOf(scope HTTPServerRequest req) {
         return req.headers.get("X-Tenant-Id", "");
     }
 
-    private void writeCommandResult(scope HTTPServerResponse res, CommandResult result, int successStatus, string successMessage, int failureStatus) {
+    private void writeCommandResult(
+        scope HTTPServerResponse res,
+        CommandResult result,
+        int successStatus,
+        string successMessage,
+        int failureStatus
+    ) {
         if (result.success) {
             res.writeJsonBody(successPayload(result.id, successMessage), successStatus);
         } else {
@@ -129,7 +143,7 @@ class InventoryController : SAPController {
         }
     }
 
-    private void writeListResponse(T)(scope HTTPServerResponse res, T[] items, Json function(T) mapper) {
+    private void writeListResponse(T)(scope HTTPServerResponse res, T[] items, Json function(T) @safe mapper) {
         auto resources = Json.emptyArray;
         foreach (item; items) resources ~= mapper(item);
         auto payload = Json.emptyObject;
