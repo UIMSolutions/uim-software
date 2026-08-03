@@ -32,7 +32,9 @@ Container buildContainer(AppConfig config) {
         break;
     }
 
-    seedDefaultEadData(repository);
+    if (config.seedEnabled) {
+        seedDefaultEadData(repository);
+    }
     exportOpenApiSpec(config.openApiExportPath);
 
     DiagramRuntime diagramRuntime;

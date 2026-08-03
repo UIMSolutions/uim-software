@@ -2,6 +2,7 @@ module uim.platform.ead.infrastructure.config;
 
 import std.conv : to;
 import std.process : environment;
+import std.string : strip, toLower;
 
 @safe:
 
@@ -16,6 +17,7 @@ struct AppConfig {
     string diagramRuntimeUrl = "";
     string diagramRuntimeBearerToken = "";
     uint diagramRuntimeTimeoutSeconds = 15;
+    bool seedEnabled = true;
     string openApiExportPath = "docs/openapi.json";
 }
 
@@ -31,6 +33,18 @@ AppConfig loadConfig() {
     config.diagramRuntimeUrl = environment.get("EAD_DIAGRAM_RUNTIME_URL", "");
     config.diagramRuntimeBearerToken = environment.get("EAD_DIAGRAM_RUNTIME_BEARER_TOKEN", "");
     config.diagramRuntimeTimeoutSeconds = environment.get("EAD_DIAGRAM_RUNTIME_TIMEOUT_SECONDS", "15").to!uint;
+    config.seedEnabled = envBool("EAD_SEED_ENABLED", true);
     config.openApiExportPath = environment.get("EAD_OPENAPI_EXPORT_PATH", "docs/openapi.json");
     return config;
+}
+
+private bool envBool(string key, bool defaultValue) {
+    auto raw = environment.get(key, defaultValue ? "true" : "false").strip.toLower();
+    if (raw == "1" || raw == "true" || raw == "yes" || raw == "on") {
+        return true;
+    }
+    if (raw == "0" || raw == "false" || raw == "no" || raw == "off") {
+        return false;
+    }
+    return defaultValue;
 }

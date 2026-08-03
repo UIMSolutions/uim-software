@@ -14,6 +14,8 @@ Environment variables:
 - EAD_DIAGRAM_RUNTIME_URL
 - EAD_DIAGRAM_RUNTIME_BEARER_TOKEN
 - EAD_DIAGRAM_RUNTIME_TIMEOUT_SECONDS
+- EAD_SEED_ENABLED (default: true)
+- EAD_OPENAPI_EXPORT_PATH (default: docs/openapi.json)
 
 ## Security Headers
 
@@ -37,3 +39,9 @@ Recommended deployment pattern:
 - Reverse proxy with TLS termination.
 - Inject OAuth/JWT access token to Authorization header.
 - Add role claims mapping to X-EAD-Roles.
+
+## Startup Behavior
+
+- If the selected repository contains no application-components, the service seeds canonical sample enterprise architecture objects.
+- OpenAPI specification is exported on startup and also available via /api/v1/ead/openapi.json.
+- Set EAD_SEED_ENABLED=false to disable startup seeding in production.

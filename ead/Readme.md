@@ -8,6 +8,9 @@ This module provides an Enterprise Architecture Designer style cloud service imp
 - Generic CRUD API per architecture object type.
 - Query APIs for search, dependency analysis, impact analysis, viewpoints, and diagram rendering.
 - Clean and Hexagonal architecture with explicit domain, application, infrastructure, and presentation layers.
+- Startup seeding of canonical enterprise architecture sample objects.
+- OpenAPI 3 export and runtime endpoint for API discovery.
+- Real Postgres and Mongo persistence adapters with automatic schema/index setup.
 
 ## Build and Run
 
@@ -21,6 +24,9 @@ Server defaults:
 - Host: 0.0.0.0
 - Port: 8275
 - UI: /ui
+
+On startup the service seeds default objects when the repository is empty and exports OpenAPI spec to docs/openapi.json.
+Set EAD_SEED_ENABLED=false to disable startup seeding.
 
 ## Test
 
@@ -62,3 +68,11 @@ The solution includes these object categories:
 - risks
 - controls
 - audit-entries
+
+## OpenAPI
+
+- Runtime endpoint: /api/v1/ead/openapi.json
+- Exported file: docs/openapi.json
+- Includes component schemas for health, EAD objects, collections, command results, diagram rendering payloads, and error responses.
+
+Override export path with EAD_OPENAPI_EXPORT_PATH.

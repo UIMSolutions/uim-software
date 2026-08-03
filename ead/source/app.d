@@ -38,6 +38,7 @@ void main() {
     writeln("    GET    /api/v1/ead/openapi.json");
     writeln("====================================================");
     writeln("  Diagram Runtime URL: ", config.diagramRuntimeUrl.length ? config.diagramRuntimeUrl : "<simulated>");
+    writeln("  Seed enabled: ", config.seedEnabled);
     writeln("  OpenAPI export path: ", config.openApiExportPath);
     writeln("  Listening on ", config.host, ":", config.port);
     writeln("====================================================");
