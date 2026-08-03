@@ -35,8 +35,10 @@ void main() {
     writeln("    GET    /api/v1/ead/viewpoints/by-layer/:layer");
     writeln("    POST   /api/v1/ead/diagram-renderings");
     writeln("    GET    /api/v1/ead/api-catalog");
+    writeln("    GET    /api/v1/ead/openapi.json");
     writeln("====================================================");
     writeln("  Diagram Runtime URL: ", config.diagramRuntimeUrl.length ? config.diagramRuntimeUrl : "<simulated>");
+    writeln("  OpenAPI export path: ", config.openApiExportPath);
     writeln("  Listening on ", config.host, ":", config.port);
     writeln("====================================================");
 

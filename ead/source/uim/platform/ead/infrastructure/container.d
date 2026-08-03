@@ -32,6 +32,9 @@ Container buildContainer(AppConfig config) {
         break;
     }
 
+    seedDefaultEadData(repository);
+    exportOpenApiSpec(config.openApiExportPath);
+
     DiagramRuntime diagramRuntime;
     if (config.diagramRuntimeUrl.length) {
         diagramRuntime = new CurlRemoteDiagramRuntime(

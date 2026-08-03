@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>EAD Cloud - Architecture Workbench</title>
+  <style>
+    :root {
+      --bg: #f3efe7;
+      --ink: #1b2a2f;
+      --brand: #005d63;
+      --accent: #da6a00;
+      --panel: #fffaf1;
+      --line: #c7b8a0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: radial-gradient(circle at 10% 10%, #fff8ec 0%, var(--bg) 55%),
+                  linear-gradient(120deg, #efe6d8 0%, #f9f4ea 100%);
+      min-height: 100vh;
+    }
+    header {
+      padding: 2rem 1.2rem 1rem;
+      text-align: center;
+      animation: enter 420ms ease-out;
+    }
+    h1 { margin: 0; letter-spacing: 0.04em; }
+    .sub { margin-top: 0.4rem; color: #51646a; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      padding: 1rem 1.2rem 2rem;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 1rem;
+      box-shadow: 0 8px 22px rgba(20, 37, 41, 0.08);
+      animation: enter 520ms ease-out;
+    }
+    .card h2 { margin-top: 0; font-size: 1.05rem; }
+    code {
+      display: block;
+      font-family: "IBM Plex Mono", "Fira Code", monospace;
+      background: #f4ecdf;
+      border: 1px dashed #cab79e;
+      padding: 0.55rem;
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+    .tag {
+      display: inline-block;
+      padding: 0.2rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      margin-right: 0.4rem;
+      background: #e4f2f3;
+      color: var(--brand);
+      border: 1px solid #9ec7ca;
+    }
+    .accent { background: #fff0df; color: var(--accent); border-color: #e6b88d; }
+    @keyframes enter {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Enterprise Architecture Designer Cloud</h1>
+    <div class="sub">vibe.d + Dlang, Clean + Hexagonal architecture</div>
+  </header>
+
+  <section class="grid">
+    <article class="card">
+      <h2>Health</h2>
+      <span class="tag">GET</span>
+      <code>/health</code>
+      <span class="tag">GET</span>
+      <code>/api/v1/health</code>
+    </article>
+
+    <article class="card">
+      <h2>Business Objects</h2>
+      <span class="tag">CRUD</span>
+      <code>/api/v1/ead/application-components</code>
+      <code>/api/v1/ead/business-capabilities</code>
+      <code>/api/v1/ead/dependencies</code>
+    </article>
+
+    <article class="card">
+      <h2>Architecture APIs</h2>
+      <span class="tag">GET</span>
+      <code>/api/v1/ead/search/models?q=s4</code>
+      <span class="tag">GET</span>
+      <code>/api/v1/ead/dependencies/by-source/{id}</code>
+      <span class="tag">GET</span>
+      <code>/api/v1/ead/impacts/by-target/{id}</code>
+    </article>
+
+    <article class="card">
+      <h2>Visualization</h2>
+      <span class="tag accent">POST</span>
+      <code>/api/v1/ead/diagram-renderings</code>
+      <p>Simulated renderer by default, remote runtime via environment configuration.</p>
+    </article>
+  </section>
+</body>
+</html>

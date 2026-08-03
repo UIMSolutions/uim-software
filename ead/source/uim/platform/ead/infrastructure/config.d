@@ -16,6 +16,7 @@ struct AppConfig {
     string diagramRuntimeUrl = "";
     string diagramRuntimeBearerToken = "";
     uint diagramRuntimeTimeoutSeconds = 15;
+    string openApiExportPath = "docs/openapi.json";
 }
 
 AppConfig loadConfig() {
@@ -30,5 +31,6 @@ AppConfig loadConfig() {
     config.diagramRuntimeUrl = environment.get("EAD_DIAGRAM_RUNTIME_URL", "");
     config.diagramRuntimeBearerToken = environment.get("EAD_DIAGRAM_RUNTIME_BEARER_TOKEN", "");
     config.diagramRuntimeTimeoutSeconds = environment.get("EAD_DIAGRAM_RUNTIME_TIMEOUT_SECONDS", "15").to!uint;
+    config.openApiExportPath = environment.get("EAD_OPENAPI_EXPORT_PATH", "docs/openapi.json");
     return config;
 }
