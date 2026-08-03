@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Supply Chain Network</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 2rem; background: #f3f4f6; color: #111827; }
+      .card { background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+      button { background: #2563eb; color: white; border: none; padding: 0.6rem 1rem; border-radius: 8px; cursor: pointer; }
+      pre { background: #111827; color: #f9fafb; padding: 1rem; border-radius: 8px; overflow: auto; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>Supply Chain Network Console</h1>
+      <p>Monitor partners, purchase orders, shipments, invoices, and alerts in a lightweight web client.</p>
+      <button onclick="loadData()">Load supply chain data</button>
+      <pre id="output">Loading...</pre>
+    </div>
+    <script>
+      async function loadData() {
+        const [partners, orders, shipments, notices, invoices, alerts] = await Promise.all([
+          fetch('/api/v1/partners').then(r => r.json()),
+          fetch('/api/v1/orders').then(r => r.json()),
+          fetch('/api/v1/shipments').then(r => r.json()),
+          fetch('/api/v1/ship-notices').then(r => r.json()),
+          fetch('/api/v1/invoices').then(r => r.json()),
+          fetch('/api/v1/alerts').then(r => r.json())
+        ]);
+        document.getElementById('output').textContent = JSON.stringify({partners, orders, shipments, notices, invoices, alerts}, null, 2);
+      }
+    </script>
+  </body>
+</html>

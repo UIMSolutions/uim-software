@@ -1,0 +1,35 @@
+name: BW Service CI
+
+on:
+  push:
+    paths:
+      - bw/**
+      - .github/workflows/bw-ci.yml
+  pull_request:
+    paths:
+      - bw/**
+      - .github/workflows/bw-ci.yml
+  workflow_dispatch:
+
+jobs:
+  bw-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup D Compiler
+        uses: dlang-community/setup-dlang@v2
+        with:
+          compiler: dmd-latest
+
+      - name: Unit Tests
+        working-directory: bw
+        run: dub test
+
+      - name: Integration Tests
+        working-directory: bw
+        run: |
+          chmod +x tests/integration/http_endpoints.sh
+          bash tests/integration/http_endpoints.sh

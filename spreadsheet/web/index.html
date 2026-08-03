@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spreadsheet Analytics</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 2rem; background: #f5f7fb; color: #1f2937; }
+      .card { background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+      button { background: #2563eb; color: white; border: none; padding: 0.6rem 1rem; border-radius: 8px; cursor: pointer; }
+      pre { background: #111827; color: #f9fafb; padding: 1rem; border-radius: 8px; overflow: auto; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>Spreadsheet Analytics Workspace</h1>
+      <p>This client demonstrates the spreadsheet service endpoints and can be extended into a Tableau-like interactive dashboard.</p>
+      <button onclick="loadWorkbooks()">Load workbooks</button>
+      <pre id="output">Waiting for data...</pre>
+    </div>
+    <script>
+      async function loadWorkbooks() {
+        const response = await fetch('/api/v1/spreadsheets');
+        const data = await response.json();
+        document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+      }
+    </script>
+  </body>
+</html>

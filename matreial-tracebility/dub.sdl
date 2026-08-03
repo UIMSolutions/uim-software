@@ -1,0 +1,45 @@
+name "material-traceability"
+description "Material Traceability service inspired by SAP Business Network Material Traceability"
+authors "Ozan Nurettin Suel" "GitHub Copilot"
+copyright "Copyright (c) 2018-2026, Ozan Nurettin Suel"
+license "Apache-2.0"
+targetName "uim-material-traceability-platform-service"
+
+dependency "uim-framework" version="~>26.4.1"
+dependency "core" path="../core"
+
+sourcePaths "source"
+importPaths "source"
+
+configuration "defaultRun" {
+    targetType "executable"
+}
+
+configuration "defaultTest" {
+    targetType "library"
+}
+
+configuration "modules" {
+    targetType "library"
+    versions "show_module"
+}
+
+configuration "tests" {
+    targetType "library"
+    versions "show_module" "show_test"
+}
+
+configuration "inits" {
+    targetType "library"
+    versions "show_module" "show_init"
+}
+
+configuration "calls" {
+    targetType "library"
+    versions "show_module" "show_test" "show_init" "show_calls"
+}
+
+configuration "verbose" {
+    targetType "library"
+    versions "show_module" "show_test" "show_init" "show_calls"
+}

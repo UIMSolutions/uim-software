@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Material Traceability Console</title>
+  <style>
+    :root {
+      --ink: #17263a;
+      --blue: #1c6be0;
+      --sand: #f5eeda;
+      --mint: #dff4e8;
+      --line: #bfd3e6;
+      --danger: #b6373f;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 10% 10%, #c9e6ff 0%, transparent 35%),
+        radial-gradient(circle at 90% 18%, var(--mint) 0%, transparent 30%),
+        linear-gradient(140deg, #f4faff 0%, #fff7e9 100%);
+      min-height: 100vh;
+    }
+    .shell { max-width: 1120px; margin: 0 auto; padding: 24px 16px 40px; }
+    .hero, .card {
+      background: rgba(255,255,255,.9);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: 0 12px 28px rgba(19,39,61,.08);
+      animation: rise .6s ease both;
+    }
+    .hero { padding: 22px; }
+    h1 { margin: 0; font-size: clamp(1.3rem, 2vw, 2rem); }
+    p { margin: 10px 0 0; line-height: 1.55; }
+    .grid { margin-top: 16px; display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); }
+    .card { padding: 16px; }
+    label { display: block; margin: 8px 0 6px; font-weight: 600; font-size: .92rem; }
+    input, select, textarea { width: 100%; border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; font: inherit; }
+    textarea { min-height: 92px; resize: vertical; }
+    .actions { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
+    button { border: 0; border-radius: 999px; padding: 10px 14px; font-weight: 700; color: #fff; background: var(--blue); cursor: pointer; }
+    button.alt { background: var(--sand); color: var(--ink); }
+    .status { margin-top: 10px; min-height: 20px; font-weight: 600; }
+    .status.error { color: var(--danger); }
+    .status.ok { color: #0f7a4c; }
+    pre { margin: 0; min-height: 190px; border-radius: 14px; background: #11253d; color: #e8f4ff; padding: 14px; overflow: auto; font-family: "IBM Plex Mono", "Cascadia Code", monospace; }
+    @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <h1>Business Network Material Traceability</h1>
+      <p>Track materials across suppliers, lots, batches, events, compliance, and recall simulations.</p>
+    </section>
+    <section class="grid">
+      <article class="card">
+        <h2>Connection</h2>
+        <label for="token">Bearer Token</label>
+        <input id="token" placeholder="token-value">
+        <label for="roles">X-MT-Roles</label>
+        <input id="roles" value="mt.admin">
+        <label for="objectType">Object Type</label>
+        <select id="objectType"></select>
+        <label for="objectId">Object ID</label>
+        <input id="objectId" placeholder="example: MAT-2026-001">
+      </article>
+      <article class="card">
+        <h2>Payload</h2>
+        <label for="payload">JSON Body</label>
+        <textarea id="payload">{
+  "technicalName": "MAT-2026-001",
+  "businessName": "Battery Cell Lot",
+  "traceabilityDomain": "Electronics",
+  "sourceSystem": "MES",
+  "lifecycleState": "active",
+  "owner": "quality.team",
+  "description": "Critical material for EV modules",
+  "metadata": {
+    "origin": "Supplier-A",
+    "hazardClass": "9"
+  },
+  "createdBy": "qa.lead"
+}</textarea>
+        <div class="actions">
+          <button data-op="list">List</button>
+          <button data-op="get">Get</button>
+          <button data-op="create">Create</button>
+          <button data-op="update">Update</button>
+          <button data-op="delete" class="alt">Delete</button>
+        </div>
+      </article>
+      <article class="card">
+        <h2>Result</h2>
+        <div class="actions">
+          <button id="search">Search Events</button>
+          <button id="recall">Recall Simulation</button>
+          <button id="catalog" class="alt">API Catalog</button>
+        </div>
+        <div id="status" class="status"></div>
+        <pre id="output">{ "message": "Ready" }</pre>
+      </article>
+    </section>
+  </main>
+  <script>
+    const objectTypes = [
+      "materials", "material-lots", "batches", "serial-numbers", "suppliers", "manufacturers",
+      "plants", "warehouses", "shipment-units", "transport-events", "transformation-events",
+      "consumption-events", "quality-inspections", "certificates", "compliance-statements",
+      "recall-cases", "incidents", "chain-of-custody-links", "lineage-views", "risk-assessments",
+      "partner-mappings", "document-references", "api-definitions", "audit-entries"
+    ];
+
+    const objectTypeSelect = document.querySelector("#objectType");
+    const output = document.querySelector("#output");
+    const statusNode = document.querySelector("#status");
+
+    objectTypes.forEach((type) => {
+      const option = document.createElement("option");
+      option.value = type;
+      option.textContent = type;
+      objectTypeSelect.appendChild(option);
+    });
+
+    function headers(withBody) {
+      const token = document.querySelector("#token").value.trim();
+      const roles = document.querySelector("#roles").value.trim();
+      const h = {
+        "Authorization": token ? `Bearer ${token}` : "",
+        "X-MT-Roles": roles
+      };
+      if (withBody) h["Content-Type"] = "application/json";
+      return h;
+    }
+
+    function setStatus(text, ok) {
+      statusNode.textContent = text;
+      statusNode.className = `status ${ok ? "ok" : "error"}`;
+    }
+
+    async function run(url, options) {
+      try {
+        const response = await fetch(url, options);
+        const text = await response.text();
+        let payload = text;
+        try { payload = JSON.parse(text); } catch (_) {}
+        output.textContent = JSON.stringify(payload, null, 2);
+        setStatus(`${response.status} ${response.statusText}`, response.ok);
+      } catch (error) {
+        output.textContent = JSON.stringify({ error: String(error) }, null, 2);
+        setStatus("Network error", false);
+      }
+    }
+
+    document.querySelectorAll("button[data-op]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const op = button.dataset.op;
+        const objectType = objectTypeSelect.value;
+        const id = document.querySelector("#objectId").value.trim();
+        const base = `/api/v1/mt/${objectType}`;
+
+        if (op === "list") return run(base, { method: "GET", headers: headers(false) });
+        if (op === "get") return run(`${base}/${id}`, { method: "GET", headers: headers(false) });
+        if (op === "create") return run(base, { method: "POST", headers: headers(true), body: document.querySelector("#payload").value });
+        if (op === "update") return run(`${base}/${id}`, { method: "PUT", headers: headers(true), body: document.querySelector("#payload").value });
+        if (op === "delete") return run(`${base}/${id}`, { method: "DELETE", headers: headers(false) });
+      });
+    });
+
+    document.querySelector("#search").addEventListener("click", () => {
+      run("/api/v1/mt/search/events?q=material", { method: "GET", headers: headers(false) });
+    });
+
+    document.querySelector("#recall").addEventListener("click", () => {
+      run("/api/v1/mt/recall-simulations", {
+        method: "POST",
+        headers: headers(true),
+        body: JSON.stringify({
+          recallCaseId: "RC-2026-001",
+          materialId: "MAT-2026-001",
+          lotId: "LOT-2026-100",
+          horizon: "P30D",
+          parameters: { severity: "high" }
+        })
+      });
+    });
+
+    document.querySelector("#catalog").addEventListener("click", () => {
+      run("/api/v1/mt/api-catalog", { method: "GET", headers: headers(false) });
+    });
+  </script>
+</body>
+</html>

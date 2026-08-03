@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PP Control Tower</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --panel: #ffffff;
+      --ink: #1b2230;
+      --muted: #6a7488;
+      --brand: #005a9c;
+      --brand2: #00a676;
+      --line: #d9dfeb;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Source Sans 3", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 0 0, #e4f4ff 0%, transparent 35%),
+        radial-gradient(circle at 100% 100%, #e6fff5 0%, transparent 35%),
+        var(--bg);
+      min-height: 100vh;
+      padding: 24px;
+      display: grid;
+      place-items: center;
+    }
+
+    .shell {
+      width: min(1120px, 100%);
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(10, 30, 60, 0.12);
+      animation: in 450ms ease;
+    }
+
+    @keyframes in {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    header {
+      padding: 16px 22px;
+      color: #fff;
+      background: linear-gradient(120deg, var(--brand), #006cc1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .main {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      min-height: 600px;
+    }
+
+    .left {
+      border-right: 1px solid var(--line);
+      padding: 18px;
+      background: #fbfdff;
+    }
+
+    .right {
+      padding: 18px;
+    }
+
+    label { display: block; margin-bottom: 6px; color: var(--muted); font-size: 0.83rem; }
+    input, select, textarea, button {
+      width: 100%;
+      margin-bottom: 11px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 9px 10px;
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      background: var(--brand);
+      color: white;
+      cursor: pointer;
+      font-weight: 700;
+      transition: transform .12s ease, background .2s ease;
+    }
+
+    button:hover { transform: translateY(-1px); background: #004a82; }
+    .green { background: var(--brand2); }
+    .green:hover { background: #008d63; }
+
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .result {
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fdfefe;
+      max-height: 470px;
+      overflow: auto;
+      padding: 12px;
+      font-family: "IBM Plex Mono", Consolas, monospace;
+      font-size: 0.84rem;
+    }
+
+    @media (max-width: 900px) {
+      .main { grid-template-columns: 1fr; }
+      .left { border-right: 0; border-bottom: 1px solid var(--line); }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <h1>Production Planning Control Tower</h1>
+      <span id="health">Checking health...</span>
+    </header>
+    <div class="main">
+      <div class="left">
+        <label for="objectType">Business Object</label>
+        <select id="objectType">
+          <option>materials</option>
+          <option>plants</option>
+          <option>work-centers</option>
+          <option>production-versions</option>
+          <option>bills-of-material</option>
+          <option>routings</option>
+          <option>mrp-areas</option>
+          <option>demand-programs</option>
+          <option>planned-orders</option>
+          <option>production-orders</option>
+          <option>order-operations</option>
+          <option>confirmations</option>
+          <option>capacity-requirements</option>
+          <option>mrp-runs</option>
+        </select>
+
+        <button id="listBtn">List Objects</button>
+
+        <div class="grid2">
+          <div>
+            <label for="plantId">Plant</label>
+            <input id="plantId" placeholder="PL01" />
+          </div>
+          <div>
+            <label for="materialId">Material</label>
+            <input id="materialId" placeholder="MAT-100" />
+          </div>
+        </div>
+
+        <label for="name">Name</label>
+        <input id="name" placeholder="Object name" />
+
+        <div class="grid2">
+          <div>
+            <label for="quantity">Quantity</label>
+            <input id="quantity" placeholder="100" />
+          </div>
+          <div>
+            <label for="uom">UoM</label>
+            <input id="uom" placeholder="EA" />
+          </div>
+        </div>
+
+        <label for="description">Description</label>
+        <textarea id="description" rows="3" placeholder="Planning context"></textarea>
+
+        <button id="createBtn" class="green">Create Object</button>
+      </div>
+
+      <div class="right">
+        <label for="mrpMaterial">MRP Material</label>
+        <div class="grid2">
+          <input id="mrpMaterial" placeholder="MAT-100" />
+          <button id="mrpBtn">Run MRP</button>
+        </div>
+
+        <label for="byMat">Planned Orders by Material</label>
+        <div class="grid2">
+          <input id="byMat" placeholder="MAT-100" />
+          <button id="byMatBtn">Fetch</button>
+        </div>
+
+        <div class="result" id="result">{ "message": "PP dashboard ready" }</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const result = $("result");
+
+    function pretty(v) { return JSON.stringify(v, null, 2); }
+
+    async function api(path, options = {}) {
+      const res = await fetch(path, {
+        headers: {
+          "Content-Type": "application/json",
+          "X-Tenant-Id": "demo"
+        },
+        ...options
+      });
+      const text = await res.text();
+      let data;
+      try { data = JSON.parse(text); } catch (_) { data = { raw: text }; }
+      if (!res.ok) throw new Error(pretty(data));
+      return data;
+    }
+
+    async function health() {
+      try {
+        const h = await api("/health");
+        $("health").textContent = "Health: " + h.status;
+      } catch (_) {
+        $("health").textContent = "Health unavailable";
+      }
+    }
+
+    async function listObjects() {
+      const objectType = $("objectType").value;
+      try {
+        const data = await api("/api/v1/pp/" + objectType);
+        result.textContent = pretty(data);
+      } catch (err) {
+        result.textContent = String(err.message || err);
+      }
+    }
+
+    async function createObject() {
+      const objectType = $("objectType").value;
+      const payload = {
+        plantId: $("plantId").value,
+        materialId: $("materialId").value,
+        name: $("name").value,
+        status: "active",
+        description: $("description").value,
+        quantity: $("quantity").value,
+        uom: $("uom").value,
+        createdBy: "pp.web"
+      };
+
+      try {
+        const created = await api("/api/v1/pp/" + objectType, {
+          method: "POST",
+          body: JSON.stringify(payload)
+        });
+        result.textContent = pretty(created);
+      } catch (err) {
+        result.textContent = String(err.message || err);
+      }
+    }
+
+    async function runMRP() {
+      const payload = {
+        plantId: $("plantId").value || "PL01",
+        materialId: $("mrpMaterial").value || "MAT-100",
+        runMode: "net-change",
+        horizonDays: "14",
+        initiatedBy: "pp.web"
+      };
+
+      try {
+        const output = await api("/api/v1/pp/mrp-runs/execute", {
+          method: "POST",
+          body: JSON.stringify(payload)
+        });
+        result.textContent = pretty(output);
+      } catch (err) {
+        result.textContent = String(err.message || err);
+      }
+    }
+
+    async function byMaterial() {
+      const material = $("byMat").value || "MAT-100";
+      try {
+        const data = await api("/api/v1/pp/planned-orders/by-material/" + encodeURIComponent(material));
+        result.textContent = pretty(data);
+      } catch (err) {
+        result.textContent = String(err.message || err);
+      }
+    }
+
+    $("listBtn").addEventListener("click", listObjects);
+    $("createBtn").addEventListener("click", createObject);
+    $("mrpBtn").addEventListener("click", runMRP);
+    $("byMatBtn").addEventListener("click", byMaterial);
+    health();
+  </script>
+</body>
+</html>

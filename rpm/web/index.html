@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RPM Control Tower</title>
+  <style>
+    :root {
+      --bg: #f4f5ef;
+      --panel: #ffffff;
+      --ink: #1b1f23;
+      --muted: #56606b;
+      --accent: #1f7a8c;
+      --accent-2: #bfdb38;
+      --warn: #d62828;
+      --line: #d6d9de;
+      --shadow: 0 14px 40px rgba(23, 34, 48, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 10% 0%, #d9f4ff 0, transparent 35%),
+        radial-gradient(circle at 100% 100%, #f3f8d2 0, transparent 40%),
+        var(--bg);
+      min-height: 100vh;
+    }
+
+    .layout {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .hero {
+      background: linear-gradient(120deg, #0b2d39, #1f7a8c 55%, #5cb3c3);
+      color: #f6fdff;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 24px;
+      animation: fadeIn .45s ease-out;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(1.4rem, 2vw, 2.1rem);
+      letter-spacing: 0.02em;
+    }
+
+    .hero p {
+      margin: 10px 0 0;
+      line-height: 1.4;
+      max-width: 78ch;
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 16px;
+      animation: fadeIn .6s ease-out;
+    }
+
+    .card h2 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    label { display: block; margin: 10px 0 4px; font-size: .92rem; color: var(--muted); }
+
+    input, select, button {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      font-size: 0.95rem;
+      padding: 10px 12px;
+      font-family: inherit;
+    }
+
+    button {
+      margin-top: 12px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: transform .16s ease, filter .16s ease;
+    }
+
+    button:hover { transform: translateY(-1px); filter: brightness(1.06); }
+    button.secondary { background: #3d4c5a; }
+    button.success { background: #3f8f1c; }
+
+    pre {
+      background: #11151b;
+      color: #d6f6ff;
+      border-radius: 10px;
+      padding: 12px;
+      overflow: auto;
+      max-height: 360px;
+      font-size: 0.82rem;
+    }
+
+    .hint { color: var(--muted); font-size: 0.9rem; }
+    .error { color: var(--warn); font-weight: 600; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <main class="layout">
+    <section class="hero">
+      <h1>Returnable Packaging Management Control Tower</h1>
+      <p>Clean + Hexagonal implementation for core packaging lifecycle: asset registry, pool balancing, operations (check-in/out, transfer, repair, cleaning, inspection), traceability, and KPI insights.</p>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Connection</h2>
+        <label for="token">Bearer Token</label>
+        <input id="token" placeholder="demo-token" value="demo-token">
+        <label for="roles">RPM Roles (comma-separated)</label>
+        <input id="roles" value="rpm.admin,rpm.write">
+        <p class="hint">Used for all API calls from this page.</p>
+      </article>
+
+      <article class="card">
+        <h2>Create Packaging Material</h2>
+        <label for="materialCode">Technical Name</label>
+        <input id="materialCode" value="PALLET-120x80">
+        <label for="materialName">Business Name</label>
+        <input id="materialName" value="Euro Pallet">
+        <label for="materialQty">Quantity</label>
+        <input id="materialQty" value="1000" type="number">
+        <button class="success" id="createMaterial">Create</button>
+      </article>
+
+      <article class="card">
+        <h2>Register Operation</h2>
+        <label for="opType">Operation Type</label>
+        <select id="opType">
+          <option value="check-out">check-out</option>
+          <option value="check-in">check-in</option>
+          <option value="transfer" selected>transfer</option>
+          <option value="clean">clean</option>
+          <option value="repair">repair</option>
+          <option value="inspect">inspect</option>
+        </select>
+        <label for="opAsset">Asset ID</label>
+        <input id="opAsset" value="SER-1000">
+        <label for="opQty">Quantity</label>
+        <input id="opQty" value="12" type="number">
+        <label for="opFrom">From Location</label>
+        <input id="opFrom" value="LOC-HAM">
+        <label for="opTo">To Location</label>
+        <input id="opTo" value="LOC-RTM">
+        <button id="runOperation">Submit Operation</button>
+      </article>
+
+      <article class="card">
+        <h2>Quick Queries</h2>
+        <button class="secondary" id="loadMaterials">List Packaging Materials</button>
+        <button class="secondary" id="loadKpis">Load KPI Snapshot</button>
+        <button class="secondary" id="traceAsset">Trace SER-1000</button>
+      </article>
+    </section>
+
+    <section class="card">
+      <h2>API Response</h2>
+      <div id="status" class="hint">No requests sent yet.</div>
+      <pre id="output">{}</pre>
+    </section>
+  </main>
+
+  <script>
+    const output = document.getElementById('output');
+    const status = document.getElementById('status');
+
+    const headers = () => ({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${document.getElementById('token').value || 'demo-token'}`,
+      'X-RPM-Roles': document.getElementById('roles').value || 'rpm.admin,rpm.write',
+      'X-Tenant-Id': 'default'
+    });
+
+    async function callApi(method, path, body) {
+      try {
+        status.textContent = `${method} ${path}`;
+        const response = await fetch(path, {
+          method,
+          headers: headers(),
+          body: body ? JSON.stringify(body) : undefined
+        });
+
+        const text = await response.text();
+        let payload = text;
+        try { payload = JSON.parse(text); } catch (_) {}
+
+        output.textContent = JSON.stringify(payload, null, 2);
+        status.className = response.ok ? 'hint' : 'error';
+        status.textContent = `${response.status} ${response.statusText}`;
+      } catch (err) {
+        status.className = 'error';
+        status.textContent = String(err);
+      }
+    }
+
+    document.getElementById('createMaterial').addEventListener('click', () => {
+      callApi('POST', '/api/v1/rpm/packaging-materials', {
+        technicalName: document.getElementById('materialCode').value,
+        businessName: document.getElementById('materialName').value,
+        quantity: String(document.getElementById('materialQty').value),
+        unitOfMeasure: 'EA',
+        createdBy: 'ui-user',
+        modifiedBy: 'ui-user',
+        metadata: { category: 'pallet' }
+      });
+    });
+
+    document.getElementById('runOperation').addEventListener('click', () => {
+      callApi('POST', '/api/v1/rpm/operations', {
+        operationType: document.getElementById('opType').value,
+        poolId: 'POOL-EU',
+        packagingMaterialId: 'MAT-PALLET',
+        assetId: document.getElementById('opAsset').value,
+        fromLocationId: document.getElementById('opFrom').value,
+        toLocationId: document.getElementById('opTo').value,
+        partnerId: 'PARTNER-1',
+        quantity: String(document.getElementById('opQty').value),
+        referenceId: `REF-${Date.now()}`,
+        executedBy: 'ui-user',
+        notes: 'Created from web control tower'
+      });
+    });
+
+    document.getElementById('loadMaterials').addEventListener('click', () => {
+      callApi('GET', '/api/v1/rpm/packaging-materials');
+    });
+
+    document.getElementById('loadKpis').addEventListener('click', () => {
+      callApi('GET', '/api/v1/rpm/kpis?from=2026-01-01&to=2026-12-31');
+    });
+
+    document.getElementById('traceAsset').addEventListener('click', () => {
+      callApi('GET', '/api/v1/rpm/trace/SER-1000');
+    });
+  </script>
+</body>
+</html>
